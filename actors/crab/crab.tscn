@@ -1,0 +1,169 @@
+[gd_scene load_steps=25 format=3 uid="uid://lddmwkgyuqsk"]
+
+[ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
+[ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vihr2"]
+radius = 0.6
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ieb0f"]
+animation = &"Jump"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fc1xm"]
+animation = &"Fall"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_5xahp"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_ieb0f")
+blend_point_0/pos = 1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_fc1xm")
+blend_point_1/pos = -1.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a6tpn"]
+animation = &"Rave"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2x4nq"]
+animation = &"Action"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8atix"]
+animation = &"ScuttleForward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rgudy"]
+animation = &"ScuttleRightward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6khos"]
+animation = &"ScuttleBackward"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ov32d"]
+animation = &"ScuttleLeftward"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_8lhgq"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_2x4nq")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_8atix")
+blend_point_1/pos = Vector2(0, 0.5)
+blend_point_2/node = SubResource("AnimationNodeAnimation_rgudy")
+blend_point_2/pos = Vector2(0.5, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_6khos")
+blend_point_3/pos = Vector2(0, -0.5)
+blend_point_4/node = SubResource("AnimationNodeAnimation_ov32d")
+blend_point_4/pos = Vector2(-0.5, 0)
+sync = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fyuy5"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w66pk"]
+advance_mode = 2
+advance_condition = &"is_on_ground"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hhuwn"]
+advance_mode = 2
+advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_on_ground\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_a52gb"]
+xfade_time = 0.2
+advance_mode = 2
+advance_condition = &"is_rave_pressed"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6olra"]
+xfade_time = 0.2
+advance_mode = 2
+advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_rave_pressed\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_04so3"]
+advance_mode = 2
+advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_on_ground\")"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_plgea"]
+states/JumpAndFall/node = SubResource("AnimationNodeBlendSpace1D_5xahp")
+states/JumpAndFall/position = Vector2(489.333, 99.3333)
+states/Rave/node = SubResource("AnimationNodeAnimation_a6tpn")
+states/Rave/position = Vector2(716, 258.444)
+states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8lhgq")
+states/Walking/position = Vector2(490.222, 260)
+transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3")]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ls75x"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_1elqm"]
+graph_offset = Vector2(-335.333, -38.6667)
+nodes/StateMachine/node = SubResource("AnimationNodeStateMachine_plgea")
+nodes/StateMachine/position = Vector2(-133.333, 186.667)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ls75x")
+nodes/TimeScale/position = Vector2(133.333, 160)
+nodes/output/position = Vector2(293.333, 160)
+node_connections = [&"TimeScale", 0, &"StateMachine", &"output", 0, &"TimeScale"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_67nus"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_2x4nq"]
+states/BlendTree/node = SubResource("AnimationNodeBlendTree_1elqm")
+states/BlendTree/position = Vector2(441.333, 100)
+states/Start/position = Vector2(200.667, 99.7778)
+transitions = ["Start", "BlendTree", SubResource("AnimationNodeStateMachineTransition_67nus")]
+
+[node name="Crab" type="CharacterBody3D"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_fc1xm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("SphereShape3D_vihr2")
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../crab")
+tree_root = SubResource("AnimationNodeStateMachine_2x4nq")
+anim_player = NodePath("../crab/AnimationPlayer")
+parameters/BlendTree/StateMachine/conditions/is_on_ground = true
+parameters/BlendTree/StateMachine/conditions/is_rave_pressed = false
+parameters/BlendTree/StateMachine/JumpAndFall/blend_position = 0
+parameters/BlendTree/StateMachine/Walking/blend_position = Vector2(0, 2.275)
+parameters/BlendTree/TimeScale/scale = 2.85
+
+[node name="crab" parent="." instance=ExtResource("1_vihr2")]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
+
+[node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
+bones/1/position = Vector3(-1.19209e-07, 0.5, 1.80469)
+bones/1/rotation = Quaternion(-0.130526, -2.89826e-17, -2.0858e-25, 0.991445)
+bones/2/rotation = Quaternion(4.1159e-09, -0.000106373, 0.707107, 0.707107)
+bones/3/rotation = Quaternion(3.54479e-08, -1.3278e-12, -1.1221e-07, 1)
+bones/4/rotation = Quaternion(1.59066e-08, 0.000106362, -0.707107, 0.707107)
+bones/5/rotation = Quaternion(2.10333e-09, 1.66585e-11, 5.11661e-09, 1)
+bones/6/position = Vector3(-3.16274, 1.46486e-07, 0.631063)
+bones/6/rotation = Quaternion(5.31893e-05, -5.31893e-05, 0.707107, 0.707107)
+bones/7/rotation = Quaternion(4.41049e-05, 3.08897e-13, 0.293169, 0.956061)
+bones/8/rotation = Quaternion(-4.41048e-05, -4.3217e-12, -0.293168, 0.956061)
+bones/9/position = Vector3(3.16274, 1.46486e-07, 0.631063)
+bones/9/rotation = Quaternion(5.31893e-05, 5.31893e-05, -0.707107, 0.707107)
+bones/10/rotation = Quaternion(4.27338e-05, -1.09065e-05, -0.0475218, 0.99887)
+bones/11/rotation = Quaternion(-4.27321e-05, -1.091e-05, 0.0475208, 0.99887)
+bones/12/rotation = Quaternion(0.0148873, -0.0378663, 0.269703, 0.962084)
+bones/13/rotation = Quaternion(-0.293879, 0.0208012, 0.152543, 0.943363)
+bones/14/rotation = Quaternion(-0.327554, 0.0015249, 0.00547955, 0.944815)
+bones/15/rotation = Quaternion(0.0238254, -0.0854792, 0.947681, 0.306637)
+bones/16/rotation = Quaternion(-0.359207, -0.0243996, -0.119486, 0.925256)
+bones/17/rotation = Quaternion(-0.348667, -0.00521528, -0.0190256, 0.937039)
+bones/18/rotation = Quaternion(0.196286, -0.0449463, -0.226769, 0.952905)
+bones/19/rotation = Quaternion(-0.374064, -0.0437333, -0.20602, 0.903172)
+bones/20/rotation = Quaternion(-0.475339, -0.0121826, -0.0440471, 0.878615)
+bones/21/rotation = Quaternion(0.0928556, -0.375888, 0.869703, -0.306109)
+bones/22/rotation = Quaternion(-0.005735, -0.00376392, 0.00389406, 0.999969)
+bones/23/rotation = Quaternion(0.0042761, -0.00774822, -0.00357527, 0.999955)
+bones/24/rotation = Quaternion(-0.0739348, -0.116696, 0.730548, 0.668741)
+bones/25/rotation = Quaternion(-0.240676, 0.0206097, 0.066742, 0.968089)
+bones/26/rotation = Quaternion(-0.256799, 0.0040291, 0.0139384, 0.966356)
+bones/27/rotation = Quaternion(0.00241643, 0.163087, -0.637894, 0.752654)
+bones/28/rotation = Quaternion(-0.248671, 0.0325728, 0.0141911, 0.967936)
+bones/29/rotation = Quaternion(-0.268995, 0.0108116, 0.0320609, 0.962547)
+bones/30/position = Vector3(-2.40619, 1.67332, 0.0124217)
+bones/31/position = Vector3(2.40619, 1.68683, 0.641021)
+bones/32/position = Vector3(-2.86494, -0.327394, 0.14001)
+bones/33/position = Vector3(2.86494, 0.906392, 0.0124217)
+bones/34/position = Vector3(-2.40619, -0.896887, 0.356461)
+bones/35/position = Vector3(2.40619, -1.60645, 0.12157)
+
+[editable path="crab"]

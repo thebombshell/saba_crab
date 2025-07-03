@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3 uid="uid://cluxu12q8s20m"]
+
+[ext_resource type="PackedScene" uid="uid://lddmwkgyuqsk" path="res://actors/crab/crab.tscn" id="1_g7g4h"]
+[ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="2_j8ivh"]
+[ext_resource type="Texture2D" uid="uid://m58m76r0fupt" path="res://brushes/basic_grid.png" id="2_nd71p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j8ivh"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7ddre"]
+albedo_texture = ExtResource("2_nd71p")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_nd71p"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_j8ivh"]
+sky_top_color = Color(0.535434, 0.83333, 0.897134, 1)
+sky_horizon_color = Color(0.678662, 0.672013, 0.409666, 1)
+ground_bottom_color = Color(3.1285e-07, 0.533535, 0.343286, 1)
+ground_horizon_color = Color(0.678431, 0.670588, 0.407843, 1)
+
+[sub_resource type="Sky" id="Sky_nd71p"]
+sky_material = SubResource("ProceduralSkyMaterial_j8ivh")
+process_mode = 3
+
+[sub_resource type="Environment" id="Environment_7ddre"]
+background_mode = 2
+sky = SubResource("Sky_nd71p")
+
+[node name="TestScene" type="Node3D"]
+
+[node name="Crab" parent="." instance=ExtResource("1_g7g4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_j8ivh")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+material_override = SubResource("StandardMaterial3D_7ddre")
+mesh = SubResource("BoxMesh_nd71p")
+
+[node name="FollowCamera" parent="." node_paths=PackedStringArray("follow_target") instance=ExtResource("2_j8ivh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 10)
+follow_height = 4.0
+follow_strength = 20.0
+follow_up_strength = 10.0
+follow_target = NodePath("../Crab")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.685729, -0.518645, -0.510669, 0, -0.701606, 0.712565, -0.727857, -0.488627, -0.481112, 0, 6.56261, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7ddre")
