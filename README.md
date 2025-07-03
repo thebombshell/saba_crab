@@ -1,6 +1,6 @@
 # Saba Crab
 
-Hey, I amde a saba crab model and rig, and a small character control in godot to demo it.
+Hey, I made a saba crab model and rig, and a small character control in godot to demo it.
 
 It is here for anyone to use, copy, or modify for any purpose, so long as they link back to this repository so others can grab it too.
 
