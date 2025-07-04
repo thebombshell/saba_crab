@@ -1,12 +1,15 @@
 class_name FollowCameraActor extends Camera3D
 
-@export var look_strength = 10.0;
-@export var follow_distance = 10.0;
-@export var follow_height = 2.0;
-@export var follow_strength = 4.0;
-@export var follow_up_strength = 4.0;
+@export var look_strength: float = 10.0;
+@export var follow_distance: float = 10.0;
+@export var follow_height: float = 2.0;
+@export var follow_strength: float = 4.0;
+@export var follow_up_strength: float = 4.0;
 
 @export var follow_target: Node3D = null;
+
+var is_underwater : bool:
+	get: return global_position.y < Water.current.height_at_point(global_position) + 4.0;
 
 func process_looking(t_delta: float):
 	
@@ -22,7 +25,7 @@ func process_following(t_delta: float):
 	if !is_instance_valid(follow_target):
 		return;
 	
-	var target_up = Vector3.UP * follow_target.global_basis;
+	var target_up =Vector3.UP# Vector3.UP * follow_target.global_basis;
 	var difference = follow_target.global_position - global_position;
 	var distance = difference.length();
 	var direction = difference / distance;
@@ -34,7 +37,7 @@ func process_following(t_delta: float):
 	height = lerp(height, target_height + follow_height, t_delta * follow_up_strength);
 	global_position += target_up * height;
 	
-	global_basis = Basis.looking_at(direction, target_up);
+	global_basis = Basis.looking_at(direction, Vector3.UP);
 	return;
 
 func _physics_process(t_delta: float) -> void:

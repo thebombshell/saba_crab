@@ -23,12 +23,15 @@ const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 @onready var skeleton_3d: Skeleton3D = $crab/CrabSkeleton/Skeleton3D;
 @onready var left_claw_attachment: BoneAttachment3D = $crab/CrabSkeleton/Skeleton3D/LeftClawAttachment
 @onready var right_claw_attachment: BoneAttachment3D = $crab/CrabSkeleton/Skeleton3D/RightClawAttachment
+@onready var push_area: Area3D = $PushArea;
 @onready var grab_area: Area3D = $GrabArea;
 @onready var crab: Node3D = $crab;
+@onready var debug_mesh: MeshInstance3D = $MeshInstance3D
+
 
 @export var acceleration: float = 5.0;
 @export var decceleration: float = 20.0;
-@export var jump_impulse: float = 6.0;
+@export var jump_impulse: float = 6.5;
 @export var air_control: float = 0.5;
 @export var drag: float = 0.005;
 
@@ -39,9 +42,13 @@ var camera_right: Vector3 = Vector3.RIGHT;
 var grabbed: RigidBody3D = null;
 var grab_start_timer : float = -1.0;
 var grabbed_timer: float = 0.0;
+var yeeting_timer: float = -1.0;
+var yeet_power: float = 10.0;
 
 var walking_blend: Vector2 = Vector2.ZERO;
 var arm_blend: float = 1.0;
+var smoothed_up: Vector3 = Vector3.UP;
+
 func process_movement(t_delta: float) -> void:
 	
 	# we'll need the scene camera, if there isn't one active, then we've no
@@ -89,6 +96,11 @@ func process_forces(t_delta: float) -> void:
 	var drag_power = min(velocity.length(),
 		pow(velocity.length(), 2.0) * drag * t_delta);
 	velocity -= velocity * drag_power;
+	
+	for body: PhysicsBody3D in push_area.get_overlapping_bodies():
+		if body == self || body is not RigidBody3D:
+			continue;
+		body.apply_central_force((body.global_position - global_position).normalized() * 5.0);
 	return;
 
 func process_grabbing(t_delta: float):
@@ -104,13 +116,17 @@ func process_grabbing(t_delta: float):
 
 func turn_character_towards(t_forward: Vector3, t_amount: float):
 	
-	var ref_forward = Vector3.FORWARD * Quaternion(up_direction, 0.0);
-	var forward = Vector3.FORWARD * global_basis;
-	var right = Vector3.RIGHT * global_basis;
-	var angle = atan2(ref_forward.dot(-right), ref_forward.dot(forward));
-	var target_angle = atan2(ref_forward.dot(t_forward.cross(up_direction)), ref_forward.dot(t_forward));
-	var angle_diff = angle_difference(angle, target_angle);
-	global_basis = Basis(Quaternion(up_direction, angle + angle_diff * t_amount));
+	var up = smoothed_up;
+	var ref_forward = Vector3.FORWARD * Quaternion(up, 0.0);
+	var forward = global_basis.z;
+	var right = global_basis.x;
+	var target_forward = t_forward;
+	var target_right = t_forward.cross(up);
+	
+	global_basis = Basis(
+		right.slerp(target_right, t_amount),
+		up,
+		forward.slerp(target_forward, t_amount)).orthonormalized();
 	return;
 
 func find_walking_blend():
@@ -147,8 +163,14 @@ func update_grabbed(t_delta: float):
 		grabbed.rotation = grabbed.rotation.slerp(target_rotation, grabbed_timer);
 	grabbed.linear_velocity = grabbed.linear_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
 	grabbed.angular_velocity = grabbed.angular_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
-	if Input.is_action_just_pressed("yeet"):
-		yeet();
+	if yeeting_timer < 0.0 && Input.is_action_just_pressed("yeet"):
+		init_yeet(10.0);
+	elif yeeting_timer < 0.0 && Input.is_action_just_pressed("grab"):
+		init_yeet(1.0);
+	elif yeeting_timer >= 0.0:
+		yeeting_timer += t_delta;
+		if yeeting_timer > 0.2:
+			yeet();
 	return;
 
 func init_grab():
@@ -192,24 +214,38 @@ func try_grab():
 			break;
 	return;
 
-func yeet():
+func init_yeet(t_power: float):
 	
 	animation_tree.set(ANIM_PARAMS_IS_GRABBING_ONE, false);
 	animation_tree.set(ANIM_PARAMS_IS_GRABBING_TWO, false);
 	animation_tree.set(ANIM_PARAMS_IS_YEETING, true);
+	yeeting_timer = 0.0;
+	yeet_power = t_power;
+	return;
+
+func yeet():
+	
 	grabbed.reparent(get_parent_node_3d());
 	var dir = (grabbed.global_position -
 		(global_position + get_global_transform_interpolated().basis.z * 10.0)).normalized();
 	grabbed.global_position += dir;
-	grabbed.linear_velocity = (dir + up_direction * 0.5) * 10.0;
+	grabbed.linear_velocity = (dir + up_direction * 0.5) * (yeet_power * 0.5 + (yeet_power * 0.5) / grabbed.mass);
 	grabbed.collision_layer = grabbed.collision_layer | PHYS_LAYER_NORMAL;
 	grabbed = null;
+	yeeting_timer = -1.0;
 	return;
 
 func process_animation(t_delta: float) -> void:
 	
 	if !is_instance_valid(camera):
 		return;
+	
+	if is_on_floor():
+		smoothed_up = smoothed_up.slerp(get_floor_normal(), t_delta * 4.0).normalized();
+	else:
+		smoothed_up = smoothed_up.slerp(Vector3.UP, t_delta * 4.0).normalized();
+	
+	debug_mesh.global_position = global_position + smoothed_up * 3.0;
 	
 	# set animation params
 	animation_tree.set(ANIM_PARAMS_IS_ON_GROUND, is_on_floor());

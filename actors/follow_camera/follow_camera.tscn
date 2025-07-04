@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://b65hsqf6l6xdi"]
+[gd_scene load_steps=5 format=3 uid="uid://b65hsqf6l6xdi"]
 
 [ext_resource type="Script" uid="uid://dfc8rtr6pjsrq" path="res://actors/follow_camera/follow_camera.gd" id="1_c1cwv"]
+[ext_resource type="Material" uid="uid://cifyhukntr37t" path="res://shaders/water/water_under_mat.tres" id="2_jjm13"]
+[ext_resource type="Script" uid="uid://c1bbbitynjga6" path="res://actors/follow_camera/water.gd" id="3_n8uky"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_n8uky"]
+material = ExtResource("2_jjm13")
+flip_faces = true
+size = Vector2(2, 2)
 
 [node name="FollowCamera" type="Camera3D"]
 script = ExtResource("1_c1cwv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_n8uky")
+script = ExtResource("3_n8uky")

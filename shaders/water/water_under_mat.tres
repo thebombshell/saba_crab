@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cifyhukntr37t"]
+
+[ext_resource type="Shader" uid="uid://ch4cgkcqqrwid" path="res://shaders/water/water_under.gdshader" id="1_sd5yq"]
+[ext_resource type="Texture2D" uid="uid://wr48ss82rn4c" path="res://shaders/water/water_noise_texture.png" id="2_1raam"]
+
+[resource]
+render_priority = -99
+shader = ExtResource("1_sd5yq")
+shader_parameter/shallow_color = Color(0.248087, 0.654923, 0.615383, 1)
+shader_parameter/deep_color = Color(0.0560297, 0.462091, 0.706892, 1)
+shader_parameter/shallow_depth = 128.0
+shader_parameter/deep_depth = 1024.0
+shader_parameter/water_map_scale = 4096.0
+shader_parameter/water_map_height = 4.0
+shader_parameter/noise_map = ExtResource("2_1raam")
+shader_parameter/offset = Vector2(0, 0)

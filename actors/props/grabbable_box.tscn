@@ -10,6 +10,8 @@ size = Vector3(2, 2, 2)
 collision_layer = 5
 mass = 4.0
 script = ExtResource("1_01c65")
+grab_point = Vector3(0, 1.5, 0.2)
+grab_rotation = Vector3(30, 0, 0)
 two_handed = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
