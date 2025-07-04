@@ -13,6 +13,11 @@ var is_underwater : bool:
 
 func process_looking(t_delta: float):
 	
+	# input is simply moving the camera based on its up and right vectors,
+	# due to the following behaviour correcting for up and down though, we'll
+	# not get much use out of up, though we can certainly give this a play later
+	# if it becomes relevant to gameplay
+	
 	var up = get_global_transform_interpolated().basis.y;
 	var right = get_global_transform_interpolated().basis.x;
 	global_position += up * Input.get_axis("look_down", "look_up") * look_strength * t_delta;
@@ -25,12 +30,20 @@ func process_following(t_delta: float):
 	if !is_instance_valid(follow_target):
 		return;
 	
-	var target_up =Vector3.UP# Vector3.UP * follow_target.global_basis;
+	var target_up = Vector3.UP;
 	var difference = follow_target.global_position - global_position;
 	var distance = difference.length();
 	var direction = difference / distance;
 	
-	global_position = global_position.lerp(follow_target.global_position - direction * follow_distance, t_delta * follow_strength);
+	# smoothly moves the camera to an ideal distance from the following target
+	var target_position = follow_target.global_position - direction * follow_distance;
+	global_position = global_position.lerp(target_position, t_delta * follow_strength);
+	
+	# smoothly moves the camera to an ideal height from the following target,
+	# this is important for both stopping the camera from staring down from
+	# useless angles, and for keeping track of our movements vertically which
+	# are much less forgiving of a smooth camera than simply being a speedy
+	# crab
 	var height = global_position.dot(target_up);
 	var target_height = follow_target.global_position.dot(target_up);
 	global_position -= target_up * height;

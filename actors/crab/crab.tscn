@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://lddmwkgyuqsk"]
+[gd_scene load_steps=53 format=3 uid="uid://lddmwkgyuqsk"]
 
 [ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
@@ -238,8 +238,6 @@ radius = 1.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_fc1xm"]
 radius = 0.65
 
-[sub_resource type="TorusMesh" id="TorusMesh_ieb0f"]
-
 [node name="Crab" type="CharacterBody3D"]
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -270,7 +268,7 @@ parameters/BlendTree/TimeScale/scale = 1.0
 transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
 
 [node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
-bones/1/position = Vector3(-1.19209e-07, 0.5, 1.67433)
+bones/1/position = Vector3(-1.19209e-07, 0.5, 1.69865)
 bones/1/rotation = Quaternion(-0.130526, -2.89826e-17, -2.0858e-25, 0.991445)
 bones/2/rotation = Quaternion(-6.90808e-06, -0.000124581, 0.623034, 0.782195)
 bones/3/rotation = Quaternion(-0.000111663, 1.67086e-08, -0.470701, 0.882293)
@@ -284,38 +282,38 @@ bones/9/position = Vector3(2.63418, 0.915537, 0.631063)
 bones/9/rotation = Quaternion(0.0279933, 0.376673, -0.116826, 0.918523)
 bones/10/rotation = Quaternion(4.39567e-05, -3.68163e-06, -0.212165, 0.977234)
 bones/11/rotation = Quaternion(-4.39295e-05, -3.67429e-06, 0.212164, 0.977234)
-bones/12/rotation = Quaternion(0.221808, 0.0571684, 0.218704, 0.948526)
-bones/13/rotation = Quaternion(-0.378015, 0.0470962, 0.210897, 0.900227)
-bones/14/rotation = Quaternion(-0.489988, 0.013466, 0.0484888, 0.870275)
-bones/15/rotation = Quaternion(-0.087704, -0.35361, 0.881754, 0.299631)
-bones/16/rotation = Quaternion(-0.00560129, 0.00450449, -0.00396962, 0.999966)
-bones/17/rotation = Quaternion(0.00406301, 0.00828185, 0.00360059, 0.999951)
-bones/18/rotation = Quaternion(0.0149855, -0.0310732, -0.316236, 0.948053)
-bones/19/rotation = Quaternion(-0.434877, -0.0699345, -0.260275, 0.859214)
-bones/20/rotation = Quaternion(-0.472833, -0.0223326, -0.0802872, 0.877203)
-bones/21/rotation = Quaternion(-0.0176804, -0.141549, 0.933024, -0.33033)
-bones/22/rotation = Quaternion(-0.367761, 0.0310152, 0.12927, 0.920369)
-bones/23/rotation = Quaternion(-0.339141, 0.00722845, 0.0245741, 0.940387)
-bones/24/rotation = Quaternion(0.0415003, -0.11955, 0.650481, 0.748906)
-bones/25/rotation = Quaternion(-0.282694, -0.0298567, -0.00930638, 0.9587)
-bones/26/rotation = Quaternion(-0.324377, -0.00975706, -0.0309147, 0.945372)
-bones/27/rotation = Quaternion(0.125723, 0.0022527, -0.680442, 0.721933)
-bones/28/rotation = Quaternion(-0.349751, 0.0123738, -0.0162036, 0.936621)
-bones/29/rotation = Quaternion(-0.447939, 0.00390265, 0.0177561, 0.893879)
-bones/30/position = Vector3(-2.40619, 1.7127, 0.612794)
-bones/31/position = Vector3(2.40619, 0.57604, 0.239684)
-bones/32/position = Vector3(-2.86494, 0.84634, 0.0124217)
-bones/33/position = Vector3(2.86494, 0.555358, 0.395389)
-bones/34/position = Vector3(-2.40619, -1.67989, 0.137049)
-bones/35/position = Vector3(2.40619, -0.622127, 0.0124217)
+bones/12/rotation = Quaternion(0.140163, 0.00657852, 0.236082, 0.961549)
+bones/13/rotation = Quaternion(-0.322177, 0.0277043, 0.169654, 0.930942)
+bones/14/rotation = Quaternion(-0.400023, 0.00491068, 0.0176268, 0.916322)
+bones/15/rotation = Quaternion(-0.0476152, -0.217962, 0.930224, 0.291391)
+bones/16/rotation = Quaternion(-0.154517, 0.000504793, -0.0483139, 0.986808)
+bones/17/rotation = Quaternion(-0.116779, 0.00589547, 0.0179238, 0.992979)
+bones/18/rotation = Quaternion(0.108167, -0.0688465, -0.278329, 0.951889)
+bones/19/rotation = Quaternion(-0.450376, -0.077654, -0.273349, 0.846411)
+bones/20/rotation = Quaternion(-0.524241, -0.0259554, -0.0946147, 0.845899)
+bones/21/rotation = Quaternion(0.0224967, -0.193233, 0.929423, -0.313572)
+bones/22/rotation = Quaternion(-0.2665, 0.0127792, 0.0865234, 0.959858)
+bones/23/rotation = Quaternion(-0.22705, -0.000142902, -0.000622824, 0.973883)
+bones/24/rotation = Quaternion(-0.00241459, -0.102274, 0.693693, 0.712969)
+bones/25/rotation = Quaternion(-0.283388, -0.00225171, 0.0315779, 0.958483)
+bones/26/rotation = Quaternion(-0.319853, -0.00179218, -0.00634575, 0.947444)
+bones/27/rotation = Quaternion(0.0940857, 0.0792674, -0.64875, 0.750991)
+bones/28/rotation = Quaternion(-0.30943, 0.0354034, 0.0151686, 0.950142)
+bones/29/rotation = Quaternion(-0.375675, 0.011283, 0.0364736, 0.925965)
+bones/30/position = Vector3(-2.40619, 1.90816, 0.334262)
+bones/31/position = Vector3(2.40619, 0.803536, 0.5176)
+bones/32/position = Vector3(-2.86494, 0.253767, 0.0124217)
+bones/33/position = Vector3(2.86494, 0.946571, 0.218732)
+bones/34/position = Vector3(-2.40619, -1.62467, 0.289793)
+bones/35/position = Vector3(2.40619, -1.11989, 0.0124217)
 
 [node name="LeftClawAttachment" type="BoneAttachment3D" parent="crab/CrabSkeleton/Skeleton3D" index="1"]
-transform = Transform3D(-0.688938, 0.235704, 0.685426, 0.624618, -0.286687, 0.726404, 0.367719, 0.928576, 0.0502851, 2.63418, 2.04693, 1.54767)
+transform = Transform3D(-0.688938, 0.235704, 0.685426, 0.624618, -0.286687, 0.726404, 0.367719, 0.928576, 0.0502851, 2.63418, 2.07125, 1.54767)
 bone_name = "Claw.L"
 bone_idx = 6
 
 [node name="RightClawAttachment" type="BoneAttachment3D" parent="crab/CrabSkeleton/Skeleton3D" index="2"]
-transform = Transform3D(-0.688938, -0.235704, -0.685426, -0.624618, -0.286687, 0.726404, -0.367719, 0.928576, 0.050285, -2.63418, 2.04693, 1.54767)
+transform = Transform3D(-0.688938, -0.235704, -0.685426, -0.624618, -0.286687, 0.726404, -0.367719, 0.928576, 0.050285, -2.63418, 2.07125, 1.54767)
 bone_name = "Claw.R"
 bone_idx = 9
 
@@ -333,8 +331,5 @@ collision_layer = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PushArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("SphereShape3D_fc1xm")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("TorusMesh_ieb0f")
 
 [editable path="crab"]

@@ -26,7 +26,6 @@ const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 @onready var push_area: Area3D = $PushArea;
 @onready var grab_area: Area3D = $GrabArea;
 @onready var crab: Node3D = $crab;
-@onready var debug_mesh: MeshInstance3D = $MeshInstance3D
 
 
 @export var acceleration: float = 5.0;
@@ -89,6 +88,14 @@ func process_movement(t_delta: float) -> void:
 	
 func process_forces(t_delta: float) -> void:
 	
+	# not so much a force, but it needs to go somewhere, this smooths out the
+	# up vector used when finding orientation, such that we align to the floor
+	# but not so perfectly that quick changes in orientation become jarring
+	if is_on_floor():
+		smoothed_up = smoothed_up.slerp(get_floor_normal(), t_delta * 4.0).normalized();
+	else:
+		smoothed_up = smoothed_up.slerp(Vector3.UP, t_delta * 4.0).normalized();
+	
 	# handle gravity
 	velocity += get_gravity() * t_delta;
 	
@@ -97,6 +104,9 @@ func process_forces(t_delta: float) -> void:
 		pow(velocity.length(), 2.0) * drag * t_delta);
 	velocity -= velocity * drag_power;
 	
+	# character bodies in godot do not push objects they run in to, so I've
+	# given the crab a forcefield of sorts, that pushes objects which are very
+	# close, its not perfect pushing, but it'll do.
 	for body: PhysicsBody3D in push_area.get_overlapping_bodies():
 		if body == self || body is not RigidBody3D:
 			continue;
@@ -137,12 +147,24 @@ func find_walking_blend():
 
 func update_grabbed(t_delta: float):
 	
+	# if we have not grabbed, then we check if we'd like to grab
 	if !is_instance_valid(grabbed):
 		
 		if Input.is_action_just_pressed("grab"):
 			init_grab();
 		return;
 	
+	# this is handling the position and rotation of grabbed objects to track
+	# with the claws properly.
+	# 1 handed grab is simple, we use the right claw attachment as a parent for
+	# the grabbed object, and we smooth away its position and rotation so it
+	# doesn't simply teleport into our claw the moment its picked up.
+	# 2 handed grab is wierd, we have 2 different bones, but not a single
+	# transform shared between them, and finding the exact transform between 2
+	# unrelated transforms isn't a simple lerp, because rotation and scale are
+	# both represented in the basis, and this makes things go wierd. So instead
+	# we're making a new basis from scratch, by slerping (a rotation lerp) the
+	# basis axes, and normalizing them, which removes the scaling.
 	grabbed_timer = clamp(grabbed_timer + t_delta * 4.0, 0.0, 1.0);
 	if grabbed.two_handed:
 		var left_transform = left_claw_attachment.get_global_transform_interpolated();
@@ -161,8 +183,18 @@ func update_grabbed(t_delta: float):
 		var target_rotation = grabbed.grab_rotation;
 		grabbed.position = grabbed.position.lerp(target_position, grabbed_timer);
 		grabbed.rotation = grabbed.rotation.slerp(target_rotation, grabbed_timer);
+	
+	# sap away the linear and angular velocities because things go wierd if you
+	# let an object accumulate gravity or spin while its not active in the
+	# physics, it would in effect do whatever it wants when you try to throw it
 	grabbed.linear_velocity = grabbed.linear_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
 	grabbed.angular_velocity = grabbed.angular_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
+	
+	# we seperate yeeting into init yeet, and yeet, because init yeet allows us
+	# to start the animation, then yeet lets us throw the object at the precise
+	# moment in the animation where you'd typically let go of a thing, it looks
+	# nicer. Also we've split yeet between ungrab and yeet, so we can put down
+	# objects harmlessly or yeet them with sufficient force.
 	if yeeting_timer < 0.0 && Input.is_action_just_pressed("yeet"):
 		init_yeet(10.0);
 	elif yeeting_timer < 0.0 && Input.is_action_just_pressed("grab"):
@@ -175,6 +207,8 @@ func update_grabbed(t_delta: float):
 
 func init_grab():
 	
+	# if we're allowed to grab, we will check the grab area for overlapping
+	# grabbable objects, the first valid one will initiate a grab animation.
 	if is_instance_valid(grabbed) || grab_start_timer >= 0.0:
 		return;
 	
@@ -190,6 +224,10 @@ func init_grab():
 
 func grab(t_actor: GrabbableActor):
 	
+	# we've now hit the moment in the animation where truly grabbing the object
+	# is appropriate, and so we set the animation variables, store the grabbed
+	# object, turn off its regular physics layer, and if single handed, we
+	# handle the reparenting
 	grabbed = t_actor;
 	animation_tree.set(ANIM_PARAMS_IS_YEETING, false);
 	animation_tree.set(ANIM_PARAMS_HAS_GRABBED, true);
@@ -216,6 +254,7 @@ func try_grab():
 
 func init_yeet(t_power: float):
 	
+	# set the animation variables for a yeet, and store the power of it
 	animation_tree.set(ANIM_PARAMS_IS_GRABBING_ONE, false);
 	animation_tree.set(ANIM_PARAMS_IS_GRABBING_TWO, false);
 	animation_tree.set(ANIM_PARAMS_IS_YEETING, true);
@@ -225,6 +264,11 @@ func init_yeet(t_power: float):
 
 func yeet():
 	
+	# we've hit the point in the animation where a yeet should occur, so we do
+	# unparenting the object, finding the direction to yeet it, teleport it a
+	# little bit so we aren't suddenly activating a physics objects in our own
+	# skull, and finally applying the yeet impulse and clearing our grabbed
+	# object storage
 	grabbed.reparent(get_parent_node_3d());
 	var dir = (grabbed.global_position -
 		(global_position + get_global_transform_interpolated().basis.z * 10.0)).normalized();
@@ -239,13 +283,6 @@ func process_animation(t_delta: float) -> void:
 	
 	if !is_instance_valid(camera):
 		return;
-	
-	if is_on_floor():
-		smoothed_up = smoothed_up.slerp(get_floor_normal(), t_delta * 4.0).normalized();
-	else:
-		smoothed_up = smoothed_up.slerp(Vector3.UP, t_delta * 4.0).normalized();
-	
-	debug_mesh.global_position = global_position + smoothed_up * 3.0;
 	
 	# set animation params
 	animation_tree.set(ANIM_PARAMS_IS_ON_GROUND, is_on_floor());

@@ -4,6 +4,16 @@ const WATER_NOISE_TEXTURE = preload("res://shaders/water/water_noise_texture.png
 
 static var current : Water = null;
 
+# I will not be documenting this beyond here, I wrote this for another project
+# called slappy's reef, it was my ludum dare 57 entry and I've only pulled it
+# from that repository and stripped out some features we don't need.
+#
+# If you want more info on it, a short version, is this is a raymarch shader
+# which after many hours of tweaking after the game jam, I managed to make work
+# well enough to have a smooth transition between displaying above water and
+# below worder. I like it, it can probably be improved, but it'll serve our
+# purposes here for sure.
+
 var noise_map : Image = WATER_NOISE_TEXTURE.get_image();
 var effect_image : Image = null;
 var offset : Vector2 = Vector2.ZERO;
