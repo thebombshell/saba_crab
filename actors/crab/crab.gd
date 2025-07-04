@@ -15,12 +15,14 @@ const ANIM_PARAMS_IS_GRABBING_ONE = "parameters/BlendTree/HandMachine/conditions
 const ANIM_PARAMS_IS_GRABBING_TWO = "parameters/BlendTree/HandMachine/conditions/is_grabbing_2";
 const ANIM_PARAMS_HAS_GRABBED = "parameters/BlendTree/HandMachine/conditions/has_grabbed";
 const ANIM_PARAMS_IS_YEETING = "parameters/BlendTree/HandMachine/conditions/is_yeeting";
+const ANIM_PARAMS_IS_SWINGING = "parameters/BlendTree/HandMachine/conditions/is_swinging";
 const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 
 @onready var animation_tree: AnimationTree = $AnimationTree;
 @onready var animation_player: AnimationPlayer = $crab/AnimationPlayer;
 @onready var skeleton_3d: Skeleton3D = $crab/CrabSkeleton/Skeleton3D;
-@onready var bone_attachment_3d: BoneAttachment3D = $crab/CrabSkeleton/Skeleton3D/BoneAttachment3D;
+@onready var left_claw_attachment: BoneAttachment3D = $crab/CrabSkeleton/Skeleton3D/LeftClawAttachment
+@onready var right_claw_attachment: BoneAttachment3D = $crab/CrabSkeleton/Skeleton3D/RightClawAttachment
 @onready var grab_area: Area3D = $GrabArea;
 @onready var crab: Node3D = $crab;
 
@@ -36,6 +38,7 @@ var camera_forward: Vector3 = Vector3.FORWARD;
 var camera_right: Vector3 = Vector3.RIGHT;
 var grabbed: RigidBody3D = null;
 var grab_start_timer : float = -1.0;
+var grabbed_timer: float = 0.0;
 
 var walking_blend: Vector2 = Vector2.ZERO;
 var arm_blend: float = 1.0;
@@ -124,8 +127,26 @@ func update_grabbed(t_delta: float):
 			init_grab();
 		return;
 	
-	grabbed.position = grabbed.position.lerp(grabbed.grab_point, t_delta * 10.0);
-	grabbed.rotation = grabbed.rotation.slerp(grabbed.grab_rotation, t_delta * 10.0);
+	grabbed_timer = clamp(grabbed_timer + t_delta * 4.0, 0.0, 1.0);
+	if grabbed.two_handed:
+		var left_transform = left_claw_attachment.get_global_transform_interpolated();
+		var right_transform = right_claw_attachment.get_global_transform_interpolated();
+		var X = left_transform.basis.x.slerp(right_transform.basis.x, 0.5).normalized();
+		var Y = left_transform.basis.y.slerp(right_transform.basis.y, 0.5).normalized();
+		var Z = left_transform.basis.z.slerp(right_transform.basis.z, 0.5).normalized();
+		var offset = (
+			X * grabbed.grab_point.x +
+			Y * grabbed.grab_point.y +
+			Z * grabbed.grab_point.z);
+		grabbed.global_basis = Basis(X, Y, Z).orthonormalized() * Basis.from_euler(grabbed.grab_rotation);
+		grabbed.global_position = left_transform.origin.lerp(right_transform.origin, 0.5) + offset;
+	else:
+		var target_position = grabbed.grab_point;
+		var target_rotation = grabbed.grab_rotation;
+		grabbed.position = grabbed.position.lerp(target_position, grabbed_timer);
+		grabbed.rotation = grabbed.rotation.slerp(target_rotation, grabbed_timer);
+	grabbed.linear_velocity = grabbed.linear_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
+	grabbed.angular_velocity = grabbed.angular_velocity.lerp(Vector3.ZERO, t_delta * 10.0);
 	if Input.is_action_just_pressed("yeet"):
 		yeet();
 	return;
@@ -145,6 +166,17 @@ func init_grab():
 			break;
 	return;
 
+func grab(t_actor: GrabbableActor):
+	
+	grabbed = t_actor;
+	animation_tree.set(ANIM_PARAMS_IS_YEETING, false);
+	animation_tree.set(ANIM_PARAMS_HAS_GRABBED, true);
+	grabbed_timer = 0.0;
+	grabbed.collision_layer = grabbed.collision_layer & (~PHYS_LAYER_NORMAL);
+	if !t_actor.two_handed:
+		grabbed.reparent(right_claw_attachment);
+	return;
+
 func try_grab():
 	
 	# ignore request if we're already holding something
@@ -156,11 +188,7 @@ func try_grab():
 	# check overlapping objects for the first valid grabbable
 	for obj in grab_area.get_overlapping_bodies():
 		if obj is GrabbableActor:
-			grabbed = obj;
-			grabbed.collision_layer = grabbed.collision_layer & (~PHYS_LAYER_NORMAL);
-			grabbed.reparent(bone_attachment_3d);
-			animation_tree.set(ANIM_PARAMS_IS_YEETING, false);
-			animation_tree.set(ANIM_PARAMS_HAS_GRABBED, true);
+			grab(obj);
 			break;
 	return;
 
@@ -187,6 +215,7 @@ func process_animation(t_delta: float) -> void:
 	animation_tree.set(ANIM_PARAMS_IS_ON_GROUND, is_on_floor());
 	animation_tree.set(ANIM_PARAMS_JUMP_AND_FALL, velocity.dot(up_direction));
 	animation_tree.set(ANIM_PARAMS_HAS_GRABBED, is_instance_valid(grabbed));
+	animation_tree.set(ANIM_PARAMS_IS_SWINGING, Input.is_action_just_pressed("swing"));
 	animation_tree.set(ANIM_PARAMS_ARM_BLEND, arm_blend);
 	
 	# here, we're passing the walk blending params as the relationship between
