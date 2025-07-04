@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb5jdc1hr6qqv"]
+
+[ext_resource type="Script" uid="uid://cvmh67seb218d" path="res://actors/props/grabbable.gd" id="1_5b8gj"]
+[ext_resource type="ArrayMesh" uid="uid://dephfnnv3bv6l" path="res://models/props/props_glowstick.res" id="1_iwq2j"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5b8gj"]
+radius = 0.15
+height = 1.8
+
+[node name="GrabbableGlowstick" type="RigidBody3D"]
+collision_layer = 5
+script = ExtResource("1_5b8gj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("1_iwq2j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_5b8gj")

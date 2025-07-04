@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cluxu12q8s20m"]
+[gd_scene load_steps=11 format=3 uid="uid://cluxu12q8s20m"]
 
 [ext_resource type="PackedScene" uid="uid://lddmwkgyuqsk" path="res://actors/crab/crab.tscn" id="1_g7g4h"]
 [ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="2_j8ivh"]
 [ext_resource type="Texture2D" uid="uid://m58m76r0fupt" path="res://brushes/basic_grid.png" id="2_nd71p"]
+[ext_resource type="PackedScene" uid="uid://bb5jdc1hr6qqv" path="res://actors/props/grabbable_glowstick.tscn" id="4_7ddre"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j8ivh"]
 size = Vector3(100, 1, 100)
@@ -56,3 +57,7 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7ddre")
+
+[node name="GrabbableGlowstick" parent="." instance=ExtResource("4_7ddre")]
+transform = Transform3D(0.257403, 0, 0.966304, 0, 1, 0, -0.966304, 0, 0.257403, 0, 1.87117, 8.76456)
+grab_point = Vector3(0, 1.5, 1)
