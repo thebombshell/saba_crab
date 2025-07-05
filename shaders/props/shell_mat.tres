@@ -5,9 +5,10 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_4a8tj")
+shader_parameter/bob_amount = 0.5
 shader_parameter/diffuse_colour = Color(0.83, 0.821423, 0.5727, 1)
 shader_parameter/metalness = 0.5
 shader_parameter/roughness = 0.0
 shader_parameter/emission = 0.2
-shader_parameter/perlescence_colour = Color(0.733684, 0.994117, 0.550834, 1)
+shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
 shader_parameter/perlescence_frequency = 0.5

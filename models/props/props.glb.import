@@ -33,6 +33,12 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
+"materials": {
+"Shell": {
+"use_external/enabled": true,
+"use_external/path": "uid://ws5836jyj2v"
+}
+},
 "meshes": {
 "props_box": {
 "generate/lightmap_uv": 0,
@@ -49,6 +55,22 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "uid://dephfnnv3bv6l"
+},
+"props_parasol": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/props/props_parasol.res"
+},
+"props_rock": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/props/props_rock.res"
 },
 "props_shell": {
 "generate/lightmap_uv": 0,

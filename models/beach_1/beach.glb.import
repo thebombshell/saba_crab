@@ -34,6 +34,10 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
+"cliff": {
+"use_external/enabled": true,
+"use_external/path": "uid://ugkp3syuh6x5"
+},
 "sand": {
 "use_external/enabled": true,
 "use_external/path": "uid://db26evuax1qov"
@@ -47,6 +51,14 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://models/beach_1/beach_sand.res"
+},
+"beach_sand_fence": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_sand_fence.res"
 }
 }
 }

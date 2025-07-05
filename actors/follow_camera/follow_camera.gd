@@ -1,5 +1,7 @@
 class_name FollowCameraActor extends Camera3D
 
+const PHYS_MASK_FLOOR = 64;
+
 @export var look_strength: float = 20.0;
 @export var follow_distance: float = 10.0;
 @export var follow_height: float = 2.0;
@@ -62,9 +64,16 @@ func process_obstruction(_delta: float) -> void:
 	query.collide_with_bodies = true;
 	query.collide_with_areas = false;
 	query.exclude = [follow_target];
+	query.collision_mask = PHYS_MASK_FLOOR;
 	var result = physics.intersect_ray(query);
 	if result.has("position"):
 		global_position = result.position;
+	return;
+
+func process_underwater(t_delta: float) -> void:
+	
+	var filter : AudioEffectLowPassFilter = AudioServer.get_bus_effect(AudioServer.get_bus_index("Master"), 0);
+	filter.cutoff_hz = lerp(filter.cutoff_hz, 1000.0 if global_position.y < 0.0 else 20500.0, 4.0 * t_delta);
 	return;
 
 func _physics_process(t_delta: float) -> void:
@@ -72,4 +81,5 @@ func _physics_process(t_delta: float) -> void:
 	process_looking(t_delta);
 	process_following(t_delta);
 	process_obstruction(t_delta);
+	process_underwater(t_delta);
 	return;

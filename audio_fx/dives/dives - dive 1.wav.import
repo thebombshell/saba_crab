@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dknwilahnob64"
+path="res://.godot/imported/dives - dive 1.wav-0b226478f184f00d88c9c4607a633d3e.sample"
+
+[deps]
+
+source_file="res://audio_fx/dives/dives - dive 1.wav"
+dest_files=["res://.godot/imported/dives - dive 1.wav-0b226478f184f00d88c9c4607a633d3e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

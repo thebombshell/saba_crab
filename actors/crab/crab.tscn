@@ -1,8 +1,14 @@
-[gd_scene load_steps=54 format=3 uid="uid://lddmwkgyuqsk"]
+[gd_scene load_steps=64 format=3 uid="uid://lddmwkgyuqsk"]
 
 [ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
 [ext_resource type="AudioStream" uid="uid://kh5jw413qke" path="res://audio_fx/pops/pops_randomizer.tres" id="3_fc1xm"]
+[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="4_5xahp"]
+[ext_resource type="AudioStream" uid="uid://dbsue48pc4jgq" path="res://audio_fx/chimes/chimes_randomizer.tres" id="4_6khos"]
+[ext_resource type="Environment" uid="uid://w2e6ycuh6qo3" path="res://environments/ui_viewport_environment.tres" id="5_a6tpn"]
+[ext_resource type="Shader" uid="uid://did5vtykh6n11" path="res://shaders/props/shell.gdshader" id="5_ov32d"]
+[ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="6_2x4nq"]
+[ext_resource type="Script" uid="uid://baim48guv3n7v" path="res://scripts/auto_label.gd" id="7_8atix"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ieb0f"]
 height = 1.6
@@ -240,6 +246,54 @@ radius = 1.0
 radius = 0.55
 height = 1.7
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lhgq"]
+render_priority = 0
+shader = ExtResource("5_ov32d")
+shader_parameter/bob_amount = 0.1
+shader_parameter/diffuse_colour = Color(0.83, 0.821423, 0.5727, 1)
+shader_parameter/metalness = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/emission = 0.2
+shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
+shader_parameter/perlescence_frequency = 0.5
+
+[sub_resource type="Animation" id="Animation_rgudy"]
+resource_name = "OnCollectShell"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6khos"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ov32d"]
+_data = {
+&"OnCollectShell": SubResource("Animation_rgudy"),
+&"RESET": SubResource("Animation_6khos")
+}
+
 [node name="Crab" type="CharacterBody3D"]
 collision_layer = 3
 axis_lock_angular_x = true
@@ -261,7 +315,7 @@ parameters/BlendTree/HandMachine/conditions/is_grabbing_1 = false
 parameters/BlendTree/HandMachine/conditions/is_grabbing_2 = false
 parameters/BlendTree/HandMachine/conditions/is_swinging = false
 parameters/BlendTree/HandMachine/conditions/is_yeeting = false
-parameters/BlendTree/StateMachine/conditions/is_on_ground = true
+parameters/BlendTree/StateMachine/conditions/is_on_ground = false
 parameters/BlendTree/StateMachine/conditions/is_rave_pressed = false
 parameters/BlendTree/StateMachine/JumpAndFall/blend_position = 0
 parameters/BlendTree/StateMachine/Walking/blend_position = Vector2(0, 2.275)
@@ -271,52 +325,52 @@ parameters/BlendTree/TimeScale/scale = 1.0
 transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
 
 [node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
-bones/1/position = Vector3(-1.19209e-07, 0.5, 1.85854)
-bones/1/rotation = Quaternion(-0.130526, -2.89826e-17, -2.0858e-25, 0.991445)
-bones/2/rotation = Quaternion(4.1159e-09, -0.000106373, 0.707107, 0.707107)
-bones/3/rotation = Quaternion(3.54479e-08, -1.3278e-12, -1.1221e-07, 1)
-bones/4/rotation = Quaternion(1.59066e-08, 0.000106362, -0.707107, 0.707107)
-bones/5/rotation = Quaternion(2.10333e-09, 1.66585e-11, 5.11661e-09, 1)
-bones/6/position = Vector3(-3.16274, 1.46486e-07, 0.631063)
-bones/6/rotation = Quaternion(5.31893e-05, -5.31893e-05, 0.707107, 0.707107)
-bones/7/rotation = Quaternion(4.41049e-05, 3.08897e-13, 0.293169, 0.956061)
-bones/8/rotation = Quaternion(-4.41048e-05, -4.3217e-12, -0.293168, 0.956061)
-bones/9/position = Vector3(3.16274, 1.46486e-07, 0.631063)
-bones/9/rotation = Quaternion(5.31893e-05, 5.31893e-05, -0.707107, 0.707107)
-bones/10/rotation = Quaternion(4.41049e-05, -3.08897e-13, -0.293169, 0.956061)
-bones/11/rotation = Quaternion(-4.41048e-05, 4.3217e-12, 0.293168, 0.956061)
-bones/12/rotation = Quaternion(-0.107876, -0.0273778, 0.35147, 0.92956)
-bones/13/rotation = Quaternion(-0.379159, 0.0526456, 0.221081, 0.89699)
-bones/14/rotation = Quaternion(-0.372904, 0.0141487, 0.0477404, 0.926533)
-bones/15/rotation = Quaternion(0.0165416, -0.203935, 0.908915, 0.363333)
-bones/16/rotation = Quaternion(-0.381329, -0.0431168, -0.144816, 0.912007)
-bones/17/rotation = Quaternion(-0.331877, -0.011003, -0.0334995, 0.942663)
-bones/18/rotation = Quaternion(-0.0386931, 0.068764, -0.264763, 0.96108)
-bones/19/rotation = Quaternion(-0.199135, -0.00648373, -0.105864, 0.974216)
-bones/20/rotation = Quaternion(-0.217036, 0.00619537, 0.019994, 0.975939)
-bones/21/rotation = Quaternion(0.00696046, -0.121509, 0.94824, -0.293307)
-bones/22/rotation = Quaternion(-0.274476, 0.0101707, 0.0837694, 0.957884)
-bones/23/rotation = Quaternion(-0.256309, -0.000644165, -0.00235066, 0.966592)
-bones/24/rotation = Quaternion(0.058352, -0.00161369, 0.713662, 0.698054)
-bones/25/rotation = Quaternion(-0.331031, 0.0149389, 0.0655077, 0.941225)
-bones/26/rotation = Quaternion(-0.412103, 0.00378631, 0.0150043, 0.911006)
-bones/27/rotation = Quaternion(-0.154971, 0.19528, -0.725583, 0.641388)
-bones/28/rotation = Quaternion(-0.164291, -0.0197625, -0.054398, 0.984713)
-bones/29/rotation = Quaternion(-0.142909, -0.00287468, -0.0058992, 0.989714)
-bones/30/position = Vector3(-2.40619, 0.424231, 0.0124217)
-bones/31/position = Vector3(2.40619, 2.06882, 0.0124217)
-bones/32/position = Vector3(-2.86494, -0.000359535, 0.542962)
-bones/33/position = Vector3(2.86494, -0.430943, 0.0124217)
-bones/34/position = Vector3(-2.40619, -0.215988, 0.0124217)
-bones/35/position = Vector3(2.40619, -1.32662, 0.466286)
+bones/1/position = Vector3(-1.19209e-07, 3.57628e-07, 1.58246)
+bones/1/rotation = Quaternion(-0.0855332, 7.71563e-19, 1.72431e-18, 0.996335)
+bones/2/rotation = Quaternion(-6.91205e-06, -0.000124586, 0.623034, 0.782195)
+bones/3/rotation = Quaternion(-0.000111696, -4.96125e-09, -0.470701, 0.882293)
+bones/4/rotation = Quaternion(-6.91313e-06, 0.000124587, -0.623034, 0.782195)
+bones/5/rotation = Quaternion(-0.000111692, 3.39741e-09, 0.4707, 0.882293)
+bones/6/position = Vector3(-2.63418, 0.915537, 0.631063)
+bones/6/rotation = Quaternion(0.0279933, -0.376673, 0.116826, 0.918523)
+bones/7/rotation = Quaternion(4.39551e-05, 3.69305e-06, 0.212165, 0.977234)
+bones/8/rotation = Quaternion(-4.39382e-05, 3.70544e-06, -0.212164, 0.977234)
+bones/9/position = Vector3(2.63418, 0.915537, 0.631063)
+bones/9/rotation = Quaternion(0.0279933, 0.376673, -0.116826, 0.918523)
+bones/10/rotation = Quaternion(4.39584e-05, -3.68233e-06, -0.212165, 0.977234)
+bones/11/rotation = Quaternion(-4.39298e-05, -3.67844e-06, 0.212164, 0.977234)
+bones/12/rotation = Quaternion(0.0840079, -0.0467175, 0.239238, 0.966191)
+bones/13/rotation = Quaternion(-0.361299, 0.0124797, 0.153833, 0.919588)
+bones/14/rotation = Quaternion(-0.41072, 0.00350323, 0.00654384, 0.911731)
+bones/15/rotation = Quaternion(-0.00474551, -0.0352117, 0.962336, 0.26953)
+bones/16/rotation = Quaternion(-0.393047, -0.00318559, -0.0904252, 0.915056)
+bones/17/rotation = Quaternion(-0.392062, -0.00146695, 0.000372723, 0.919938)
+bones/18/rotation = Quaternion(0.0840079, 0.0467175, -0.239238, 0.966191)
+bones/19/rotation = Quaternion(-0.361299, -0.0124797, -0.153833, 0.919588)
+bones/20/rotation = Quaternion(-0.41072, -0.00350323, -0.00654384, 0.911731)
+bones/21/rotation = Quaternion(0.00474551, -0.0352117, 0.962336, -0.26953)
+bones/22/rotation = Quaternion(-0.393047, 0.00318559, 0.0904252, 0.915056)
+bones/23/rotation = Quaternion(-0.392062, 0.00146695, -0.000372723, 0.919938)
+bones/24/rotation = Quaternion(0.045663, -0.0508843, 0.695447, 0.715318)
+bones/25/rotation = Quaternion(-0.385248, -0.00170352, 0.0455832, 0.921685)
+bones/26/rotation = Quaternion(-0.44574, -0.00136058, 0.00234112, 0.895159)
+bones/27/rotation = Quaternion(0.045663, 0.0508843, -0.695447, 0.715318)
+bones/28/rotation = Quaternion(-0.385248, 0.00170352, -0.0455832, 0.921685)
+bones/29/rotation = Quaternion(-0.44574, 0.00136058, -0.00234112, 0.895159)
+bones/30/position = Vector3(-1.98933, 1.32662, 0.198479)
+bones/31/position = Vector3(1.98933, 1.32662, 0.198479)
+bones/32/position = Vector3(-2.44807, -0.000359535, 0.198479)
+bones/33/position = Vector3(2.44807, -0.000359535, 0.198479)
+bones/34/position = Vector3(-1.98933, -1.32662, 0.198479)
+bones/35/position = Vector3(1.98933, -1.32662, 0.198479)
 
 [node name="LeftClawAttachment" type="BoneAttachment3D" parent="crab/CrabSkeleton/Skeleton3D" index="1"]
-transform = Transform3D(-7.55734e-18, 1, 5.74705e-17, -0.258674, -5.74694e-17, 0.965965, 0.965965, -7.56599e-18, 0.258674, 3.16274, 2.4681, 0.663332)
+transform = Transform3D(-0.688938, 0.235704, 0.685426, 0.655302, -0.20157, 0.727976, 0.309748, 0.950691, -0.0155878, 2.63418, 2.04825, 1.0097)
 bone_name = "Claw.L"
 bone_idx = 6
 
 [node name="RightClawAttachment" type="BoneAttachment3D" parent="crab/CrabSkeleton/Skeleton3D" index="2"]
-transform = Transform3D(7.55734e-18, -1, 5.74705e-17, 0.258674, 5.74694e-17, 0.965965, -0.965965, 7.56599e-18, 0.258674, -3.16274, 2.4681, 0.663332)
+transform = Transform3D(-0.688938, -0.235704, -0.685426, -0.655302, -0.20157, 0.727976, -0.309748, 0.950691, -0.0155878, -2.63418, 2.04825, 1.0097)
 bone_name = "Claw.R"
 bone_idx = 9
 
@@ -338,5 +392,71 @@ shape = SubResource("CapsuleShape3D_fc1xm")
 [node name="PopsPlayer" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_fc1xm")
 max_polyphony = 3
+bus = &"SFX"
+
+[node name="ChimesPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_6khos")
+max_polyphony = 3
+bus = &"SFX"
+attenuation_filter_db = -10.0
+
+[node name="CrabUI" type="CanvasLayer" parent="."]
+
+[node name="ShellCountDisplay" type="HBoxContainer" parent="CrabUI"]
+custom_minimum_size = Vector2(150, 100)
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.25
+anchor_bottom = 0.2
+
+[node name="ShellIconContainer" type="AspectRatioContainer" parent="CrabUI/ShellCountDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="CrabUI/ShellCountDisplay/ShellIconContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
+layers = 524288
+material_override = SubResource("ShaderMaterial_8lhgq")
+mesh = ExtResource("4_5xahp")
+skeleton = NodePath("../../../..")
+
+[node name="Camera3D" type="Camera3D" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.70725)
+cull_mask = 524288
+environment = ExtResource("5_a6tpn")
+fov = 60.0
+
+[node name="ShellCountLabel" type="Label" parent="CrabUI/ShellCountDisplay"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+theme_override_fonts/font = ExtResource("6_2x4nq")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("7_8atix")
+
+[node name="UIAnimator" type="AnimationPlayer" parent="CrabUI"]
+libraries = {
+&"": SubResource("AnimationLibrary_ov32d")
+}
+
+[node name="MiscPlayer" type="AudioStreamPlayer3D" parent="."]
+
+[connection signal="resized" from="CrabUI/ShellCountDisplay/ShellCountLabel" to="CrabUI/ShellCountDisplay/ShellCountLabel" method="_on_resized"]
 
 [editable path="crab"]

@@ -18,6 +18,12 @@ const ANIM_PARAMS_IS_YEETING = "parameters/BlendTree/HandMachine/conditions/is_y
 const ANIM_PARAMS_IS_SWINGING = "parameters/BlendTree/HandMachine/conditions/is_swinging";
 const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 
+# audio assets
+
+const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
+
+# misc nodes
+
 @onready var animation_tree: AnimationTree = $AnimationTree;
 @onready var animation_player: AnimationPlayer = $crab/AnimationPlayer;
 @onready var skeleton_3d: Skeleton3D = $crab/CrabSkeleton/Skeleton3D;
@@ -26,7 +32,20 @@ const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 @onready var push_area: Area3D = $PushArea;
 @onready var grab_area: Area3D = $GrabArea;
 @onready var crab: Node3D = $crab;
+
+# audio nodes
+
 @onready var pops_player: AudioStreamPlayer3D = $PopsPlayer;
+@onready var chimes_player: AudioStreamPlayer3D = $ChimesPlayer;
+@onready var misc_player: AudioStreamPlayer3D = $MiscPlayer
+
+# ui nodes
+
+@onready var shell_count_display: Control = $CrabUI/ShellCountDisplay;
+@onready var shell_count_label: AutoLabel = $CrabUI/ShellCountDisplay/ShellCountLabel;
+@onready var ui_animator: AnimationPlayer = $CrabUI/UIAnimator;
+
+# configurables
 
 @export var acceleration: float = 5.0;
 @export var decceleration: float = 20.0;
@@ -47,6 +66,21 @@ var yeet_power: float = 10.0;
 var walking_blend: Vector2 = Vector2.ZERO;
 var arm_blend: float = 1.0;
 var smoothed_up: Vector3 = Vector3.UP;
+
+var shell_count: int = 0;
+var shell_display_timer: float = 3.0;
+
+var was_under_water: bool = false;
+var is_under_water: bool = false;
+
+func collect_shell() -> void:
+	
+	shell_count += 1;
+	shell_count_label.text = str(shell_count);
+	chimes_player.play();
+	ui_animator.play("OnCollectShell");
+	shell_display_timer = max(shell_display_timer, 1.0);
+	return;
 
 func process_movement(t_delta: float) -> void:
 	
@@ -91,6 +125,8 @@ func process_movement(t_delta: float) -> void:
 	if is_on_floor() && Input.is_action_just_pressed("jump"):
 		velocity -= up_direction * velocity.dot(up_direction);
 		velocity += up_direction * jump_impulse;
+	
+	
 	return;
 	
 func process_forces(t_delta: float) -> void:
@@ -329,6 +365,26 @@ func process_animation(t_delta: float) -> void:
 		animation_tree.set(ANIM_PARAMS_TIME_SCALE, 1.0);
 		animation_tree.set(ANIM_PARAMS_IS_RAVE_PRESSED, false);
 		arm_blend = lerp(arm_blend, 1.0, t_delta * 10.0);
+	
+	# not strictly an animation, but its a cosmetic thing to track, getting us
+	# our dive sounds
+	was_under_water = is_under_water;
+	is_under_water = global_position.y < 0.0;
+	if is_under_water && !was_under_water:
+		misc_player.stream = SFX_DIVE;
+		misc_player.volume_linear = clamp(velocity.dot(Vector3.DOWN) / 4.0, 0.0, 1.0);
+		misc_player.play(0.35);
+	return;
+
+func process_ui(t_delta: float) -> void:
+	
+	if Input.is_action_pressed("show_ui"):
+		shell_display_timer = 3.0;
+	shell_display_timer -= t_delta;
+	var shell_display_alpha = smoothstep(0.0, 0.25, shell_display_timer);
+	var shell_display_left = Vector2(get_viewport().size) * Vector2(-0.25, 0.05);
+	var shell_display_right = Vector2(get_viewport().size) * Vector2(0.05, 0.05);
+	shell_count_display.position = lerp(shell_display_left, shell_display_right, shell_display_alpha);
 	return;
 
 func _physics_process(t_delta: float) -> void:
@@ -338,5 +394,6 @@ func _physics_process(t_delta: float) -> void:
 	process_grabbing(t_delta);
 	process_forces(t_delta);
 	process_animation(t_delta);
+	process_ui(t_delta);
 	move_and_slide();
 	return;

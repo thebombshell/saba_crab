@@ -4,6 +4,7 @@
 [ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_ynirh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_77iah"]
+radius = 1.0
 
 [node name="Shell" type="Area3D"]
 collision_layer = 0

@@ -10,6 +10,7 @@ flip_faces = true
 size = Vector2(2, 2)
 
 [node name="FollowCamera" type="Camera3D"]
+cull_mask = 524287
 script = ExtResource("1_c1cwv")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

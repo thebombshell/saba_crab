@@ -1,5 +1,7 @@
 shader_type spatial;
 
+uniform float bob_amount = 0.5;
+
 uniform vec3 diffuse_colour : source_color = vec3(1.0, 1.0, 1.0);
 uniform float metalness = 0.5;
 uniform float roughness = 0.5;
@@ -26,7 +28,7 @@ void vertex() {
 		vec3(ct, 0.0, st),
 		vec3(0.0, 1.0, 0.0),
 		vec3(-st, 0.0, ct));
-	VERTEX = VERTEX * rot + vec3(0.0, st * 0.5, 0.0);
+	VERTEX = VERTEX * rot + vec3(0.0, st * bob_amount, 0.0);
 	NORMAL = NORMAL * rot;
 }
 

@@ -27,8 +27,9 @@ static func fill_mesh(t_mesh: MultiMesh):
 			shell_list[i].origin_position.z));
 	return;
 
-
-func _on_body_entered(_body: Node3D) -> void:
+func _on_body_entered(t_body: Node3D) -> void:
 	
-	
+	if t_body is CrabActor && !is_queued_for_deletion():
+		t_body.collect_shell();
+		queue_free();
 	return;

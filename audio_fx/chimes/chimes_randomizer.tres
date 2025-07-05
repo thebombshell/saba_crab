@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://dbsue48pc4jgq"]
+
+[ext_resource type="AudioStream" uid="uid://ba61aqooecy8c" path="res://audio_fx/chimes/chimes - chime 1.wav" id="1_eqml4"]
+[ext_resource type="AudioStream" uid="uid://dj44djgds6ffx" path="res://audio_fx/chimes/chimes - chime 2.wav" id="2_bqlle"]
+[ext_resource type="AudioStream" uid="uid://d3iv2rv8bix5v" path="res://audio_fx/chimes/chimes - chime 3.wav" id="3_hfvvh"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_eqml4")
+stream_1/stream = ExtResource("2_bqlle")
+stream_2/stream = ExtResource("3_hfvvh")
