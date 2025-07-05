@@ -6,11 +6,11 @@
 [resource]
 render_priority = -99
 shader = ExtResource("1_sd5yq")
-shader_parameter/shallow_color = Color(0.248087, 0.654923, 0.615383, 1)
-shader_parameter/deep_color = Color(0.0560297, 0.462091, 0.706892, 1)
-shader_parameter/shallow_depth = 128.0
-shader_parameter/deep_depth = 1024.0
+shader_parameter/shallow_color = Color(0.256689, 0.663735, 0.532334, 1)
+shader_parameter/deep_color = Color(0.0691005, 0.484097, 0.601813, 1)
+shader_parameter/shallow_depth = 8.0
+shader_parameter/deep_depth = 64.0
 shader_parameter/water_map_scale = 4096.0
-shader_parameter/water_map_height = 4.0
+shader_parameter/water_map_height = 1.0
 shader_parameter/noise_map = ExtResource("2_1raam")
 shader_parameter/offset = Vector2(0, 0)

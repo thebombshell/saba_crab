@@ -15,3 +15,6 @@ script = ExtResource("1_c1cwv")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_n8uky")
 script = ExtResource("3_n8uky")
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true

@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://kh5jw413qke"]
+
+[ext_resource type="AudioStream" uid="uid://cqqbaohdsloiw" path="res://audio_fx/pops/pops - pop_1.wav" id="1_ato8r"]
+[ext_resource type="AudioStream" uid="uid://bn5hyio68y0nh" path="res://audio_fx/pops/pops - pop_2.wav" id="2_xwfiq"]
+[ext_resource type="AudioStream" uid="uid://m378l4ukyr4s" path="res://audio_fx/pops/pops - pop_3.wav" id="3_2qjt0"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_ato8r")
+stream_1/stream = ExtResource("2_xwfiq")
+stream_2/stream = ExtResource("3_2qjt0")

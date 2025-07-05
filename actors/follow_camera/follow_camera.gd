@@ -1,6 +1,6 @@
 class_name FollowCameraActor extends Camera3D
 
-@export var look_strength: float = 10.0;
+@export var look_strength: float = 20.0;
 @export var follow_distance: float = 10.0;
 @export var follow_height: float = 2.0;
 @export var follow_strength: float = 4.0;
@@ -21,7 +21,7 @@ func process_looking(t_delta: float):
 	var up = get_global_transform_interpolated().basis.y;
 	var right = get_global_transform_interpolated().basis.x;
 	global_position += up * Input.get_axis("look_down", "look_up") * look_strength * t_delta;
-	global_position += right * Input.get_axis("look_left", "look_right") * look_strength * t_delta;
+	global_position += -right * Input.get_axis("look_left", "look_right") * look_strength * t_delta;
 	return;
 
 func process_following(t_delta: float):
@@ -53,9 +53,23 @@ func process_following(t_delta: float):
 	global_basis = Basis.looking_at(direction, Vector3.UP);
 	return;
 
+func process_obstruction(_delta: float) -> void:
+	
+	var physics = get_world_3d().direct_space_state;
+	var query = PhysicsRayQueryParameters3D.new();
+	query.from = follow_target.global_position;
+	query.to = global_position;
+	query.collide_with_bodies = true;
+	query.collide_with_areas = false;
+	query.exclude = [follow_target];
+	var result = physics.intersect_ray(query);
+	if result.has("position"):
+		global_position = result.position;
+	return;
+
 func _physics_process(t_delta: float) -> void:
 	
 	process_looking(t_delta);
 	process_following(t_delta);
-	
+	process_obstruction(t_delta);
 	return;

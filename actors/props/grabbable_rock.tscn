@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://o848u1562qnv"]
+
+[ext_resource type="Script" uid="uid://cvmh67seb218d" path="res://actors/props/grabbable.gd" id="1_dmle0"]
+[ext_resource type="ArrayMesh" uid="uid://cvni63xjqwwo5" path="res://models/props/props_stone.res" id="2_dmle0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ilkyn"]
+radius = 0.25
+
+[node name="GrabbableRock" type="RigidBody3D"]
+collision_layer = 5
+linear_damp = 0.1
+angular_damp = 0.1
+script = ExtResource("1_dmle0")
+grab_point = Vector3(0, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("2_dmle0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("SphereShape3D_ilkyn")

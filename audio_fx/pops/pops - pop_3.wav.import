@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://m378l4ukyr4s"
+path="res://.godot/imported/pops - pop_3.wav-fe9441b6cf4769866478203afe8e09f9.sample"
+
+[deps]
+
+source_file="res://audio_fx/pops/pops - pop_3.wav"
+dest_files=["res://.godot/imported/pops - pop_3.wav-fe9441b6cf4769866478203afe8e09f9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

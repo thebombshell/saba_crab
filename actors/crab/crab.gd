@@ -26,7 +26,7 @@ const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 @onready var push_area: Area3D = $PushArea;
 @onready var grab_area: Area3D = $GrabArea;
 @onready var crab: Node3D = $crab;
-
+@onready var pops_player: AudioStreamPlayer3D = $PopsPlayer;
 
 @export var acceleration: float = 5.0;
 @export var decceleration: float = 20.0;
@@ -70,6 +70,7 @@ func process_movement(t_delta: float) -> void:
 	
 	# handle acceleration if we are using inputs
 	if move_input.length() > 0.25:
+		
 		velocity += move_input * acceleration * (1.0 if is_on_floor() else air_control) * t_delta;
 	# decellerate proportional to the wrong direction movement if we are
 	# inputting, otherwise apply full decceleration
@@ -79,6 +80,12 @@ func process_movement(t_delta: float) -> void:
 	else:
 		var hvelocity = velocity - up_direction * velocity.dot(up_direction);
 		velocity -= (hvelocity.normalized() * min(1.0, hvelocity.length())) * decceleration * t_delta;
+	
+	# handle the foot pop noises
+	if move_input.length() < 0.25:
+		pops_player.volume_linear = clamp(pops_player.volume_linear - t_delta * 10.0, 0.0, 1.0);
+	else:
+		pops_player.volume_linear = clamp(move_input.length(), 0.0, 1.0) * 0.1;
 	
 	# handle jumping
 	if is_on_floor() && Input.is_action_just_pressed("jump"):
@@ -92,16 +99,18 @@ func process_forces(t_delta: float) -> void:
 	# up vector used when finding orientation, such that we align to the floor
 	# but not so perfectly that quick changes in orientation become jarring
 	if is_on_floor():
-		smoothed_up = smoothed_up.slerp(get_floor_normal(), t_delta * 4.0).normalized();
+		smoothed_up = smoothed_up.slerp(get_floor_normal().normalized(), t_delta * 4.0).normalized();
 	else:
 		smoothed_up = smoothed_up.slerp(Vector3.UP, t_delta * 4.0).normalized();
 	
 	# handle gravity
 	velocity += get_gravity() * t_delta;
 	
-	# handle drag so we can't build up to uncontrollable speeds
+	# handle drag so we can't build up to uncontrollable speeds, trippling its
+	# strength when below the water-line
+	var drag_strength = drag * (1.0 if global_position.y > 0.0 else 8.0);
 	var drag_power = min(velocity.length(),
-		pow(velocity.length(), 2.0) * drag * t_delta);
+		pow(velocity.length(), 2.0) * drag_strength * t_delta);
 	velocity -= velocity * drag_power;
 	
 	# character bodies in godot do not push objects they run in to, so I've
@@ -127,7 +136,6 @@ func process_grabbing(t_delta: float):
 func turn_character_towards(t_forward: Vector3, t_amount: float):
 	
 	var up = smoothed_up;
-	var ref_forward = Vector3.FORWARD * Quaternion(up, 0.0);
 	var forward = global_basis.z;
 	var right = global_basis.x;
 	var target_forward = t_forward;
@@ -201,7 +209,7 @@ func update_grabbed(t_delta: float):
 		init_yeet(1.0);
 	elif yeeting_timer >= 0.0:
 		yeeting_timer += t_delta;
-		if yeeting_timer > 0.2:
+		if yeeting_timer > 0.1:
 			yeet();
 	return;
 

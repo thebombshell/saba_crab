@@ -12,9 +12,9 @@ uniform vec2 offset;
 float sample_water(vec2 t_uv)
 {
 	vec2 uv = t_uv / water_map_scale;
-	float noise = texture(noise_map, uv + offset + vec2(0.5, 0.5)).r * 0.5 +
+	float noise = texture(noise_map, uv + offset + vec2(0.5, 0.5)).r * 0.33 +
 		texture(noise_map, uv * 10.0 + offset + vec2(0.5, 0.5)).r * 0.33 +
-		texture(noise_map, uv * 100.0 + offset + vec2(0.5, 0.5)).r * 0.17;
+		texture(noise_map, uv * 100.0 + offset + vec2(0.5, 0.5)).r * 0.33;
 	float effect = 0.0;
 	return noise * water_map_height + effect;
 }
@@ -71,7 +71,7 @@ vec3 march_to_water(vec3 ray_position, vec3 ray_direction, out float t_is_surfac
 		ray = ray_position + ray_direction * dist;
 		water_height = sample_water(ray.xz);
 		travel = abs(ray.y - water_height);
-		if (dist >= 8192.0 || travel < 0.025 || (ray.y - water_height) * ray_sign < 0.0) {
+		if (dist >= 8192.0 || travel < 0.01 || (ray.y - water_height) * ray_sign < 0.0) {
 			t_is_surface_hit = 1.0;
 			return ray;
 		}
