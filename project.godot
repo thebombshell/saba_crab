@@ -129,6 +129,7 @@ dash={
 3d_physics/layer_5="ENEMY"
 3d_physics/layer_6="WATER"
 3d_physics/layer_7="FLOOR"
+3d_physics/layer_8="CAMERA"
 
 [physics]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b65hsqf6l6xdi"]
+[gd_scene load_steps=6 format=3 uid="uid://b65hsqf6l6xdi"]
 
 [ext_resource type="Script" uid="uid://dfc8rtr6pjsrq" path="res://actors/follow_camera/follow_camera.gd" id="1_c1cwv"]
 [ext_resource type="Material" uid="uid://cifyhukntr37t" path="res://shaders/water/water_under_mat.tres" id="2_jjm13"]
@@ -8,6 +8,8 @@
 material = ExtResource("2_jjm13")
 flip_faces = true
 size = Vector2(2, 2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n8uky"]
 
 [node name="FollowCamera" type="Camera3D"]
 cull_mask = 524287
@@ -19,3 +21,10 @@ script = ExtResource("3_n8uky")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
 current = true
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_n8uky")

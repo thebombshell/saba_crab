@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cluxu12q8s20m"]
+[gd_scene load_steps=15 format=3 uid="uid://cluxu12q8s20m"]
 
 [ext_resource type="PackedScene" uid="uid://lddmwkgyuqsk" path="res://actors/crab/crab.tscn" id="1_g7g4h"]
 [ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="2_j8ivh"]
@@ -22,8 +22,6 @@ data = PackedVector3Array(-38.5534, 11.6567, -153.053, -38.5587, 11.6288, -152.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ddre"]
 size = Vector3(1000, 20, 1000)
-
-[sub_resource type="SphereMesh" id="SphereMesh_s36qc"]
 
 [node name="TestScene" type="Node3D"]
 
@@ -170,10 +168,12 @@ ambience_names = Dictionary[String, int]({
 "Inland": 2,
 "Sea": 3
 })
+default_fade_distance = 200.0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="AmbienceTracker"]
 stream = ExtResource("8_rnaij")
 attenuation_model = 3
+volume_db = -20.0
 autoplay = true
 panning_strength = 0.0
 bus = &"Ambiance"
@@ -182,26 +182,40 @@ attenuation_filter_db = 0.0
 
 [node name="Sea" type="Area3D" parent="AmbienceTracker"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 128
 
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AmbienceTracker/Sea"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -31.1841, 0, 0)
-depth = 10.0
+depth = 100.0
 polygon = PackedVector2Array(25.2151, -34.8079, 25.4164, -66.635, 10.9646, -91.4005, 2.94655, -118.277, -3.34328, -147.587, -52.5087, -174.681, -86.7608, -203.896, -114.741, -235.163, -130.14, -263.734, -112.991, -310.847, -98.2325, -330.228, -267.169, -325.75, -323.293, -149.087, -317.63, 18.9417, -313.916, 100.494, -284.963, 195.74, -251.846, 237.634, -43.5117, 247.937, 23.1381, 195.446, 28.2068, 140.445, 37.5375, 115.917, 33.2056, 88.7592, 16.6293, 61.0981, 8.07955, 20.7756)
 script = ExtResource("10_s36qc")
 
 [node name="Inland" type="Area3D" parent="AmbienceTracker"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 128
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AmbienceTracker/Inland"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -31.184, 16.5821, 0)
+depth = 100.0
+polygon = PackedVector2Array(172.866, -182.001, 51.7665, -178.832, 50.0996, 18.1225, 202.995, -0.925544, 276.979, -38.5612, 276.903, -150.657)
+script = ExtResource("10_s36qc")
 
 [node name="BirdSea" type="Area3D" parent="AmbienceTracker"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 128
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AmbienceTracker/BirdSea"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -31.184, 16.5821, 0)
+depth = 100.0
+polygon = PackedVector2Array(-311.668, -412.301, -42.212, -414.871, -43.36, -277.141, -181.649, -208.699, -246.139, -72.9969, -176.59, 132.908, -41.0392, 130.67, 18.0205, 200.462, 97.4937, 271.942, -310.291, 267.919)
+script = ExtResource("10_s36qc")
 
 [node name="BirdNest" type="Area3D" parent="AmbienceTracker"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 128
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="AmbienceTracker"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
-mesh = SubResource("SphereMesh_s36qc")
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="AmbienceTracker/BirdNest"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -31.184, 16.5821, 0)
+depth = 100.0
+polygon = PackedVector2Array(15.5338, 198.431, 28.1789, 112.965, 58.605, 70.3468, 156.939, 61.113, 191.729, 174.173, 88.8427, 246.884)
+script = ExtResource("10_s36qc")
