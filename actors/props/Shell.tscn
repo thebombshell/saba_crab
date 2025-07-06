@@ -15,7 +15,7 @@ script = ExtResource("1_77iah")
 shape = SubResource("SphereShape3D_77iah")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = ExtResource("2_ynirh")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

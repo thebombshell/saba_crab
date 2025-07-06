@@ -5,8 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cli2ow8dv3jx3" path="res://brushes/sand_roughness.png" id="3_4rpqn"]
 
 [resource]
-diffuse_mode = 3
-specular_mode = 1
+diffuse_mode = 2
 albedo_color = Color(0.963725, 0.845351, 0.568146, 1)
 albedo_texture = ExtResource("1_5iqio")
 metallic = 0.08

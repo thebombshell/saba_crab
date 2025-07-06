@@ -2,14 +2,15 @@ class_name FollowCameraActor extends Camera3D
 
 const PHYS_MASK_FLOOR = 64;
 
-@export var look_strength: float = 20.0;
+@export var look_strength: float = 5.0;
 @export var follow_distance: float = 10.0;
-@export var follow_height: float = 1.0;
-@export var follow_strength: float = 4.0;
-@export var follow_up_strength: float = 4.0;
+@export var follow_strength: float = 10.0;
 
 @export var follow_target: Node3D = null;
 @export var follow_offset: Vector3 = Vector3.UP;
+
+var look: Vector2 = Vector2.ZERO;
+var look_hnormal: Vector3 = Vector3.ZERO;
 
 var follow_target_position: Vector3:
 	get: return follow_target.global_position + follow_offset * follow_target.global_basis.get_rotation_quaternion();
@@ -19,15 +20,19 @@ var is_underwater : bool:
 
 func process_looking(t_delta: float):
 	
-	# input is simply moving the camera based on its up and right vectors,
-	# due to the following behaviour correcting for up and down though, we'll
-	# not get much use out of up, though we can certainly give this a play later
-	# if it becomes relevant to gameplay
+	# changed the input to now affect a look vector because we can stop it from
+	# going inverted and becoming useless. we also loop the X
 	
-	var up = get_global_transform_interpolated().basis.y;
-	var right = get_global_transform_interpolated().basis.x;
-	global_position += up * Input.get_axis("look_down", "look_up") * look_strength * t_delta;
-	global_position += -right * Input.get_axis("look_left", "look_right") * look_strength * t_delta;
+	look += Vector2(
+		Input.get_axis("look_left", "look_right"),
+		Input.get_axis("look_down", "look_up")) * look_strength * t_delta;
+	look = Vector2(fmod(look.x, PI * 2.0), clamp(look.y, (PI * 0.5) - 0.5, (PI * 0.5) - 0.1));
+	look.y = lerp(look.y, (PI * 0.5) - 0.3, t_delta);
+	var y = cos(look.y);
+	var w = sin(look.y);
+	var x = cos(look.x) * w;
+	var z = sin(look.x) * w;
+	look_hnormal = Vector3(x, y, z).normalized();
 	return;
 
 func process_following(t_delta: float):
@@ -36,25 +41,10 @@ func process_following(t_delta: float):
 	if !is_instance_valid(follow_target):
 		return;
 	
-	var target_up = Vector3.UP;
-	var difference = follow_target.global_position - global_position;
-	var distance = difference.length();
-	var direction = difference / distance;
-	
-	# smoothly moves the camera to an ideal distance from the following target
-	var goto_position = follow_target_position - direction * follow_distance;
+	# our target is a simple projected normal, so we lerp towards it to avoid
+	# a snappy or jittery camera when the fraerate drops
+	var goto_position = follow_target_position + look_hnormal * follow_distance;
 	global_position = global_position.lerp(goto_position, t_delta * follow_strength);
-	
-	# smoothly moves the camera to an ideal height from the following target,
-	# this is important for both stopping the camera from staring down from
-	# useless angles, and for keeping track of our movements vertically which
-	# are much less forgiving of a smooth camera than simply being a speedy
-	# crab
-	var height = global_position.dot(target_up);
-	var target_height = follow_target_position.dot(target_up);
-	global_position -= target_up * height;
-	height = lerp(height, target_height + follow_height, t_delta * follow_up_strength);
-	global_position += target_up * height;
 	
 	global_basis = Basis.looking_at((follow_target_position - global_position).normalized(), Vector3.UP);
 	return;

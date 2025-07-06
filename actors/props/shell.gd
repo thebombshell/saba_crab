@@ -25,7 +25,7 @@ func correct_height() -> void:
 	query.collision_mask = PHYS_MASK_FLOOR;
 	query.collide_with_areas = false;
 	query.collide_with_bodies = true;
-	query.from = global_position;
+	query.from = global_position + Vector3.UP * 2.0;
 	query.to = global_position + Vector3.DOWN * 5.0;
 	var result = get_world_3d().direct_space_state.intersect_ray(query);
 	if result.has("position"):

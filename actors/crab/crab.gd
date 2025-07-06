@@ -17,6 +17,8 @@ const ANIM_PARAMS_HAS_GRABBED = "parameters/BlendTree/HandMachine/conditions/has
 const ANIM_PARAMS_IS_YEETING = "parameters/BlendTree/HandMachine/conditions/is_yeeting";
 const ANIM_PARAMS_IS_SWINGING = "parameters/BlendTree/HandMachine/conditions/is_swinging";
 const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
+const ANIM_PARAMS_IS_DASH_PRESSED = "parameters/BlendTree/StateMachine/conditions/is_dash_pressed";
+const ANIM_PARAMS_IS_SPIN_PRESSED = "parameters/BlendTree/StateMachine/conditions/is_spin_pressed";
 
 # audio assets
 
@@ -56,6 +58,7 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 @export var jump_impulse: float = 6.5;
 @export var air_control: float = 0.5;
 @export var drag: float = 0.005;
+@export var dash_speed: float = 40.0;
 
 # movement trackers
 var move_input: Vector3 = Vector3.ZERO;
@@ -85,6 +88,21 @@ var shell_display_timer: float = 3.0;
 # under water trackers
 var was_under_water: bool = false;
 var is_under_water: bool = false;
+
+# dash variables
+var dash_timer: float = 0.0;
+var is_dashing: bool:
+	get: return dash_timer > 0.0;
+var can_dash: bool:
+	get: return !is_dashing && !is_spinning;
+var dash_direction: Vector3 = Vector3.FORWARD;
+
+# spin variables
+var spin_timer: float = 0.0;
+var is_spinning: bool:
+	get: return dash_timer > 0.0;
+var can_spin: bool:
+	get: return !is_dashing && !is_spinning;
 
 func collect_shell() -> void:
 	
@@ -145,7 +163,46 @@ func process_movement(t_delta: float) -> void:
 	if is_on_floor() && Input.is_action_just_pressed("jump"):
 		jump();
 	return;
+
+func spin() -> void:
 	
+	spin_timer = 1.0;
+	velocity *= 0.9;
+	velocity -= Vector3.UP * min(0.0, velocity.dot(Vector3.UP)) * 0.5;
+	velocity += Vector3.UP;
+	return;
+
+func dash() -> void:
+	
+	dash_timer = 1.0;
+	dash_direction = (move_input if move_input.length() > 0.25 else
+		get_global_transform_interpolated().basis.z).normalized();
+	return;
+
+func process_abilities(t_delta: float) -> void:
+	
+	dash_timer -= t_delta;
+	spin_timer -= t_delta;
+	
+	if Input.is_action_just_pressed("spin") && can_spin:
+		animation_tree.set(ANIM_PARAMS_IS_SPIN_PRESSED, true);
+		spin();
+	else:
+		animation_tree.set(ANIM_PARAMS_IS_SPIN_PRESSED, false);
+	if Input.is_action_just_pressed("dash") && can_dash:
+		animation_tree.set(ANIM_PARAMS_IS_DASH_PRESSED, true);
+		dash();
+	else:
+		animation_tree.set(ANIM_PARAMS_IS_DASH_PRESSED, false);
+	
+	if dash_timer > 0.0:
+		var delta = pow(dash_timer, 2.0) * t_delta;
+		velocity += dash_direction * dash_speed * delta;
+		turn_character_towards(dash_direction, delta * 10.0);
+	if spin_timer > 0.0:
+		velocity += Vector3.UP * spin_timer * t_delta;
+	return;
+
 func process_forces(t_delta: float) -> void:
 	
 	# not so much a force, but it needs to go somewhere, this smooths out the
@@ -193,7 +250,6 @@ func turn_character_towards(t_forward: Vector3, t_amount: float):
 	var right = global_basis.x;
 	var target_forward = t_forward;
 	var target_right = t_forward.cross(up);
-	
 	global_basis = Basis(
 		right.slerp(target_right, t_amount),
 		up,
@@ -413,6 +469,7 @@ func _physics_process(t_delta: float) -> void:
 	
 	camera = get_viewport().get_camera_3d();
 	process_movement(t_delta);
+	process_abilities(t_delta);
 	process_grabbing(t_delta);
 	process_forces(t_delta);
 	process_animation(t_delta);

@@ -11,4 +11,4 @@ shader_parameter/metalness = 0.5
 shader_parameter/roughness = 0.0
 shader_parameter/emission = 0.2
 shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
-shader_parameter/perlescence_frequency = 0.5
+shader_parameter/perlescence_frequency = 0.3
