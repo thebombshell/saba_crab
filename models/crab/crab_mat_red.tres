@@ -2,9 +2,11 @@
 
 [resource]
 diffuse_mode = 3
-albedo_color = Color(0.840328, 2.88785e-06, 1.44392e-06, 1)
-metallic = 0.2
-metallic_specular = 0.2
-roughness = 0.2
+specular_mode = 1
+albedo_color = Color(0.999794, 0.274344, 0.213592, 1)
+metallic = 0.05
+metallic_specular = 0.1
+roughness = 0.3
 rim_enabled = true
+rim = 0.05
 rim_tint = 1.0

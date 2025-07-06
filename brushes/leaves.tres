@@ -1,0 +1,21 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://kj74rv6cuvpn"]
+
+[ext_resource type="Texture2D" uid="uid://iu2h6daame7x" path="res://brushes/leaf_albedo.png" id="1_5e837"]
+[ext_resource type="Texture2D" uid="uid://du0f2c6h6d1nd" path="res://brushes/sand_metalness.png" id="2_vhfvp"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.435
+alpha_antialiasing_mode = 0
+cull_mode = 2
+shading_mode = 2
+diffuse_mode = 2
+specular_mode = 1
+albedo_color = Color(0.535359, 0.652968, 7.70092e-07, 1)
+albedo_texture = ExtResource("1_5e837")
+metallic = 0.21
+rim = 0.05
+rim_tint = 0.22
+heightmap_texture = ExtResource("2_vhfvp")
+subsurf_scatter_strength = 1.0
+uv1_world_triplanar = true

@@ -34,6 +34,10 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
+"TreeLeaves": {
+"use_external/enabled": true,
+"use_external/path": "uid://kj74rv6cuvpn"
+},
 "cliff": {
 "use_external/enabled": true,
 "use_external/path": "uid://ugkp3syuh6x5"
@@ -44,21 +48,45 @@ _subresources={
 }
 },
 "meshes": {
-"beach_Mesh": {
+"beach_Plane": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_Mesh.res"
+"save_to_file/path": "res://models/beach_1/beach_Plane.res"
 },
-"beach_Mesh2": {
+"beach_Shrub1": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_Mesh2.res"
+"save_to_file/path": "res://models/beach_1/beach_Shrub1.res"
+},
+"beach_Tree1": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Tree1.res"
+},
+"beach_lighthouse": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_lighthouse.res"
+},
+"beach_sand": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_sand.res"
 },
 "beach_sand_fence": {
 "generate/lightmap_uv": 0,

@@ -17,6 +17,7 @@ float sample_water(vec2 t_uv)
 	float noise = texture(noise_map, uv + offset + vec2(0.5, 0.5)).r * 0.33 +
 		texture(noise_map, uv * 10.0 + offset + vec2(0.5, 0.5)).r * 0.33 +
 		texture(noise_map, uv * 100.0 + offset + vec2(0.5, 0.5)).r * 0.33;
+	noise = pow(noise, 1.4);
 	float effect = 0.0;
 	return noise * water_map_height + effect;
 }

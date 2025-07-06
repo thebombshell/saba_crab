@@ -209,9 +209,12 @@ func process_forces(t_delta: float) -> void:
 	# up vector used when finding orientation, such that we align to the floor
 	# but not so perfectly that quick changes in orientation become jarring
 	if is_on_floor():
-		smoothed_up = smoothed_up.slerp(get_floor_normal().normalized(), t_delta * 4.0).normalized();
+		var target = get_floor_normal().normalized();
+		var dot = smoothed_up.dot(target);
+		if dot < 0.995:
+			smoothed_up = smoothed_up.lerp(target, t_delta * 4.0).normalized();
 	else:
-		smoothed_up = smoothed_up.slerp(Vector3.UP, t_delta * 4.0).normalized();
+		smoothed_up = smoothed_up.lerp(Vector3.UP, t_delta * 4.0).normalized();
 	
 	# handle gravity
 	velocity += get_gravity() * t_delta;
