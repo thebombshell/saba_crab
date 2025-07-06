@@ -4,11 +4,15 @@ const PHYS_MASK_FLOOR = 64;
 
 @export var look_strength: float = 20.0;
 @export var follow_distance: float = 10.0;
-@export var follow_height: float = 2.0;
+@export var follow_height: float = 1.0;
 @export var follow_strength: float = 4.0;
 @export var follow_up_strength: float = 4.0;
 
 @export var follow_target: Node3D = null;
+@export var follow_offset: Vector3 = Vector3.UP;
+
+var follow_target_position: Vector3:
+	get: return follow_target.global_position + follow_offset * follow_target.global_basis.get_rotation_quaternion();
 
 var is_underwater : bool:
 	get: return global_position.y < Water.current.height_at_point(global_position) + 4.0;
@@ -38,8 +42,8 @@ func process_following(t_delta: float):
 	var direction = difference / distance;
 	
 	# smoothly moves the camera to an ideal distance from the following target
-	var target_position = follow_target.global_position - direction * follow_distance;
-	global_position = global_position.lerp(target_position, t_delta * follow_strength);
+	var goto_position = follow_target_position - direction * follow_distance;
+	global_position = global_position.lerp(goto_position, t_delta * follow_strength);
 	
 	# smoothly moves the camera to an ideal height from the following target,
 	# this is important for both stopping the camera from staring down from
@@ -47,19 +51,19 @@ func process_following(t_delta: float):
 	# are much less forgiving of a smooth camera than simply being a speedy
 	# crab
 	var height = global_position.dot(target_up);
-	var target_height = follow_target.global_position.dot(target_up);
+	var target_height = follow_target_position.dot(target_up);
 	global_position -= target_up * height;
 	height = lerp(height, target_height + follow_height, t_delta * follow_up_strength);
 	global_position += target_up * height;
 	
-	global_basis = Basis.looking_at(direction, Vector3.UP);
+	global_basis = Basis.looking_at((follow_target_position - global_position).normalized(), Vector3.UP);
 	return;
 
 func process_obstruction(_delta: float) -> void:
 	
 	var physics = get_world_3d().direct_space_state;
 	var query = PhysicsRayQueryParameters3D.new();
-	query.from = follow_target.global_position;
+	query.from = follow_target_position;
 	query.to = global_position;
 	query.collide_with_bodies = true;
 	query.collide_with_areas = false;
@@ -73,7 +77,7 @@ func process_obstruction(_delta: float) -> void:
 func process_underwater(t_delta: float) -> void:
 	
 	var filter : AudioEffectLowPassFilter = AudioServer.get_bus_effect(AudioServer.get_bus_index("Master"), 0);
-	filter.cutoff_hz = lerp(filter.cutoff_hz, 1000.0 if global_position.y < 0.0 else 20500.0, 4.0 * t_delta);
+	filter.cutoff_hz = lerp(filter.cutoff_hz, 500.0 if global_position.y < 0.0 else 20500.0, 4.0 * t_delta);
 	return;
 
 func _physics_process(t_delta: float) -> void:

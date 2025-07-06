@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode unshaded, fog_disabled, blend_mix, depth_draw_never, depth_test_disabled;
+render_mode unshaded, blend_mix, depth_draw_never, depth_test_disabled;
 
 #include "water_helper.gdshaderinc"
 
@@ -33,7 +33,7 @@ void fragment() {
 	float surface_line =
 		step(world_position.y, surface_position.y) *
 		smoothstep(surface_position.y - 1.0, surface_position.y, world_position.y) *
-		smoothstep(100.0, 0.0, distance_to_water_surface);
+		smoothstep(50.0, 0.0, distance_to_water_surface);
 	vec3 normal = find_normal(surface_position.xz);
 	
 	vec3 R = normalize(reflect(vec3(0.0, 1.0, 0.0), normal));
@@ -45,10 +45,11 @@ void fragment() {
 	
 	float nearest_surface = min(distance_to_water_surface, distance_to_ground);
 	float can_see_surface = step(distance_to_water_surface, distance_to_ground);
+	float final_surface_line = surface_line * can_see_surface;
 	vec3 depth_color = mix(shallow_color, deep_color, smoothstep(0.0, deep_depth, distance_to_ground));
-	vec3 surface_color = lamb * depth_color + spec;
-	float depth_alpha = clamp(distance_to_ground / deep_depth, 0.65, 1.0);
-	float surface_alpha = clamp((depth_alpha + spec) * is_surface_hit * can_see_surface, 0.0, 1.0);
-	ALBEDO = clamp(mix(surface_color, depth_color, is_pixel_below_water), 0.0, 1.0) + clamp(pow(surface_line, 2.0), 0.0, 1.0);
-	ALPHA = clamp(mix(surface_alpha, depth_alpha, is_pixel_below_water), 0.0, 1.0) + surface_line;
+	vec3 surface_color = lamb * depth_color + spec + clamp(pow(final_surface_line, 2.0), 0.0, 1.0);
+	float depth_alpha = clamp(distance_to_ground / deep_depth, shallow_alpha, deep_depth);
+	float surface_alpha = clamp((depth_alpha + spec) * is_surface_hit * can_see_surface + final_surface_line, 0.0, 1.0);
+	ALBEDO = clamp(mix(surface_color, depth_color, is_pixel_below_water), 0.0, 1.0);
+	ALPHA = clamp(mix(surface_alpha, depth_alpha, is_pixel_below_water), 0.0, 1.0);
 }

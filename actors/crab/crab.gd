@@ -37,7 +37,11 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 
 @onready var pops_player: AudioStreamPlayer3D = $PopsPlayer;
 @onready var chimes_player: AudioStreamPlayer3D = $ChimesPlayer;
-@onready var misc_player: AudioStreamPlayer3D = $MiscPlayer
+@onready var clacks_player: AudioStreamPlayer3D = $ClacksPlayer;
+@onready var thuds_player: AudioStreamPlayer3D = $ThudsPlayer;
+@onready var swings_player: AudioStreamPlayer3D = $SwingsPlayer;
+@onready var jumps_player: AudioStreamPlayer3D = $JumpsPlayer;
+@onready var misc_player: AudioStreamPlayer3D = $MiscPlayer;
 
 # ui nodes
 
@@ -53,23 +57,32 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 @export var air_control: float = 0.5;
 @export var drag: float = 0.005;
 
+# movement trackers
 var move_input: Vector3 = Vector3.ZERO;
 var camera: Camera3D = null;
 var camera_forward: Vector3 = Vector3.FORWARD;
 var camera_right: Vector3 = Vector3.RIGHT;
+var was_on_floor: bool = false;
+
+# grab trackers
 var grabbed: RigidBody3D = null;
 var grab_start_timer : float = -1.0;
 var grabbed_timer: float = 0.0;
+
+# yeet trackers
 var yeeting_timer: float = -1.0;
 var yeet_power: float = 10.0;
 
+# blend trackers
 var walking_blend: Vector2 = Vector2.ZERO;
 var arm_blend: float = 1.0;
-var smoothed_up: Vector3 = Vector3.UP;
+var smoothed_up: Vector3 = Vector3.UP + Vector3.ONE * 0.001;
 
+# shell trackers
 var shell_count: int = 0;
 var shell_display_timer: float = 3.0;
 
+# under water trackers
 var was_under_water: bool = false;
 var is_under_water: bool = false;
 
@@ -80,6 +93,13 @@ func collect_shell() -> void:
 	chimes_player.play();
 	ui_animator.play("OnCollectShell");
 	shell_display_timer = max(shell_display_timer, 1.0);
+	return;
+
+func jump() -> void:
+	
+	velocity -= up_direction * velocity.dot(up_direction);
+	velocity += up_direction * jump_impulse;
+	jumps_player.play();
 	return;
 
 func process_movement(t_delta: float) -> void:
@@ -123,10 +143,7 @@ func process_movement(t_delta: float) -> void:
 	
 	# handle jumping
 	if is_on_floor() && Input.is_action_just_pressed("jump"):
-		velocity -= up_direction * velocity.dot(up_direction);
-		velocity += up_direction * jump_impulse;
-	
-	
+		jump();
 	return;
 	
 func process_forces(t_delta: float) -> void:
@@ -374,6 +391,11 @@ func process_animation(t_delta: float) -> void:
 		misc_player.stream = SFX_DIVE;
 		misc_player.volume_linear = clamp(velocity.dot(Vector3.DOWN) / 4.0, 0.0, 1.0);
 		misc_player.play(0.35);
+	
+	# play landing sound
+	if is_on_floor() && !was_on_floor:
+		thuds_player.volume_linear = clamp(smoothstep(0.0, -0.8, velocity.y), 0.0, 1.0);
+		thuds_player.play();
 	return;
 
 func process_ui(t_delta: float) -> void:
@@ -395,5 +417,7 @@ func _physics_process(t_delta: float) -> void:
 	process_forces(t_delta);
 	process_animation(t_delta);
 	process_ui(t_delta);
+	
+	was_on_floor = is_on_floor();
 	move_and_slide();
 	return;

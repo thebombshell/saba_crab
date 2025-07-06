@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://mfgs7jvagkgn"]
+
+[ext_resource type="AudioStream" uid="uid://wrikykxxmkb1" path="res://audio_fx/swings/swings - low_swing_1.wav" id="1_daxi0"]
+[ext_resource type="AudioStream" uid="uid://bj0gdiet5lge4" path="res://audio_fx/swings/swings - low_swing_2.wav" id="2_3m7dk"]
+[ext_resource type="AudioStream" uid="uid://6o68sixae0ku" path="res://audio_fx/swings/swings - low_swing_3.wav" id="3_wmh8o"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_daxi0")
+stream_1/stream = ExtResource("2_3m7dk")
+stream_2/stream = ExtResource("3_wmh8o")

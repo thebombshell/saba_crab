@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://c0ochslvoixb0"]
+
+[ext_resource type="AudioStream" uid="uid://cpi4hwgs40kj8" path="res://audio_fx/clacks/clacks - clack 1.wav" id="1_ese4f"]
+[ext_resource type="AudioStream" uid="uid://b45yfdly3vydg" path="res://audio_fx/clacks/clacks - clack 2.wav" id="2_sem1p"]
+[ext_resource type="AudioStream" uid="uid://c8ub3pub23uum" path="res://audio_fx/clacks/clacks - clack 3.wav" id="3_isx2d"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_ese4f")
+stream_1/stream = ExtResource("2_sem1p")
+stream_2/stream = ExtResource("3_isx2d")

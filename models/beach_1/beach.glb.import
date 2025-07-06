@@ -44,13 +44,21 @@ _subresources={
 }
 },
 "meshes": {
-"beach_sand": {
+"beach_Mesh": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_sand.res"
+"save_to_file/path": "res://models/beach_1/beach_Mesh.res"
+},
+"beach_Mesh2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Mesh2.res"
 },
 "beach_sand_fence": {
 "generate/lightmap_uv": 0,

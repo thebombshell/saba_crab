@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamSynchronized" load_steps=5 format=3 uid="uid://dywok45y8cfox"]
+
+[ext_resource type="AudioStream" uid="uid://cmvc2jqevpw7y" path="res://audio_fx/beach_1_ambience/ambiance - bird_sea_sample.wav" id="1_0uody"]
+[ext_resource type="AudioStream" uid="uid://by3fcpgttsw0i" path="res://audio_fx/beach_1_ambience/ambience - bird_nest_sample.wav" id="2_oypkd"]
+[ext_resource type="AudioStream" uid="uid://dl8cecydpecrk" path="res://audio_fx/beach_1_ambience/ambience - inland_sample.wav" id="3_c6aiy"]
+[ext_resource type="AudioStream" uid="uid://balwcwse8hdk8" path="res://audio_fx/beach_1_ambience/ambience - sea_sample.wav" id="4_v8y22"]
+
+[resource]
+stream_count = 4
+stream_0/stream = ExtResource("1_0uody")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("2_oypkd")
+stream_1/volume = 0.0
+stream_2/stream = ExtResource("3_c6aiy")
+stream_2/volume = 0.0
+stream_3/stream = ExtResource("4_v8y22")
+stream_3/volume = 0.0

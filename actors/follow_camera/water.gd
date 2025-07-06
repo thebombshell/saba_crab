@@ -17,8 +17,8 @@ static var current : Water = null;
 var noise_map : Image = WATER_NOISE_TEXTURE.get_image();
 var effect_image : Image = null;
 var offset : Vector2 = Vector2.ZERO;
-var height_map_scale : float = 4096.0;
-var height_map_height : float = 1.0;
+var height_map_scale : float = 2048.0 * 4.0;
+var height_map_height : float = 0.5;
 
 func sample_float_at_point(t_map : PackedFloat32Array, t_uv : Vector2) -> float:
 	

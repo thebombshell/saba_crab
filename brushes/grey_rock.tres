@@ -4,10 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://cli2ow8dv3jx3" path="res://brushes/sand_roughness.png" id="3_lnty3"]
 
 [resource]
+specular_mode = 1
 albedo_color = Color(0.66728, 0.510954, 0.39853, 1)
 albedo_texture = ExtResource("1_ebt7h")
-metallic_specular = 0.0
+metallic = 0.19
+metallic_specular = 0.25
+roughness = 0.86
 roughness_texture = ExtResource("3_lnty3")
+rim_enabled = true
+rim = 0.16
+rim_tint = 0.12
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 uv1_world_triplanar = true

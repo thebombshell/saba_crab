@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=4 format=3 uid="uid://ecn7qvlfberi"]
+
+[ext_resource type="AudioStream" uid="uid://bpp4ecf1i1epx" path="res://audio_fx/thuds/thuds - thud 1.wav" id="1_j2bhg"]
+[ext_resource type="AudioStream" uid="uid://rl04gx5xf0ej" path="res://audio_fx/thuds/thuds - thud 2.wav" id="2_14j46"]
+[ext_resource type="AudioStream" uid="uid://be26iemhiadg4" path="res://audio_fx/thuds/thuds - thud 3.wav" id="3_3t6rj"]
+
+[resource]
+streams_count = 3
+stream_0/stream = ExtResource("1_j2bhg")
+stream_1/stream = ExtResource("2_14j46")
+stream_2/stream = ExtResource("3_3t6rj")

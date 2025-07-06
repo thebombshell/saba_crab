@@ -3,6 +3,8 @@ uniform vec3 shallow_color : source_color;
 uniform vec3 deep_color : source_color;
 uniform float shallow_depth = 200.0;
 uniform float deep_depth = 500.0;
+uniform float shallow_alpha = 0.5;
+uniform float deep_alpha = 1.0;
 uniform float water_map_scale = 16.0;
 uniform float water_map_height = 2.0;
 uniform sampler2D effect_map;
@@ -34,7 +36,11 @@ vec3 find_normal(vec2 t_uv)
 
 vec3 find_depth_world_position(vec2 t_screen_uv, sampler2D t_sampler, mat4 t_inverse_view_matrix, mat4 t_inverse_proj_matrix) {
 	
+#if CURRENT_RENDERER == RENDERER_COMPATIBILITY
 	vec3 ndc = vec3(t_screen_uv, texture(t_sampler, t_screen_uv).x) * 2.0 - 1.0;
+#else
+	vec3 ndc = vec3(t_screen_uv * 2.0 - 1.0, texture(t_sampler, t_screen_uv).x);
+#endif
 	vec4 view = t_inverse_proj_matrix * vec4(ndc, 1.0);
 	view.xyz /= view.w;
 	float linear_depth = -view.z;

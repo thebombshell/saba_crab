@@ -28,3 +28,16 @@ I am not going to use anything that isn't already approved for royalty-free comm
 
 [Super Peanut](https://www.fontspace.com/super-peanut-font-f136882)
 **Provided by "All Super Font", they have an etsy as [nhfonts](https://nhfonts.etsy.com/)**
+
+### Sounds
+
+The Following Sound effects obtained from Free To Use Sounds:
+
+#### ambience - bird_sea_sample
+AMBSea_Ambience, Birds, Seagulls, Puffins, Razorbill, Fulmar, Guillemot, Seagulls, Nesting, Ocean, Waves, Steep Cliff, Lï¿½trabjarg, Iceland, 19232, 04.wav
+#### ambience - bird_nest_sample
+AMBSea_Ambience, Evening, Birds Nesting, Chirping, Northern Fulmars, Ocean Background, Campground Vik, Iceland, 19232.wav
+#### ambience - inland_sample
+AMBUrbn_Black Sea, Waves Crashing Distance, Traffic, Promenade, Car Honk, Condominium, Nighttime, Curfew, Air Condition, Black Sea, Batumi, Georgia, 19232, 01.wav
+#### ambience - sea_sample
+AMBSea_Seaside, Harbour, Movements, Sea Waves, Splash, Little Bay, Daytime, Birds, Bodrum, Turkey, FTUS, 19232.wav

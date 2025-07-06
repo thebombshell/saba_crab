@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://lddmwkgyuqsk"]
+[gd_scene load_steps=67 format=3 uid="uid://lddmwkgyuqsk"]
 
 [ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
@@ -6,9 +6,12 @@
 [ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="4_5xahp"]
 [ext_resource type="AudioStream" uid="uid://dbsue48pc4jgq" path="res://audio_fx/chimes/chimes_randomizer.tres" id="4_6khos"]
 [ext_resource type="Environment" uid="uid://w2e6ycuh6qo3" path="res://environments/ui_viewport_environment.tres" id="5_a6tpn"]
+[ext_resource type="AudioStream" uid="uid://c0ochslvoixb0" path="res://audio_fx/clacks/clacks_randomizer.tres" id="5_fyuy5"]
 [ext_resource type="Shader" uid="uid://did5vtykh6n11" path="res://shaders/props/shell.gdshader" id="5_ov32d"]
 [ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="6_2x4nq"]
+[ext_resource type="AudioStream" uid="uid://ecn7qvlfberi" path="res://audio_fx/thuds/thuds_randomizer.tres" id="6_w66pk"]
 [ext_resource type="Script" uid="uid://baim48guv3n7v" path="res://scripts/auto_label.gd" id="7_8atix"]
+[ext_resource type="AudioStream" uid="uid://mfgs7jvagkgn" path="res://audio_fx/swings/swings_randomizer.tres" id="7_hhuwn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ieb0f"]
 height = 1.6
@@ -299,6 +302,7 @@ collision_layer = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
+floor_max_angle = 0.610865
 script = ExtResource("1_fc1xm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -325,6 +329,7 @@ parameters/BlendTree/TimeScale/scale = 1.0
 transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
 
 [node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
+bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
 bones/1/position = Vector3(-1.19209e-07, 3.57628e-07, 1.58246)
 bones/1/rotation = Quaternion(-0.0855332, 7.71563e-19, 1.72431e-18, 0.996335)
 bones/2/rotation = Quaternion(-6.91205e-06, -0.000124586, 0.623034, 0.782195)
@@ -374,6 +379,12 @@ transform = Transform3D(-0.688938, -0.235704, -0.685426, -0.655302, -0.20157, 0.
 bone_name = "Claw.R"
 bone_idx = 9
 
+[node name="SafetyRing" parent="crab/CrabSkeleton/Skeleton3D" index="3"]
+visible = false
+
+[node name="BoosterPack" parent="crab/CrabSkeleton/Skeleton3D" index="4"]
+visible = false
+
 [node name="GrabArea" type="Area3D" parent="."]
 collision_layer = 0
 collision_mask = 4
@@ -399,6 +410,28 @@ stream = ExtResource("4_6khos")
 max_polyphony = 3
 bus = &"SFX"
 attenuation_filter_db = -10.0
+
+[node name="ClacksPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_fyuy5")
+max_polyphony = 3
+bus = &"SFX"
+
+[node name="ThudsPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_w66pk")
+bus = &"SFX"
+
+[node name="SwingsPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_hhuwn")
+volume_db = -5.0
+pitch_scale = 1.5
+bus = &"SFX"
+attenuation_filter_db = -14.0
+
+[node name="JumpsPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_hhuwn")
+volume_db = -14.0
+bus = &"SFX"
+attenuation_filter_db = -14.0
 
 [node name="CrabUI" type="CanvasLayer" parent="."]
 
