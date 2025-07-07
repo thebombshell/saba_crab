@@ -4,13 +4,16 @@ render_mode cull_disabled;
 
 uniform float wave_speed = 1.0;
 uniform float wave_height = 0.5;
+uniform float wave_scale = 1.0;
 uniform vec3 bottom_color: source_color = vec3(0.4, 1.0, 0.2);
 uniform vec3 top_color: source_color = vec3(0.0, 0.9, 0.2);
 uniform float gradient_height = 0.5;
 
+uniform sampler2D alpha_sampler;
+
 void vertex() {
 	
-	float theta = sin(TIME * wave_speed) * smoothstep(0.0, wave_height, VERTEX.y);
+	float theta = sin(TIME * wave_speed) * smoothstep(0.0, wave_height, VERTEX.y) * wave_scale;
 	float st = sin(theta);
 	float ct = cos(theta);
 	mat3 rot = mat3(
@@ -23,5 +26,7 @@ void vertex() {
 
 void fragment() {
 	
-	ALBEDO = COLOR.xyz;
+	ALBEDO = COLOR.rgb;
+	if (texture(alpha_sampler, UV).a < 0.5)
+		discard;
 }

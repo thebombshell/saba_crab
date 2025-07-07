@@ -34,9 +34,13 @@ animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "materials": {
+"Grass": {
+"use_external/enabled": true,
+"use_external/path": "uid://krqdw7vggr3e"
+},
 "TreeLeaves": {
 "use_external/enabled": true,
-"use_external/path": "uid://kj74rv6cuvpn"
+"use_external/path": "uid://skufcpjahk3v"
 },
 "cliff": {
 "use_external/enabled": true,

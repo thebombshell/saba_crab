@@ -211,10 +211,9 @@ func process_forces(t_delta: float) -> void:
 	if is_on_floor():
 		var target = get_floor_normal().normalized();
 		var dot = smoothed_up.dot(target);
-		if dot < 0.995:
-			smoothed_up = smoothed_up.lerp(target, t_delta * 4.0).normalized();
+		smoothed_up = smoothed_up.lerp(target, t_delta * 8.0).normalized();
 	else:
-		smoothed_up = smoothed_up.lerp(Vector3.UP, t_delta * 4.0).normalized();
+		smoothed_up = smoothed_up.lerp(Vector3.UP, t_delta * 8.0).normalized();
 	
 	# handle gravity
 	velocity += get_gravity() * t_delta;
@@ -251,10 +250,11 @@ func turn_character_towards(t_forward: Vector3, t_amount: float):
 	var up = smoothed_up;
 	var forward = global_basis.z;
 	var right = global_basis.x;
+	var basic_right = Vector3(right.x, clamp(right.y, -0.15, 0.15), right.z).normalized();
 	var target_forward = t_forward;
-	var target_right = t_forward.cross(up);
+	var target_right = target_forward.cross(up);
 	global_basis = Basis(
-		right.slerp(target_right, t_amount),
+		basic_right.slerp(target_right, t_amount),
 		up,
 		forward.slerp(target_forward, t_amount)).orthonormalized();
 	return;

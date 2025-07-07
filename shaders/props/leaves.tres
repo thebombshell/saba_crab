@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://skufcpjahk3v"]
+
+[ext_resource type="Shader" uid="uid://fbjwqylcfu0p" path="res://shaders/props/leafy_shader.gdshader" id="1_x7703"]
+[ext_resource type="Texture2D" uid="uid://ciu7bdjpmc3vi" path="res://models/beach_1/beach_leaf_albedo.png" id="2_ufap0"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_x7703")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_height = 20.0
+shader_parameter/wave_scale = 0.1
+shader_parameter/bottom_color = Color(0.597304, 0.673507, 0.230519, 1)
+shader_parameter/top_color = Color(0.671374, 0.717672, 0, 1)
+shader_parameter/gradient_height = 0.1
+shader_parameter/alpha_sampler = ExtResource("2_ufap0")

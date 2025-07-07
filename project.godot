@@ -140,3 +140,9 @@ spin={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+
+[rendering]
+
+occlusion_culling/bvh_build_quality=1
+occlusion_culling/occlusion_rays_per_thread=64
+occlusion_culling/use_occlusion_culling=true
