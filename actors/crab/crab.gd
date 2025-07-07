@@ -210,7 +210,6 @@ func process_forces(t_delta: float) -> void:
 	# but not so perfectly that quick changes in orientation become jarring
 	if is_on_floor():
 		var target = get_floor_normal().normalized();
-		var dot = smoothed_up.dot(target);
 		smoothed_up = smoothed_up.lerp(target, t_delta * 8.0).normalized();
 	else:
 		smoothed_up = smoothed_up.lerp(Vector3.UP, t_delta * 8.0).normalized();

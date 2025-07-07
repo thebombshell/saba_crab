@@ -90,20 +90,20 @@ func find_input(t_delta) -> Vector3:
 	var diff_to_origin = (origin - global_position);
 	diff_to_origin.y = 0.0;
 	var dist_to_origin = diff_to_origin.length();
-	var dir_to_origin = diff_to_origin.normalized();
 	
 	roaming_timer -= t_delta;
 	if roaming_timer < 0.0:
 		init_roaming();
+	
+	if dist_to_origin > roaming_distance:
+		roaming_timer = 3.0;
+		roaming_target = origin;
 	
 	var diff_to_roaming = roaming_target - global_position;
 	diff_to_roaming.y = 0.0;
 	var dist_to_roaming = diff_to_roaming.length();
 	var dir_to_roaming = diff_to_roaming.normalized();
 	
-	if dist_to_origin > roaming_distance:
-		roaming_timer = 3.0;
-		roaming_target = origin;
 	if dist_to_roaming > 1.0:
 		return dir_to_roaming;
 	return Vector3.ZERO;
@@ -155,7 +155,6 @@ func process_forces(t_delta: float) -> void:
 	# but not so perfectly that quick changes in orientation become jarring
 	if is_on_floor():
 		var target = get_floor_normal().normalized();
-		var dot = smoothed_up.dot(target);
 		smoothed_up = smoothed_up.lerp(target, t_delta * 8.0).normalized();
 	else:
 		smoothed_up = smoothed_up.lerp(Vector3.UP, t_delta * 8.0).normalized();
