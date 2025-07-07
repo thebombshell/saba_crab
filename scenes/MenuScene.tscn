@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://xsviydmib70d"]
+[gd_scene load_steps=12 format=3 uid="uid://xsviydmib70d"]
 
 [ext_resource type="Theme" uid="uid://5ryk8wjh8k36" path="res://ui/base_theme.tres" id="1_6fxy3"]
 [ext_resource type="Script" uid="uid://clcxldtajj80v" path="res://scenes/menu_scene.gd" id="1_21ehr"]
+[ext_resource type="Environment" uid="uid://cixnvigsimcmc" path="res://environments/beach_1_environment.tres" id="3_10uq6"]
+[ext_resource type="ArrayMesh" uid="uid://dooh41vhkxtwl" path="res://models/beach_1/beach_lighthouse.res" id="4_qdg0f"]
+[ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="5_kvab8"]
+[ext_resource type="Material" uid="uid://ugkp3syuh6x5" path="res://brushes/grey_rock.tres" id="5_xbut1"]
+[ext_resource type="ArrayMesh" uid="uid://by1ddtihd0cfq" path="res://models/props/props_rock.res" id="6_i7jh1"]
+[ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="6_qdg0f"]
+[ext_resource type="Material" uid="uid://db26evuax1qov" path="res://brushes/yellow_sand.tres" id="7_i43ud"]
+[ext_resource type="AudioStream" uid="uid://c0ochslvoixb0" path="res://audio_fx/clacks/clacks_randomizer.tres" id="10_i7jh1"]
+[ext_resource type="AudioStream" uid="uid://dywok45y8cfox" path="res://audio_fx/beach_1_ambience/ambience_synchronized.tres" id="11_i43ud"]
 
 [node name="MenuScene" type="Node3D"]
 script = ExtResource("1_21ehr")
@@ -40,5 +49,157 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "QUIT"
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3_10uq6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.374202, 0, -0.927347, 0, 1, 0, 0.927347, 0, 0.374202, 0, 0, 0)
+mesh = ExtResource("4_qdg0f")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 50, 0, 0, 0, 100, 0, -63.5883, 0)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="."]
+transform = Transform3D(74.3483, 0, 66.8754, 0, 50, 0, -66.8754, 0, 74.3483, 4.90296, -63.5883, -77.7689)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(25, 0, 0, 0, 10, 0, 0, 0, 25, 41.8572, 0, -51.6796)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.53704, 0, -24.1302, 0, 25, 0, 24.1302, 0, -6.53704, 93.9801, 0, -66.2356)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(-6.53704, 0, -24.1302, 0, 25, 0, 24.1302, 0, -6.53704, 102.865, -15.0334, -41.1284)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(-47.0378, 0, -16.9541, 0, 50, 0, 16.9541, 0, -47.0378, 169.71, -25.9638, -66.9904)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="."]
+transform = Transform3D(-87.5694, 29.0664, -38.5584, 45.7154, 75.6162, -46.8219, 15.5469, -58.6288, -79.5044, 585.599, 1.87242, -252.792)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="."]
+transform = Transform3D(-43.7847, 14.5332, -19.2792, 22.8577, 37.8081, -23.411, 7.77347, -29.3144, -39.7522, 491.141, -24.0191, -248.49)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="."]
+transform = Transform3D(-14.1076, 31.1281, 36.4968, 22.8577, 37.8081, -23.411, -42.1723, 10.0792, -24.898, 549.094, -24.0191, -398.76)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="."]
+transform = Transform3D(-14.1076, 31.1281, 36.4968, 22.8577, 37.8081, -23.411, -42.1723, 10.0792, -24.898, 592.517, -24.0191, -119.234)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="."]
+transform = Transform3D(24.8346, 10.9823, 41.9837, -0.714144, 48.4693, -12.2563, -43.3905, 5.48797, 24.2311, 529.777, -24.0191, -470.943)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="."]
+transform = Transform3D(12.4173, 5.49113, 20.9919, -0.357072, 24.2346, -6.12817, -21.6952, 2.74399, 12.1156, 472.037, -24.0191, -364.136)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="."]
+transform = Transform3D(12.4173, 5.49113, 20.9919, -0.357072, 24.2346, -6.12817, -21.6952, 2.74399, 12.1156, 559.106, -24.0191, -171.709)
+material_override = ExtResource("5_xbut1")
+mesh = ExtResource("6_i7jh1")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(196.249, 0, 38.5524, 0, 2, 0, -38.5524, 0, 196.249, 344.227, 0, -200.086)
+material_override = ExtResource("7_i43ud")
+mesh = ExtResource("6_i7jh1")
+
+[node name="crab" parent="." instance=ExtResource("5_kvab8")]
+transform = Transform3D(0.277714, 0, -0.113469, 0, 0.3, 0, 0.113469, 0, 0.277714, -9.53336, 85.4685, 6.54353)
+
+[node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
+bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/1/position = Vector3(-0.00922691, 3.42751e-07, 2.07998)
+bones/1/rotation = Quaternion(0.06953, 0.0587418, -0.00410138, 0.99584)
+bones/2/rotation = Quaternion(0.45616, 0.456062, 0.398482, 0.652026)
+bones/3/rotation = Quaternion(0.00305328, -3.09468e-09, -0.000848803, 0.999995)
+bones/4/rotation = Quaternion(-0.115839, 0.115978, -0.337233, 0.927041)
+bones/5/rotation = Quaternion(-0.143094, 1.21439e-08, 0.36414, 0.920286)
+bones/6/position = Vector3(-1.74181, 0.426308, 2.16566)
+bones/6/rotation = Quaternion(0.121392, 0.742334, 0.65032, -0.106249)
+bones/7/rotation = Quaternion(4.4105e-05, 9.80582e-11, 0.293169, 0.956061)
+bones/8/rotation = Quaternion(-4.41046e-05, 9.0801e-11, -0.293168, 0.956061)
+bones/9/position = Vector3(1.92635, 1.31612, 0.114292)
+bones/9/rotation = Quaternion(-0.406442, 0.184627, 0.222749, 0.866661)
+bones/10/rotation = Quaternion(4.27312e-05, -1.09089e-05, -0.0475217, 0.99887)
+bones/11/rotation = Quaternion(-4.27456e-05, -1.09154e-05, 0.0475208, 0.99887)
+bones/12/rotation = Quaternion(-0.341411, -0.155134, 0.331429, 0.865752)
+bones/13/rotation = Quaternion(-0.15668, 0.00360394, 0.0855432, 0.983931)
+bones/14/rotation = Quaternion(-0.0939851, -0.00742665, -0.0246816, 0.99524)
+bones/15/rotation = Quaternion(-0.0769253, -0.260019, 0.924072, 0.269378)
+bones/16/rotation = Quaternion(-0.157214, 0.0105401, -0.0378887, 0.986781)
+bones/17/rotation = Quaternion(-0.107496, 0.00827246, 0.0221259, 0.993925)
+bones/18/rotation = Quaternion(-0.165687, 0.0679259, -0.347151, 0.920554)
+bones/19/rotation = Quaternion(-0.232332, -0.0292301, -0.149246, 0.960673)
+bones/20/rotation = Quaternion(-0.2132, -0.00127046, -0.00388249, 0.977)
+bones/21/rotation = Quaternion(-0.0141712, -0.0940122, 0.948168, -0.303213)
+bones/22/rotation = Quaternion(-0.237988, 0.0168387, 0.0880691, 0.96712)
+bones/23/rotation = Quaternion(-0.231516, 0.000215322, 0.000509678, 0.972831)
+bones/24/rotation = Quaternion(-0.271048, -0.318246, 0.690764, 0.589998)
+bones/25/rotation = Quaternion(-0.0702802, 0.0142681, 0.0235441, 0.997147)
+bones/26/rotation = Quaternion(-0.0203505, 0.000765365, -0.00698338, 0.999768)
+bones/27/rotation = Quaternion(-0.0650562, 0.121863, -0.721712, 0.678269)
+bones/28/rotation = Quaternion(-0.199241, -0.0141869, -0.0521964, 0.978456)
+bones/29/rotation = Quaternion(-0.215806, -0.00175268, -0.0057388, 0.976418)
+
+[node name="SafetyRing" parent="crab/CrabSkeleton/Skeleton3D" index="1"]
+visible = false
+
+[node name="BoosterPack" parent="crab/CrabSkeleton/Skeleton3D" index="2"]
+visible = false
+
+[node name="AnimationPlayer" parent="crab" index="1"]
+autoplay = "Rave"
+
+[node name="FollowCamera" parent="." instance=ExtResource("6_qdg0f")]
+transform = Transform3D(0.999072, 0, 0.0430614, 0, 1, 0, -0.0430614, 0, 0.999072, -31.4205, 91.0513, 65.0181)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.437676, 0.849545, -0.294473, -0.202999, 0.412416, 0.88809, 0.875918, -0.328918, 0.352961, 0, 101.559, 0)
+light_energy = 2.0
+light_bake_mode = 1
+shadow_enabled = true
+shadow_blur = 0.5
+
+[node name="ClacksPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("10_i7jh1")
+attenuation_model = 3
+volume_db = -4.0
+max_polyphony = 3
+bus = &"SFX"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("11_i43ud")
+attenuation_model = 3
+autoplay = true
+panning_strength = 0.0
+bus = &"Ambiance"
+attenuation_filter_cutoff_hz = 20500.0
+attenuation_filter_db = 0.0
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+
+[editable path="crab"]

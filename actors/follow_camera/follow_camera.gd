@@ -51,6 +51,10 @@ func process_following(t_delta: float):
 
 func process_obstruction(_delta: float) -> void:
 	
+	# nothing to follow
+	if !is_instance_valid(follow_target):
+		return;
+	
 	var physics = get_world_3d().direct_space_state;
 	var query = PhysicsRayQueryParameters3D.new();
 	query.from = follow_target_position;
@@ -68,6 +72,11 @@ func process_underwater(t_delta: float) -> void:
 	
 	var filter : AudioEffectLowPassFilter = AudioServer.get_bus_effect(AudioServer.get_bus_index("Master"), 0);
 	filter.cutoff_hz = lerp(filter.cutoff_hz, 500.0 if global_position.y < 0.0 else 20500.0, 4.0 * t_delta);
+	return;
+
+func _ready() -> void:
+	
+	current = true;
 	return;
 
 func _physics_process(t_delta: float) -> void:

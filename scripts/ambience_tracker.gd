@@ -43,7 +43,7 @@ func _physics_process(t_delta: float) -> void:
 		var max_value = get_max_volume(t_name);
 		if area.has_overlapping_areas():
 			stream.set_sync_stream_volume(id, max_value);
-			print("%s:%d" % [t_name, max_value]);
+			#print("%s:%d" % [t_name, max_value]);
 		else:
 			var alpha = clamp(smoothstep(0.0, get_fade_distance(t_name),
 				find_nearest_distance(area)), 0.0, 1.0);
@@ -53,5 +53,5 @@ func _physics_process(t_delta: float) -> void:
 				stream.set_sync_stream_volume(id, old_value - t_delta);
 			else:
 				stream.set_sync_stream_volume(id, value);
-			print("%s:%d" % [t_name, value]);
+			#print("%s:%d" % [t_name, value]);
 	return;

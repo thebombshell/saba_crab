@@ -19,6 +19,9 @@ const ANIM_PARAMS_IS_SWINGING = "parameters/BlendTree/HandMachine/conditions/is_
 const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 const ANIM_PARAMS_IS_DASH_PRESSED = "parameters/BlendTree/StateMachine/conditions/is_dash_pressed";
 const ANIM_PARAMS_IS_SPIN_PRESSED = "parameters/BlendTree/StateMachine/conditions/is_spin_pressed";
+const ANIM_PARAMS_IS_FLIPPING = "parameters/BlendTree/StateMachine/conditions/is_flipping";
+const ANIM_PARAMS_IS_SLIDING = "parameters/BlendTree/StateMachine/conditions/is_sliding";
+const ANIM_PARAMS_IS_SUPER_SPINNING = "parameters/BlendTree/StateMachine/conditions/is_super_spinning";
 
 # audio assets
 
@@ -71,6 +74,8 @@ var was_on_floor: bool = false;
 var grabbed: RigidBody3D = null;
 var grab_start_timer : float = -1.0;
 var grabbed_timer: float = 0.0;
+var is_two_handing: bool:
+	get: return false if grabbed == null else grabbed.two_handed;
 
 # yeet trackers
 var yeeting_timer: float = -1.0;
@@ -99,10 +104,24 @@ var dash_direction: Vector3 = Vector3.FORWARD;
 
 # spin variables
 var spin_timer: float = 0.0;
+var spin_buffer: float = 0.0;
 var is_spinning: bool:
-	get: return dash_timer > 0.0;
+	get: return spin_timer > 0.0;
 var can_spin: bool:
-	get: return !is_dashing && !is_spinning;
+	get: return dash_timer < 0.5 && !is_spinning;
+
+# slide variables
+var is_sliding: bool = false;
+var flip_timer: float = -1.0;
+var is_flipping: bool:
+	get: return flip_timer > 0.0;
+	set(t_value): flip_timer = 0.5 if t_value else -1.0;
+
+# super spin variables
+var super_spin_timer: float = -1.0;
+var is_super_spinning: bool:
+	get: return super_spin_timer > 0.0;
+	set(t_value): super_spin_timer = 0.5 if t_value else -1.0;
 
 func collect_shell() -> void:
 	
@@ -115,9 +134,26 @@ func collect_shell() -> void:
 
 func jump() -> void:
 	
+	if is_sliding:
+		flip();
+		return;
+	
+	if is_spinning:
+		super_spin();
+		return;
+	
 	velocity -= up_direction * velocity.dot(up_direction);
 	velocity += up_direction * jump_impulse;
 	jumps_player.play();
+	return;
+
+func super_spin() -> void:
+	
+	is_spinning = false;
+	is_super_spinning = true;
+	velocity -= up_direction * velocity.dot(up_direction);
+	velocity *= 0.75;
+	velocity += up_direction * jump_impulse * 1.5;
 	return;
 
 func process_movement(t_delta: float) -> void:
@@ -139,7 +175,9 @@ func process_movement(t_delta: float) -> void:
 		(camera_forward * Input.get_axis("move_down", "move_up")));
 	move_input = input - up_direction * input.dot(up_direction);
 	move_input = move_input.normalized() * input.length();
-	
+	if is_sliding:
+		move_input = Vector3.ZERO;
+		
 	# handle acceleration if we are using inputs
 	if move_input.length() > 0.25:
 		
@@ -166,10 +204,9 @@ func process_movement(t_delta: float) -> void:
 
 func spin() -> void:
 	
-	spin_timer = 1.0;
+	spin_timer = 0.5;
 	velocity *= 0.9;
-	velocity -= Vector3.UP * min(0.0, velocity.dot(Vector3.UP)) * 0.5;
-	velocity += Vector3.UP;
+	velocity -= Vector3.UP * min(0.0, velocity.dot(up_direction)) * 0.5;
 	return;
 
 func dash() -> void:
@@ -179,22 +216,48 @@ func dash() -> void:
 		get_global_transform_interpolated().basis.z).normalized();
 	return;
 
+func flip() -> void:
+	
+	is_sliding = false;
+	is_flipping = true;
+	velocity -= up_direction * velocity.dot(up_direction);
+	velocity += velocity.normalized() * 10.0;
+	velocity += up_direction * jump_impulse * 0.8;
+	jumps_player.play();
+	return;
+
 func process_abilities(t_delta: float) -> void:
 	
 	dash_timer -= t_delta;
+	spin_buffer -= t_delta;
 	spin_timer -= t_delta;
+	flip_timer -= t_delta;
+	super_spin_timer -= t_delta;
 	
-	if Input.is_action_just_pressed("spin") && can_spin:
+	# handle initial spin
+	if Input.is_action_just_pressed("spin"):
+		spin_buffer = 0.25;
+	if spin_buffer > 0.0 && can_spin:
 		animation_tree.set(ANIM_PARAMS_IS_SPIN_PRESSED, true);
 		spin();
 	else:
 		animation_tree.set(ANIM_PARAMS_IS_SPIN_PRESSED, false);
+	
+	# handle initial dash
 	if Input.is_action_just_pressed("dash") && can_dash:
 		animation_tree.set(ANIM_PARAMS_IS_DASH_PRESSED, true);
 		dash();
 	else:
 		animation_tree.set(ANIM_PARAMS_IS_DASH_PRESSED, false);
 	
+	# handle slide
+	if is_sliding:
+		is_sliding = (Input.is_action_pressed("dash") &&
+			Vector2(velocity.x, velocity.z).length() > 0.1);
+	elif dash_timer > 0.6 && dash_timer < 0.8 && Input.is_action_pressed("dash"):
+		is_sliding = true;
+	
+	# handle dash
 	if dash_timer > 0.0:
 		var delta = pow(dash_timer, 2.0) * t_delta;
 		velocity += dash_direction * dash_speed * delta;
@@ -222,6 +285,10 @@ func process_forces(t_delta: float) -> void:
 	var drag_strength = drag * (1.0 if global_position.y > 0.0 else 8.0);
 	var drag_power = min(velocity.length(),
 		pow(velocity.length(), 2.0) * drag_strength * t_delta);
+	if is_sliding:
+		drag_power *= 0.05;
+	elif is_flipping || is_super_spinning:
+		drag_power *= 0.6;
 	velocity -= velocity * drag_power;
 	
 	# character bodies in godot do not push objects they run in to, so I've
@@ -409,6 +476,9 @@ func process_animation(t_delta: float) -> void:
 	animation_tree.set(ANIM_PARAMS_HAS_GRABBED, is_instance_valid(grabbed));
 	animation_tree.set(ANIM_PARAMS_IS_SWINGING, Input.is_action_just_pressed("swing"));
 	animation_tree.set(ANIM_PARAMS_ARM_BLEND, arm_blend);
+	animation_tree.set(ANIM_PARAMS_IS_SLIDING, is_sliding);
+	animation_tree.set(ANIM_PARAMS_IS_FLIPPING, is_flipping);
+	animation_tree.set(ANIM_PARAMS_IS_SUPER_SPINNING, is_super_spinning);
 	
 	# here, we're passing the walk blending params as the relationship between
 	# where we want to go, and where we are facing, so the characters animation
@@ -419,7 +489,11 @@ func process_animation(t_delta: float) -> void:
 	# if we are moving, try to rotate the crab to the camera direction, also
 	# handle the crab rave button such that it only plays when we aren't trying
 	# to also move
-	if move_input.length() > 0.25:
+	if is_dashing || is_sliding || is_spinning || is_super_spinning || is_flipping:
+		
+		animation_tree.set(ANIM_PARAMS_TIME_SCALE, 1.0);
+		animation_tree.set(ANIM_PARAMS_IS_RAVE_PRESSED, false);
+	elif move_input.length() > 0.25:
 		
 		var hvelocity = velocity - up_direction * velocity.dot(up_direction);
 		var speed_alpha = clamp(hvelocity.length() / 10.0, 0.0, 1.0);

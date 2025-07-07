@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://lddmwkgyuqsk"]
+[gd_scene load_steps=86 format=3 uid="uid://lddmwkgyuqsk"]
 
 [ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
@@ -144,6 +144,9 @@ graph_offset = Vector2(-50, 8)
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ls75x"]
 animation = &"Dash"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_67nus"]
+animation = &"Flip"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ieb0f"]
 animation = &"Jump"
 
@@ -159,8 +162,14 @@ blend_point_1/pos = -1.0
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a6tpn"]
 animation = &"Rave"
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_32kc2"]
+animation = &"Slide"
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1elqm"]
 animation = &"Spin"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hfyy1"]
+animation = &"SuperSpin"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2x4nq"]
 animation = &"Action"
@@ -222,7 +231,7 @@ advance_mode = 2
 advance_condition = &"is_dash_pressed"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vqgx3"]
-xfade_time = 0.2
+xfade_time = 0.5
 switch_mode = 2
 advance_mode = 2
 
@@ -245,25 +254,67 @@ xfade_time = 0.05
 advance_mode = 2
 advance_condition = &"is_spin_pressed"
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v6mtc"]
+advance_mode = 2
+advance_condition = &"is_sliding"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tcyba"]
+xfade_time = 0.05
+advance_mode = 2
+advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_sliding\")"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q4cli"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fem22"]
+xfade_time = 0.1
+advance_mode = 2
+advance_condition = &"is_flipping"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d1j4y"]
+xfade_time = 0.2
+switch_mode = 2
+advance_mode = 2
+advance_condition = &"is_super_spinning"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gsk3x"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_acw5q"]
+advance_mode = 2
+advance_condition = &"is_spin_pressed"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_euuoj"]
+advance_mode = 2
+advance_condition = &"is_spin_pressed"
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_plgea"]
 states/Dash/node = SubResource("AnimationNodeAnimation_ls75x")
 states/Dash/position = Vector2(317.555, 259.185)
+states/Flip/node = SubResource("AnimationNodeAnimation_67nus")
+states/Flip/position = Vector2(126.506, 147)
 states/JumpAndFall/node = SubResource("AnimationNodeBlendSpace1D_5xahp")
 states/JumpAndFall/position = Vector2(315.926, 77.5555)
 states/Rave/node = SubResource("AnimationNodeAnimation_a6tpn")
 states/Rave/position = Vector2(716, 258.444)
+states/Slide/node = SubResource("AnimationNodeAnimation_32kc2")
+states/Slide/position = Vector2(127.481, 259.078)
 states/Spin/node = SubResource("AnimationNodeAnimation_1elqm")
-states/Spin/position = Vector2(198.444, 337.308)
+states/Spin/position = Vector2(489.407, 77.8602)
 states/Start/position = Vector2(26.5927, 78.2222)
+states/SuperSpin/node = SubResource("AnimationNodeAnimation_hfyy1")
+states/SuperSpin/position = Vector2(489.181, -31.0169)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8lhgq")
 states/Walking/position = Vector2(490.222, 260)
-transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3"), "Walking", "Dash", SubResource("AnimationNodeStateMachineTransition_yfpss"), "Dash", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_vqgx3"), "JumpAndFall", "Dash", SubResource("AnimationNodeStateMachineTransition_pgv6q"), "JumpAndFall", "Spin", SubResource("AnimationNodeStateMachineTransition_xqivb"), "Spin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_w7sik"), "Walking", "Spin", SubResource("AnimationNodeStateMachineTransition_ocqmu")]
-graph_offset = Vector2(58, -2)
+transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3"), "Walking", "Dash", SubResource("AnimationNodeStateMachineTransition_yfpss"), "Dash", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_vqgx3"), "JumpAndFall", "Dash", SubResource("AnimationNodeStateMachineTransition_pgv6q"), "JumpAndFall", "Spin", SubResource("AnimationNodeStateMachineTransition_xqivb"), "Spin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_w7sik"), "Walking", "Spin", SubResource("AnimationNodeStateMachineTransition_ocqmu"), "Dash", "Slide", SubResource("AnimationNodeStateMachineTransition_v6mtc"), "Slide", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_tcyba"), "Flip", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_q4cli"), "Slide", "Flip", SubResource("AnimationNodeStateMachineTransition_fem22"), "Spin", "SuperSpin", SubResource("AnimationNodeStateMachineTransition_d1j4y"), "SuperSpin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_gsk3x"), "Dash", "Spin", SubResource("AnimationNodeStateMachineTransition_acw5q"), "Slide", "Spin", SubResource("AnimationNodeStateMachineTransition_euuoj")]
+graph_offset = Vector2(-160, -106)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ls75x"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_1elqm"]
-graph_offset = Vector2(-209.8, 27.2667)
+graph_offset = Vector2(-31.7576, -21.2121)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_ieb0f")
 nodes/Add2/position = Vector2(453.333, 160)
 nodes/HandMachine/node = SubResource("AnimationNodeStateMachine_ytn5g")
@@ -362,9 +413,12 @@ parameters/BlendTree/HandMachine/conditions/is_grabbing_2 = false
 parameters/BlendTree/HandMachine/conditions/is_swinging = false
 parameters/BlendTree/HandMachine/conditions/is_yeeting = false
 parameters/BlendTree/StateMachine/conditions/is_dash_pressed = false
+parameters/BlendTree/StateMachine/conditions/is_flipping = false
 parameters/BlendTree/StateMachine/conditions/is_on_ground = false
 parameters/BlendTree/StateMachine/conditions/is_rave_pressed = false
+parameters/BlendTree/StateMachine/conditions/is_sliding = false
 parameters/BlendTree/StateMachine/conditions/is_spin_pressed = false
+parameters/BlendTree/StateMachine/conditions/is_super_spinning = false
 parameters/BlendTree/StateMachine/JumpAndFall/blend_position = 0
 parameters/BlendTree/StateMachine/Walking/blend_position = Vector2(0, 2.275)
 parameters/BlendTree/TimeScale/scale = 1.0
@@ -446,6 +500,7 @@ shape = SubResource("CapsuleShape3D_fc1xm")
 
 [node name="PopsPlayer" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_fc1xm")
+unit_size = 20.0
 max_polyphony = 3
 bus = &"SFX"
 
