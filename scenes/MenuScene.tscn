@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://xsviydmib70d"]
+
+[ext_resource type="Theme" uid="uid://5ryk8wjh8k36" path="res://ui/base_theme.tres" id="1_6fxy3"]
+[ext_resource type="Script" uid="uid://clcxldtajj80v" path="res://scenes/menu_scene.gd" id="1_21ehr"]
+
+[node name="MenuScene" type="Node3D"]
+script = ExtResource("1_21ehr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(350, 40)
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.2
+anchor_right = 0.25
+anchor_bottom = 0.65
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("1_6fxy3")
+theme_override_constants/separation = 16
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "PLAY SOLO"
+
+[node name="MultiplayerButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "MULTIPLAYER"
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "QUIT"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

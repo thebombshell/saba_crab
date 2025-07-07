@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds3bl7txwbxq5"]
+
+[ext_resource type="Script" uid="uid://bno5vuj0pill3" path="res://scenes/loader_scene.gd" id="1_5huan"]
+[ext_resource type="PackedScene" uid="uid://ccjww4x18uira" path="res://ui/command_panel.tscn" id="2_5huan"]
+
+[node name="LoaderScene" type="Node3D"]
+script = ExtResource("1_5huan")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="CommandPanel" parent="CanvasLayer" instance=ExtResource("2_5huan")]

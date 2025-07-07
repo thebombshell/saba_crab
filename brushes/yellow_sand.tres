@@ -1,7 +1,6 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://db26evuax1qov"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://db26evuax1qov"]
 
 [ext_resource type="Texture2D" uid="uid://g5u02qiqw052" path="res://brushes/sand_albedo.png" id="1_baosg"]
-[ext_resource type="Texture2D" uid="uid://du0f2c6h6d1nd" path="res://brushes/sand_metalness.png" id="2_kv663"]
 
 [resource]
 diffuse_mode = 2
@@ -9,7 +8,6 @@ specular_mode = 1
 albedo_texture = ExtResource("1_baosg")
 rim = 0.05
 rim_tint = 0.22
-heightmap_texture = ExtResource("2_kv663")
 subsurf_scatter_strength = 1.0
 uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true

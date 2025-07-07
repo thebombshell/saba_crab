@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs></defs><g>
+<g>
+	<g>
+		<g>
+			<g transform="matrix(1,0,0,1,32,13.590325498)">
+				<path d="M80,413C80,413 432,413 432,413 " fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+			</g>
+			<g transform="matrix(1,0,0,1,32,13.590325498)">
+				<path d="M432,413C432,356.717953 432,256 256,256 C80,256 80,356.717953 80,413 " fill="none" stroke="#fefefe" stroke-width="16" stroke-linecap="round"/>
+			</g>
+			<g transform="matrix(1,0,0,1,32,13.590325498)">
+				<path d="M256,80C304.55706,80 344,119.44294 344,168 C344,216.55706 304.55706,256 256,256 C207.44294,256 168,216.55706 168,168 C168,119.44294 207.44294,80 256,80 Z" fill="none" stroke="#fefefe" stroke-width="16"/>
+			</g>
+		</g>
+		<g>
+			<g transform="matrix(1,0,0,1,-24,-20)">
+				<path d="M80,413L 137,413 " fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+			</g>
+			<g transform="matrix(1,0,0,1,-24,-20)">
+				<path d="M80,413C80,358.042318 80,260.715358 243.865761,256.165412 M401.691654,302.796058C392.351104,292.371884 380.131945,283.015473 364.147035,275.458486 " fill="none" stroke="#fefefe" stroke-width="16" stroke-linecap="round"/>
+			</g>
+			<g transform="matrix(1,0,0,1,-24,-20)">
+				<path d="M326.005943,114.707036C309.92092,93.620506 284.534112,80 256,80 C207.44294,80 168,119.44294 168,168 C168,212.569494 201.230732,249.460329 244.238492,255.218799 " fill="none" stroke="#fefefe" stroke-width="16"/>
+			</g>
+		</g>
+		<g>
+			<g>
+				<path d="M400,150C400,150 480,150 480,150 " transform="matrix(1,0,0,1,-3.5,-40.6093995)" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+			</g>
+			<g>
+				<path d="M427,110C427,110 427,190 427,190 " transform="matrix(1,0,0,1,9.5,-38.218799)" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+			</g>
+		</g>
+	</g>
+</g></g></svg>

@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm4r8j2cx4qe7"]
+
+[ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="1_cpnc6"]
+
+[node name="CommandLabel" type="Label"]
+custom_minimum_size = Vector2(392, 24)
+offset_right = 1.0
+theme_override_colors/font_color = Color(1, 0.62, 0.43, 1)
+theme_override_fonts/font = ExtResource("1_cpnc6")
+theme_override_font_sizes/font_size = 20
+autowrap_mode = 3

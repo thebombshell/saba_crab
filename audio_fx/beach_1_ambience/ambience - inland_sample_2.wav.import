@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://0jb2fyr8hmeo"
+path="res://.godot/imported/ambience - inland_sample_2.wav-1fa35d64335359ced4779d1a95550b8c.sample"
+
+[deps]
+
+source_file="res://audio_fx/beach_1_ambience/ambience - inland_sample_2.wav"
+dest_files=["res://.godot/imported/ambience - inland_sample_2.wav-1fa35d64335359ced4779d1a95550b8c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=true
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,69 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://5ryk8wjh8k36"]
+
+[ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="1_d8awb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52fkg"]
+bg_color = Color(0.76, 0.468667, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.615686, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.372549)
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2b18n"]
+bg_color = Color(1, 0.616667, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.372549)
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0also"]
+bg_color = Color(0.76, 0.468667, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.247059)
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xs5u6"]
+bg_color = Color(0.760784, 0.470588, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.247059)
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5vef"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+Button/colors/font_color = Color(1, 0.923333, 0.8, 1)
+Button/colors/font_focus_color = Color(1, 0.923333, 0.8, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_pressed_color = Color(1, 0.846667, 0.6, 1)
+Button/colors/font_pressed_color = Color(1, 0.923333, 0.8, 1)
+Button/fonts/font = ExtResource("1_d8awb")
+Button/styles/focus = SubResource("StyleBoxFlat_52fkg")
+Button/styles/hover = SubResource("StyleBoxFlat_2b18n")
+Button/styles/normal = SubResource("StyleBoxFlat_0also")
+Button/styles/pressed = SubResource("StyleBoxFlat_xs5u6")
+Panel/styles/panel = SubResource("StyleBoxFlat_s5vef")

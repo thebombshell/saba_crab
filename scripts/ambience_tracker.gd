@@ -4,6 +4,7 @@ class_name AmbienceTrackerActor extends Node3D
 
 @export var listener_node: Node3D = null;
 @export var ambience_names: Dictionary[String, int] = {};
+@export var ambience_max_volumes: Dictionary[String, float] = {};
 @export var ambience_fade_distance: Dictionary[String, float] = {};
 @export var default_fade_distance: float = 100.0;
 
@@ -18,6 +19,10 @@ func find_nearest_distance(t_area: Area3D) -> float:
 func get_fade_distance(t_name: String):
 	
 	return ambience_fade_distance[t_name] if ambience_fade_distance.has(t_name) else default_fade_distance;
+
+func get_max_volume(t_name: String):
+	
+	return ambience_max_volumes[t_name] if ambience_max_volumes.has(t_name) else -14.0;
 
 func _physics_process(t_delta: float) -> void:
 	
@@ -35,15 +40,18 @@ func _physics_process(t_delta: float) -> void:
 			continue;
 		var area: Area3D = get_node(t_name);
 		var id = ambience_names[t_name];
+		var max_value = get_max_volume(t_name);
 		if area.has_overlapping_areas():
-			stream.set_sync_stream_volume(id, 0.0);
+			stream.set_sync_stream_volume(id, max_value);
+			print("%s:%d" % [t_name, max_value]);
 		else:
 			var alpha = clamp(smoothstep(0.0, get_fade_distance(t_name),
 				find_nearest_distance(area)), 0.0, 1.0);
-			var value = alpha * -60.0;
+			var value = lerp(max_value, -60.0, alpha);
 			var old_value = stream.get_sync_stream_volume(id);
 			if value <= -60.0:
 				stream.set_sync_stream_volume(id, old_value - t_delta);
 			else:
 				stream.set_sync_stream_volume(id, value);
+			print("%s:%d" % [t_name, value]);
 	return;
