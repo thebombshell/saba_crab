@@ -76,6 +76,7 @@ func _on_created_lobby():
 
 func _on_joined_lobby():
 	
+	launch_upnp_thread();
 	if SteamManager.is_hosting_lobby:
 		return;
 	var gameserver = SteamManager.get_lobby_gameserver();
@@ -85,8 +86,6 @@ func _on_joined_lobby():
 		join_multiplayer(gameserver[0], gameserver[1]);
 	else:
 		is_waiting_for_gameserver = true;
-	
-	launch_upnp_thread();
 	return;
 
 func _on_kicked_from_lobby():
