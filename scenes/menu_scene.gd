@@ -1,11 +1,16 @@
 class_name MenuScene extends Node3D
 
+const FRIEND_CONTROL = preload("res://ui/friend_control.tscn");
+
 @onready var canvas_layer: CanvasLayer = $CanvasLayer;
-@onready var play_button: Button = $CanvasLayer/VBoxContainer/PlayButton;
+@onready var play_button: Button = $CanvasLayer/Control/MenuList/PlayButton;
 @onready var ip_edit: LineEdit = $CanvasLayer/MultiplayerContainer/IpEdit;
 @onready var join_button: Button = $CanvasLayer/MultiplayerContainer/JoinButton;
 @onready var multiplayer_container: VBoxContainer = $CanvasLayer/MultiplayerContainer;
-@onready var host_button: Button = $CanvasLayer/MultiplayerContainer/HostButton
+@onready var host_button: Button = $CanvasLayer/MultiplayerContainer/HostButton;
+@onready var friend_list: VBoxContainer = $CanvasLayer/MultiplayerContainer/ScrollContainer/MarginContainer/FriendList;
+
+var last_update = 0.0;
 
 func _on_play_button_pressed() -> void:
 	
@@ -24,16 +29,27 @@ func _on_visibility_changed() -> void:
 	process_mode = Node.PROCESS_MODE_PAUSABLE if visible else Node.PROCESS_MODE_DISABLED;
 	return;
 
-func _ready() -> void:
+func handle_initial_focus():
 	
 	play_button.grab_focus();
+	return;
+
+func _on_join_lobby():
+	
+	_on_play_button_pressed();
+	return;
+
+func _ready() -> void:
+	
+	handle_initial_focus.call_deferred();
+	SteamManager.current.joined_lobby.connect(_on_join_lobby);
 	return;
 
 
 func _on_host_button_pressed() -> void:
 	
 	MultiplayerManager.init_multiplayer();
-	_on_play_button_pressed();
+	SteamManager.host_lobby();
 	return;
 
 func _on_join_button_pressed() -> void:
@@ -45,4 +61,30 @@ func _on_join_button_pressed() -> void:
 func _on_ip_edit_text_changed(t_new_text: String) -> void:
 	
 	join_button.disabled = !t_new_text.is_valid_ip_address();
+	return;
+
+func update_friend_list():
+	
+	for child in friend_list.get_children():
+		child.queue_free.call_deferred();
+	
+	for friend in SteamManager.get_friend_info():
+		if friend.is_online:
+			var node = FRIEND_CONTROL.instantiate();
+			friend_list.add_child(node);
+			node.init.call_deferred(friend);
+	return;
+
+func _physics_process(_delta: float) -> void:
+	
+	var now = Time.get_unix_time_from_system();
+	if now - last_update > 3.0:
+		last_update = now;
+		update_friend_list();
+	return;
+
+
+func _on_multiplayer_button_toggled(t_toggled_on: bool) -> void:
+	
+	multiplayer_container.visible = t_toggled_on;
 	return;

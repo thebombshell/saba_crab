@@ -1,36 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds3bl7txwbxq5"]
+[gd_scene load_steps=6 format=3 uid="uid://ds3bl7txwbxq5"]
 
 [ext_resource type="Script" uid="uid://bno5vuj0pill3" path="res://scenes/loader_scene.gd" id="1_5huan"]
-[ext_resource type="PackedScene" uid="uid://ccjww4x18uira" path="res://ui/command_panel.tscn" id="2_5huan"]
+[ext_resource type="PackedScene" uid="uid://86hubr7y17qv" path="res://ui/command_panel.tscn" id="2_5huan"]
 [ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="3_yft55"]
 [ext_resource type="Script" uid="uid://bc6rtgfv2d0ot" path="res://scripts/multiplayer_manager.gd" id="4_rfcsa"]
+[ext_resource type="Script" uid="uid://b3ar2g56fg2so" path="res://scripts/steam_manager.gd" id="5_553pf"]
 
 [node name="LoaderScene" type="Node3D"]
 script = ExtResource("1_5huan")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CommandControl" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchor_left = 0.05
-anchor_top = 0.65
-anchor_right = 0.35
-anchor_bottom = 0.95
-mouse_filter = 1
-
-[node name="CommandPanel" parent="CanvasLayer/CommandControl" instance=ExtResource("2_5huan")]
-custom_minimum_size = Vector2(350, 24)
-layout_mode = 1
-anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CommandPanel" parent="CanvasLayer" instance=ExtResource("2_5huan")]
 
 [node name="FYILabel" type="Label" parent="CanvasLayer"]
 anchors_preset = -1
@@ -47,3 +28,6 @@ autowrap_mode = 3
 
 [node name="MultiplayerManager" type="Node" parent="."]
 script = ExtResource("4_rfcsa")
+
+[node name="SteamManager" type="Node" parent="."]
+script = ExtResource("5_553pf")

@@ -17,34 +17,41 @@ script = ExtResource("1_21ehr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
-custom_minimum_size = Vector2(350, 40)
-anchors_preset = -1
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchor_left = 0.05
-anchor_top = 0.2
-anchor_right = 0.25
-anchor_bottom = 0.65
+anchor_top = 0.05
+anchor_right = 0.35
+anchor_bottom = 0.6
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="MenuList" type="VBoxContainer" parent="CanvasLayer/Control"]
+custom_minimum_size = Vector2(350, 40)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
 theme = ExtResource("1_6fxy3")
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="PlayButton" type="Button" parent="CanvasLayer/Control/MenuList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "PLAY SOLO"
 
-[node name="MultiplayerButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="MultiplayerButton" type="Button" parent="CanvasLayer/Control/MenuList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
+toggle_mode = true
 text = "MULTIPLAYER"
 
-[node name="SettingsButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="CanvasLayer/Control/MenuList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "SETTINGS"
 
-[node name="QuitButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CanvasLayer/Control/MenuList"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "QUIT"
@@ -60,6 +67,20 @@ anchor_bottom = 0.95
 theme = ExtResource("1_6fxy3")
 theme_override_constants/separation = 16
 alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MultiplayerContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MultiplayerContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="FriendList" type="VBoxContainer" parent="CanvasLayer/MultiplayerContainer/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
 
 [node name="HostButton" type="Button" parent="CanvasLayer/MultiplayerContainer"]
 layout_mode = 2
@@ -227,8 +248,8 @@ attenuation_filter_cutoff_hz = 20500.0
 attenuation_filter_db = 0.0
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/VBoxContainer/MultiplayerButton" to="." method="_on_multiplayer_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MenuList/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Control/MenuList/MultiplayerButton" to="." method="_on_multiplayer_button_toggled"]
 [connection signal="pressed" from="CanvasLayer/MultiplayerContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MultiplayerContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="text_changed" from="CanvasLayer/MultiplayerContainer/IpEdit" to="." method="_on_ip_edit_text_changed"]

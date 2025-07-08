@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl5243hgmw6uo"]
+
+[ext_resource type="Theme" uid="uid://5ryk8wjh8k36" path="res://ui/base_theme.tres" id="1_s6x8g"]
+[ext_resource type="Script" uid="uid://ivlo73u8r4lf" path="res://ui/friend_control.gd" id="2_blb7w"]
+[ext_resource type="Script" uid="uid://baim48guv3n7v" path="res://scripts/auto_label.gd" id="3_h22mf"]
+[ext_resource type="Texture2D" uid="uid://dmq7lj5wouxyd" path="res://brushes/icons/invite.svg" id="4_c664p"]
+[ext_resource type="Texture2D" uid="uid://bic25rsxjmckv" path="res://brushes/icons/join.svg" id="5_mgsvb"]
+
+[node name="FriendControl" type="Panel"]
+custom_minimum_size = Vector2(160, 48)
+offset_right = 800.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme = ExtResource("1_s6x8g")
+script = ExtResource("2_blb7w")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+theme_override_font_sizes/font_size = 24
+text = "tricerotops"
+script = ExtResource("3_h22mf")
+min_scale_size = 40.0
+max_scale_size = 80.0
+min_font_size = 24
+max_font_size = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="InviteContainer" type="AspectRatioContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+stretch_mode = 1
+alignment_horizontal = 2
+
+[node name="InviteButton" type="Button" parent="HBoxContainer/InviteContainer"]
+layout_mode = 2
+icon = ExtResource("4_c664p")
+expand_icon = true
+
+[node name="JoinContainer" type="AspectRatioContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+stretch_mode = 1
+alignment_horizontal = 2
+
+[node name="JoinButton" type="Button" parent="HBoxContainer/JoinContainer"]
+layout_mode = 2
+icon = ExtResource("5_mgsvb")
+expand_icon = true
+
+[connection signal="pressed" from="HBoxContainer/InviteContainer/InviteButton" to="." method="_on_invite_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/JoinContainer/JoinButton" to="." method="_on_join_button_pressed"]

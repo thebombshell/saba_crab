@@ -12,7 +12,7 @@ uniform float gradient_height = 0.5;
 uniform sampler2D alpha_sampler;
 
 void vertex() {
-	
+
 	float time = TIME + NODE_POSITION_WORLD.x + NODE_POSITION_WORLD.z;
 	float theta = sin(time * wave_speed) * smoothstep(0.0, wave_height, VERTEX.y) * wave_scale;
 	float st = sin(theta);
@@ -26,7 +26,7 @@ void vertex() {
 }
 
 void fragment() {
-	
+
 	ALBEDO = COLOR.rgb;
 	if (texture(alpha_sampler, UV).a < 0.5)
 		discard;

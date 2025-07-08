@@ -21,7 +21,7 @@ signal on_load_complete(t_path : String, t_root : Node);
 var queued_load_paths : Array[String] = [];
 
 #@onready var steam_manager: SteamManager = $SteamManager;
-@onready var command_panel: CommandPanel = $CanvasLayer/CommandControl/CommandPanel;
+@onready var command_panel: CommandPanel = $CanvasLayer/CommandPanel/Panel;
 @onready var fyi_label: Label = $CanvasLayer/FYILabel;
 
 func _ready():

@@ -18,5 +18,5 @@ func _physics_process(t_delta :float) -> void:
 	var height = clamp(size.y + t_delta * 5000.0 * (-1.0 if should_be_folded else 1.0),
 		fold_size_minimum, lerp(fold_size_maximum, parent_height, fold_size_scaling));
 	
-	size = Vector2(size.x, height);
+	custom_minimum_size = Vector2(0.0, height);
 	return;

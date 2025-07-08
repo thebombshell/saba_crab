@@ -2,6 +2,8 @@ class_name MultiplayerManager extends Node
 
 static var current = null;
 
+var is_waiting_for_gameserver: bool = false;
+
 var tree_multiplayer: MultiplayerAPI:
 	get: return get_tree().get_multiplayer();
 
@@ -67,6 +69,35 @@ func listen_to_peer(t_peer: MultiplayerPeer):
 	t_peer.peer_disconnected.connect(_peer_disconnected);
 	return;
 
+func _on_created_lobby():
+	
+	return;
+
+func _on_joined_lobby():
+	
+	if SteamManager.is_hosting_lobby:
+		return;
+	var gameserver = SteamManager.get_lobby_gameserver();
+	if gameserver != null:
+		
+		is_waiting_for_gameserver = false;
+		join_multiplayer(gameserver[0], gameserver[1]);
+	else:
+		is_waiting_for_gameserver = true;
+	return;
+
+func _on_kicked_from_lobby():
+	
+	is_waiting_for_gameserver = false;
+	return;
+
+func listen_to_steam_manager():
+	
+	SteamManager.current.created_lobby.connect(_on_created_lobby);
+	SteamManager.current.joined_lobby.connect(_on_joined_lobby);
+	SteamManager.current.kicked_from_lobby.connect(_on_kicked_from_lobby);
+	return;
+
 func _ready():
 	
 	if is_instance_valid(current):
@@ -75,4 +106,11 @@ func _ready():
 	
 	tree_multiplayer.connected_to_server.connect(_connected_to_server);
 	tree_multiplayer.connection_failed.connect(_connection_failed);
+	listen_to_steam_manager.call_deferred();
+	return;
+
+func _physics_process(_delta: float) -> void:
+	
+	if is_waiting_for_gameserver:
+		_on_joined_lobby();
 	return;

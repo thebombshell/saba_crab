@@ -11,7 +11,7 @@ uniform vec3 perlescence_colour : source_color = vec3(1.0, 1.0, 1.0);
 uniform float perlescence_frequency = 1.0;
 
 vec3 irridescence(vec3 t_view, vec3 t_normal, vec3 t_light) {
-	
+
 	float vn = dot(t_view, t_normal);
 	float ln = dot(t_light, t_normal);
 	float angle = abs(vn - ln);
@@ -20,7 +20,7 @@ vec3 irridescence(vec3 t_view, vec3 t_normal, vec3 t_light) {
 }
 
 void vertex() {
-	
+
 	float theta = TIME + (COLOR.x + COLOR.y + COLOR.z);
 	float st = sin(theta);
 	float ct = cos(theta);
@@ -33,7 +33,7 @@ void vertex() {
 }
 
 void fragment() {
-	
+
 	ALBEDO = irridescence(VIEW, NORMAL, normalize(vec3(0.2, -1.0, -0.4)));
 	METALLIC = metalness;
 	ROUGHNESS = roughness;

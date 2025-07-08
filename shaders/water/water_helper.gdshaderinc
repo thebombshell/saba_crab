@@ -36,7 +36,7 @@ vec3 find_normal(vec2 t_uv)
 }
 
 vec3 find_depth_world_position(vec2 t_screen_uv, sampler2D t_sampler, mat4 t_inverse_view_matrix, mat4 t_inverse_proj_matrix) {
-	
+
 #if CURRENT_RENDERER == RENDERER_COMPATIBILITY
 	vec3 ndc = vec3(t_screen_uv, texture(t_sampler, t_screen_uv).x) * 2.0 - 1.0;
 #else
@@ -50,7 +50,7 @@ vec3 find_depth_world_position(vec2 t_screen_uv, sampler2D t_sampler, mat4 t_inv
 }
 
 vec3 find_camera_pixel_direction(vec2 t_screen_uv, vec3 t_camera_direction, vec3 t_camera_up, float t_fov) {
-	
+
 	vec3 x = normalize(cross(t_camera_direction, t_camera_up));
 	vec3 y = normalize(cross(t_camera_direction, x));
 	vec3 z = normalize(t_camera_direction);
@@ -58,23 +58,23 @@ vec3 find_camera_pixel_direction(vec2 t_screen_uv, vec3 t_camera_direction, vec3
 }
 
 vec3 find_camera_pixel_position(vec3 t_camera_position, vec3 t_pixel_direction) {
-	
+
 	return t_camera_position + t_pixel_direction * 0.05;
 }
 
 vec3 march_to_water(vec3 ray_position, vec3 ray_direction, out float t_is_surface_hit) {
-	
+
 	float ray_sign = sign(ray_position.y);
 	t_is_surface_hit = step(ray_sign * ray_direction.y, 0.0);
-	
+
 	vec3 ray = ray_position;
 	float dist = 0.0;
 	float water_height = sample_water(ray.xz);
 	float travel = distance(ray_position.y, water_map_height) / abs(ray_direction.y);
 	ray += ray_direction * travel;
-	
+
 	for (int i = 0; i < 64; i++) {
-		
+
 		ray = ray_position + ray_direction * dist;
 		water_height = sample_water(ray.xz);
 		travel = abs(ray.y - water_height);
