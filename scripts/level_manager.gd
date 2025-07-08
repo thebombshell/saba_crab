@@ -17,7 +17,7 @@ func process_multiplayer(_delta: float) -> void:
 	# handle destroying disconnected players
 	for id in player_nodes:
 		if !multiplayer.get_peers().has(id) && id != multiplayer.get_unique_id():
-			player_nodes[id].queue_free.call_deferred();
+			player_nodes[id].queue_free();
 	
 	# handle creating connected players
 	for id in multiplayer.get_peers():

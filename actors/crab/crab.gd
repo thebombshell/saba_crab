@@ -559,6 +559,8 @@ func process_ui(t_delta: float) -> void:
 
 func process_multiplayer_peer(_delta: float) -> void:
 	
+	if multiplayer.is_server() && get_multiplayer_authority() != multiplayer_id:
+		set_multiplayer_authority(multiplayer_id);
 	return;
 
 func _ready() -> void:
