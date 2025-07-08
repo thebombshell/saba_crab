@@ -3,6 +3,7 @@ class_name MultiplayerManager extends Node
 static var current = null;
 
 var is_waiting_for_gameserver: bool = false;
+var upnp_thread: Thread = null;
 
 var tree_multiplayer: MultiplayerAPI:
 	get: return get_tree().get_multiplayer();
@@ -84,11 +85,40 @@ func _on_joined_lobby():
 		join_multiplayer(gameserver[0], gameserver[1]);
 	else:
 		is_waiting_for_gameserver = true;
+	
+	launch_upnp_thread();
 	return;
 
 func _on_kicked_from_lobby():
 	
 	is_waiting_for_gameserver = false;
+	return;
+
+func upnp_result(t_success :bool):
+	
+	CommandPanel.add_line("MM", "UPNP successful" if t_success else "UPNP failed");
+	return;
+
+func upnp_thread_func(t_port: int = 60123):
+	
+	var upnp = UPNP.new();
+	var result :int = UPNP.UPNP_RESULT_ACTION_FAILED;
+	for i in 3:
+		result = upnp.discover(1000, 5);
+		if is_queued_for_deletion():
+			return;
+		if result == UPNP.UPNP_RESULT_SUCCESS:
+			break;
+	if result == UPNP.UPNP_RESULT_SUCCESS:
+		upnp.add_port_mapping(t_port, 0, "Saba Crab", "TCP");
+		upnp.add_port_mapping(t_port, 0, "Saba Crab", "UDP");
+	upnp_result.call_deferred(result == UPNP.UPNP_RESULT_SUCCESS);
+	return;
+
+func launch_upnp_thread():
+	
+	upnp_thread = Thread.new();
+	upnp_thread.start(upnp_thread_func);
 	return;
 
 func listen_to_steam_manager():
@@ -107,6 +137,12 @@ func _ready():
 	tree_multiplayer.connected_to_server.connect(_connected_to_server);
 	tree_multiplayer.connection_failed.connect(_connection_failed);
 	listen_to_steam_manager.call_deferred();
+	return;
+
+func _exit_tree() -> void:
+	
+	if upnp_thread != null:
+		upnp_thread.wait_to_finish();
 	return;
 
 func _physics_process(_delta: float) -> void:
