@@ -67,7 +67,31 @@ func update_friend_list():
 	
 	for child in friend_list.get_children():
 		child.queue_free.call_deferred();
-	
+		
+	var friends = SteamManager.get_friend_info();
+	var removes = [];
+	# list friends in this game first (not relevant now, but when I port this to
+	# the in game menu it will be
+	for friend in friends:
+		if friend.is_online && friend.is_in_game:
+			var node = FRIEND_CONTROL.instantiate();
+			friend_list.add_child(node);
+			node.init.call_deferred(friend);
+			removes.push_back(friend);
+	for friend in removes:
+		friends.erase(friend);
+	removes.clear();
+	# next list friends in a joinable game
+	for friend in SteamManager.get_friend_info():
+		if friend.is_online && friend.is_playing:
+			var node = FRIEND_CONTROL.instantiate();
+			friend_list.add_child(node);
+			node.init.call_deferred(friend);
+			removes.push_back(friend);
+	for friend in removes:
+		friends.erase(friend);
+	removes.clear();
+	# then everyone else
 	for friend in SteamManager.get_friend_info():
 		if friend.is_online:
 			var node = FRIEND_CONTROL.instantiate();

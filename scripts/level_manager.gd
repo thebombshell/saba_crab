@@ -14,10 +14,15 @@ func process_multiplayer(_delta: float) -> void:
 	if !multiplayer.is_server():
 		return;
 	
+	var removes = [];
 	# handle destroying disconnected players
 	for id in player_nodes:
 		if !multiplayer.get_peers().has(id) && id != multiplayer.get_unique_id():
-			player_nodes[id].queue_free();
+			if is_instance_valid(player_nodes[id]):
+				player_nodes[id].queue_free();
+			removes.push_back(player_nodes[id]);
+	for id in removes:
+		player_nodes.erase(id);
 	
 	# handle creating connected players
 	for id in multiplayer.get_peers():

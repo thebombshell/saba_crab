@@ -43,6 +43,8 @@ func try_spawn(t_data: Variant) -> Node:
 		var node = _spawn(t_data);
 		get_node(spawn_path).add_child(node);
 		return node;
+	if !multiplayer.is_server():
+		return null;
 	return spawn(t_data);
 
 func _ready():
