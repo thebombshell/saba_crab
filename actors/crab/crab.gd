@@ -574,11 +574,15 @@ func _ready() -> void:
 	if !is_locally_processible:
 		
 		crab_ui.hide();
-		crab_ui.process_mode = Node.PROCESS_MODE_DISABLED;
-	elif get_parent().has_node("../FollowCamera"):
+	return;
+
+func process_camera(_delta: float) -> void:
+	
+	if get_parent().has_node("../FollowCamera"):
 		
 		var t_camera: FollowCameraActor = get_parent().get_node("../FollowCamera");
 		t_camera.follow_target = self;
+	camera = get_viewport().get_camera_3d();
 	return;
 
 func _physics_process(t_delta: float) -> void:
@@ -589,7 +593,8 @@ func _physics_process(t_delta: float) -> void:
 			process_multiplayer_peer(t_delta);
 		return;
 	
-	camera = get_viewport().get_camera_3d();
+	crab_ui.show();
+	process_camera(t_delta);
 	process_movement(t_delta);
 	process_abilities(t_delta);
 	process_grabbing(t_delta);
