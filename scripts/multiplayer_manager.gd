@@ -29,7 +29,7 @@ func init_multiplayer_internal(t_port: int = 60123):
 func join_multiplayer_internal(t_ip: String, t_port: int = 60123):
 	
 	var peer = ENetMultiplayerPeer.new();
-	peer.create_client(t_ip, t_port);
+	peer.create_client(t_ip, t_port, 0, 0, 0, t_port + 1);
 	listen_to_peer(peer);
 	tree_multiplayer.multiplayer_peer = peer;
 	CommandPanel.add_line("MM", "Joining server at ip: %s:%d" % [t_ip, t_port]);
