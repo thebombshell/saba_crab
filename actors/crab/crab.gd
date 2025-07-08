@@ -59,7 +59,9 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 
 @export var multiplayer_id: int = 0;
 var is_local_crab: bool:
-	get: return !multiplayer.has_multiplayer_peer() || multiplayer_id == multiplayer.get_unique_id();
+	get: return (!multiplayer.has_multiplayer_peer() ||
+		(multiplayer_id == multiplayer.get_unique_id() &&
+		is_multiplayer_authority()));
 
 # configurables
 
