@@ -73,7 +73,7 @@ func update_friend_list():
 	# list friends in this game first (not relevant now, but when I port this to
 	# the in game menu it will be
 	for friend in friends:
-		if friend.is_online && friend.is_in_game:
+		if friend.is_online && friend.is_in_this_game:
 			var node = FRIEND_CONTROL.instantiate();
 			friend_list.add_child(node);
 			node.init.call_deferred(friend);
