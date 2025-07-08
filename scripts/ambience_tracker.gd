@@ -2,11 +2,13 @@ class_name AmbienceTrackerActor extends Node3D
 
 @onready var audio_stream_player_3d: AudioStreamPlayer3D = $AudioStreamPlayer3D;
 
-@export var listener_node: Node3D = null;
 @export var ambience_names: Dictionary[String, int] = {};
 @export var ambience_max_volumes: Dictionary[String, float] = {};
 @export var ambience_fade_distance: Dictionary[String, float] = {};
 @export var default_fade_distance: float = 100.0;
+
+var listener_node: Camera3D:
+	get: return get_viewport().get_camera_3d();
 
 func find_nearest_distance(t_area: Area3D) -> float:
 	
@@ -30,7 +32,7 @@ func _physics_process(t_delta: float) -> void:
 	if !is_instance_valid(listener_node):
 		return;
 	
-	# need a
+	# need an audio stream synchronized to modify stream volumes
 	if audio_stream_player_3d.stream is not AudioStreamSynchronized:
 		return;
 	
