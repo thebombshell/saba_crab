@@ -23,6 +23,7 @@ func init_multiplayer_internal(t_port: int = 60123):
 	peer.create_server(t_port, 8);
 	listen_to_peer(peer);
 	tree_multiplayer.multiplayer_peer = peer;
+	CommandPanel.add_line("MM", "Initializing server at port: %d" % t_port);
 	return;
 
 func join_multiplayer_internal(t_ip: String, t_port: int = 60123):
@@ -31,11 +32,13 @@ func join_multiplayer_internal(t_ip: String, t_port: int = 60123):
 	peer.create_client(t_ip, t_port);
 	listen_to_peer(peer);
 	tree_multiplayer.multiplayer_peer = peer;
+	CommandPanel.add_line("MM", "Joining server at ip: %s:%d" % [t_ip, t_port]);
 	return;
 
 func end_multiplayer_internal():
 	
 	tree_multiplayer.multiplayer_peer = null;
+	CommandPanel.add_line("MM", "Ending multiplayer!");
 	return;
 	
 func _connected_to_server():
