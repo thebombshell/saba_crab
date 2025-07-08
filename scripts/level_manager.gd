@@ -1,8 +1,10 @@
 class_name LevelManager extends Node3D
 
 @export var player_spawn_points: Array[MultiplayerSpawnPoint] = [];
+@export var content_path: String = "";
 
 var player_nodes: Dictionary[int, Node] = {};
+var is_ready = false;
 
 func spawn_player(t_id: int) -> void:
 	
@@ -20,7 +22,7 @@ func process_multiplayer(_delta: float) -> void:
 		if !multiplayer.get_peers().has(id) && id != multiplayer.get_unique_id():
 			if is_instance_valid(player_nodes[id]):
 				player_nodes[id].queue_free();
-			removes.push_back(player_nodes[id]);
+			removes.push_back(id);
 	for id in removes:
 		player_nodes.erase(id);
 	
@@ -32,6 +34,20 @@ func process_multiplayer(_delta: float) -> void:
 	# handle creating host player
 	if !player_nodes.has(multiplayer.get_unique_id()):
 		spawn_player(multiplayer.get_unique_id());
+	return;
+
+func _on_load_complete(t_path: String, t_node: Node):
+	
+	if t_path == content_path:
+		t_node.reparent(self);
+		LoaderScene.current.on_load_complete.disconnect(_on_load_complete);
+		is_ready = true;
+	return;
+
+func _ready():
+	
+	LoaderScene.current.on_load_complete.connect(_on_load_complete);
+	LoaderScene.load_scene(content_path);
 	return;
 
 func _physics_process(t_delta: float) -> void:

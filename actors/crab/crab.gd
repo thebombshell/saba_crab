@@ -58,10 +58,14 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 # multiplayer
 
 @export var multiplayer_id: int = 0;
-var is_local_crab: bool:
-	get: return (!multiplayer.has_multiplayer_peer() ||
-		(multiplayer_id == multiplayer.get_unique_id() &&
-		is_multiplayer_authority()));
+var is_ready: bool:
+	get:
+		var level_manager = get_node("../../");
+		return level_manager is LevelManager && level_manager.is_ready;
+var is_local_authority_and_should_be:
+	get: return multiplayer_id == multiplayer.get_unique_id() && is_multiplayer_authority();
+var is_locally_processible: bool:
+	get: return true if !multiplayer.has_multiplayer_peer() else is_local_authority_and_should_be;
 
 # configurables
 
@@ -567,7 +571,7 @@ func process_multiplayer_peer(_delta: float) -> void:
 
 func _ready() -> void:
 	
-	if !is_local_crab:
+	if !is_locally_processible:
 		
 		crab_ui.hide();
 		crab_ui.process_mode = Node.PROCESS_MODE_DISABLED;
@@ -579,8 +583,10 @@ func _ready() -> void:
 
 func _physics_process(t_delta: float) -> void:
 	
-	if !is_local_crab:
-		process_multiplayer_peer(t_delta);
+	if !(is_locally_processible && is_ready):
+		
+		if multiplayer.has_multiplayer_peer():
+			process_multiplayer_peer(t_delta);
 		return;
 	
 	camera = get_viewport().get_camera_3d();

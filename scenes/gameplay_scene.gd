@@ -1,46 +1,33 @@
-class_name Gameplay extends MultiplayerSynchronizer
+class_name Gameplay extends MultiplayerSpawner
 
 static var current: Gameplay = null;
 
-@export var level_name: String = "SeagullsCove";
-var current_level_name: String = "";
-var previous_level_name: String = "";
+@export var is_ready: bool = false;
 
-func load_level(t_name: String):
-	
-	# on loading new level, clean the curent level, store the previous level so
-	# we can handle the veyr rare edgecase that someone joins the exact frame a
-	# new load occurs, so they know to clena it up, then ask the loader scene to
-	# grab our target level
-	
-	for child in get_children():
-		child.queue_free.call_deferred();
-	previous_level_name = current_level_name;
-	current_level_name = t_name;
-	LoaderScene.load_scene("res://scenes/" + t_name + ".tscn");
-	return;
+var current_scene: LevelManager = null;
 
-func _on_load_complete(t_path: String, t_node: Node):
+var is_spawning_auhtority: bool:
+	get: return !multiplayer.has_multiplayer_peer() || multiplayer.is_server();
+
+func try_spawn(t_data: Variant) -> Node:
 	
-	# ensure menu is hidden
-	LoaderScene.current.get_node("MenuScene").visible = false;
+	if !multiplayer.has_multiplayer_peer():
+		var node = _spawn(t_data);
+		get_node(spawn_path).add_child(node);
+		return node;
+	if !multiplayer.is_server():
+		return null;
+	return spawn(t_data);
+
+func _spawn(t_data: Variant):
 	
-	# if the previous level is loaded, then we know we're in a rare edgecase and
-	# can ignore it by cleaning up the node
-	if (!previous_level_name.is_empty() &&
-		t_path.contains(previous_level_name + ".tscn")):
-		t_node.queue_free.call_deferred();
-	
-	# if this is a level we expect to load, then we reparent it here, and enable
-	# it. Addendum, this can be hit when you first load gameplay due to the
-	# order of operations on LoaderScene, so we only want to handle this when we
-	# know current_level_name has content
-	if (!current_level_name.is_empty() &&
-		t_path.contains(current_level_name + ".tscn")):
-		t_node.reparent(self);
-		t_node.process_mode = Node.PROCESS_MODE_ALWAYS;
-		t_node.visible = true;
-	return;
+	if t_data is not String:
+		push_error("Gameplay was expecting a level name");
+	is_ready = false;
+	if is_instance_valid(current_scene):
+		current_scene.queue_free();
+	current_scene = load("res://scenes/" + t_data + ".tscn").instantiate();
+	return current_scene;
 
 func _ready():
 	
@@ -49,16 +36,16 @@ func _ready():
 		push_error("There shoudl only be one Gameplay at a time");
 	current = self;
 	
-	# listen to the loader scenes load completion
-	LoaderScene.current.on_load_complete.connect(_on_load_complete);
+	LoaderScene.current.get_node("MenuScene").visible = false;
+	LoaderScene.current.get_node("MenuScene").process_mode = Node.PROCESS_MODE_DISABLED;
 	
-	if multiplayer.has_multiplayer_peer() && !multiplayer.is_server():
-		level_name = "";
+	spawn_function = _spawn;
+	if is_spawning_auhtority:
+		try_spawn("SeagullsCove");
 	return;
 
 func _physics_process(_delta: float) -> void:
 	
-	# if level has changed we should load the new one
-	if level_name != current_level_name:
-		load_level(level_name);
+	if is_spawning_auhtority:
+		is_ready = is_instance_valid(current_scene) && current_scene.is_ready;
 	return;

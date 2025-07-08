@@ -3,10 +3,13 @@
 [ext_resource type="Script" uid="uid://b11wnii58t1k8" path="res://scenes/gameplay_scene.gd" id="1_mkkox"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mkkox"]
-properties/0/path = NodePath("GameplayScene:level_name")
+properties/0/path = NodePath(".:is_ready")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
-[node name="GameplayScene" type="MultiplayerSynchronizer"]
-replication_config = SubResource("SceneReplicationConfig_mkkox")
+[node name="GameplayScene" type="MultiplayerSpawner"]
+spawn_path = NodePath(".")
 script = ExtResource("1_mkkox")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_mkkox")

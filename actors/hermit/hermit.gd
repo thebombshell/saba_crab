@@ -21,6 +21,16 @@ const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 
 const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 
+# multiplayer
+var is_ready: bool:
+	get:
+		var level_manager = get_node("../../");
+		return level_manager is LevelManager && level_manager.is_ready;
+var is_local_authority_and_should_be:
+	get: return is_multiplayer_authority();
+var is_locally_processible: bool:
+	get: return true if !multiplayer.has_multiplayer_peer() else is_local_authority_and_should_be;
+
 # misc nodes
 
 @onready var animation_tree: AnimationTree = $AnimationTree;
@@ -246,7 +256,7 @@ func _on_spawn(t_data: Variant):
 
 func _physics_process(t_delta: float) -> void:
 	
-	if multiplayer.has_multiplayer_peer() && !multiplayer.is_server():
+	if !(is_locally_processible && is_ready):
 		return;
 	
 	process_movement(t_delta);
