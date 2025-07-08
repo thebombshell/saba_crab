@@ -13,7 +13,8 @@ uniform sampler2D alpha_sampler;
 
 void vertex() {
 	
-	float theta = sin(TIME * wave_speed) * smoothstep(0.0, wave_height, VERTEX.y) * wave_scale;
+	float time = TIME + NODE_POSITION_WORLD.x + NODE_POSITION_WORLD.z;
+	float theta = sin(time * wave_speed) * smoothstep(0.0, wave_height, VERTEX.y) * wave_scale;
 	float st = sin(theta);
 	float ct = cos(theta);
 	mat3 rot = mat3(

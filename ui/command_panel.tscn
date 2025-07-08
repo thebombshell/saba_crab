@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ccjww4x18uira"]
 
-[ext_resource type="Script" uid="uid://d3nhe3ps03bn0" path="res://scripts/command_panel.gd" id="1_svo1i"]
+[ext_resource type="Script" uid="uid://t2baxo4fpd2o" path="res://ui/command_panel_commands.gd" id="1_aay2y"]
 [ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="2_aay2y"]
 [ext_resource type="Texture2D" uid="uid://cdv0qotb75sgv" path="res://brushes/icons/fold_untoggled.svg" id="2_kjcr4"]
 [ext_resource type="Texture2D" uid="uid://biks5vdmyq5xr" path="res://brushes/icons/fold_toggled.svg" id="3_xdc48"]
@@ -38,7 +38,7 @@ offset_top = 400.0
 offset_right = 400.0
 offset_bottom = -64.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vafxb")
-script = ExtResource("1_svo1i")
+script = ExtResource("1_aay2y")
 fold_size_minimum = 24.0
 fold_size_maximum = 150.0
 

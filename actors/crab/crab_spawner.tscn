@@ -1,0 +1,63 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5juv2ah8cigo"]
+
+[ext_resource type="Script" uid="uid://duja5r4vf067q" path="res://scripts/multiplayer_spawn_point.gd" id="1_kd43q"]
+[ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="2_4jqn2"]
+[ext_resource type="PackedScene" uid="uid://lddmwkgyuqsk" path="res://actors/crab/crab.tscn" id="2_6va4d"]
+
+[node name="CrabSpawner" type="Node3D"]
+script = ExtResource("1_kd43q")
+spawn_actor = ExtResource("2_6va4d")
+spawn_immediately = false
+spawn_once = false
+
+[node name="crab" parent="." instance=ExtResource("2_4jqn2")]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
+
+[node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
+bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
+bones/1/position = Vector3(-1.19209e-07, 3.57628e-07, 1.58246)
+bones/1/rotation = Quaternion(-0.0855332, 7.71563e-19, 1.72431e-18, 0.996335)
+bones/2/rotation = Quaternion(-6.91205e-06, -0.000124586, 0.623034, 0.782195)
+bones/3/rotation = Quaternion(-0.000111696, -4.96125e-09, -0.470701, 0.882293)
+bones/4/rotation = Quaternion(-6.91313e-06, 0.000124587, -0.623034, 0.782195)
+bones/5/rotation = Quaternion(-0.000111692, 3.39741e-09, 0.4707, 0.882293)
+bones/6/position = Vector3(-2.63418, 0.915537, 0.631063)
+bones/6/rotation = Quaternion(0.0279933, -0.376673, 0.116826, 0.918523)
+bones/7/rotation = Quaternion(4.39551e-05, 3.69305e-06, 0.212165, 0.977234)
+bones/8/rotation = Quaternion(-4.39382e-05, 3.70544e-06, -0.212164, 0.977234)
+bones/9/position = Vector3(2.63418, 0.915537, 0.631063)
+bones/9/rotation = Quaternion(0.0279933, 0.376673, -0.116826, 0.918523)
+bones/10/rotation = Quaternion(4.39584e-05, -3.68233e-06, -0.212165, 0.977234)
+bones/11/rotation = Quaternion(-4.39298e-05, -3.67844e-06, 0.212164, 0.977234)
+bones/12/rotation = Quaternion(0.0840079, -0.0467175, 0.239238, 0.966191)
+bones/13/rotation = Quaternion(-0.361299, 0.0124797, 0.153833, 0.919588)
+bones/14/rotation = Quaternion(-0.41072, 0.00350323, 0.00654384, 0.911731)
+bones/15/rotation = Quaternion(-0.00474551, -0.0352117, 0.962336, 0.26953)
+bones/16/rotation = Quaternion(-0.393047, -0.00318559, -0.0904252, 0.915056)
+bones/17/rotation = Quaternion(-0.392062, -0.00146695, 0.000372723, 0.919938)
+bones/18/rotation = Quaternion(0.0840079, 0.0467175, -0.239238, 0.966191)
+bones/19/rotation = Quaternion(-0.361299, -0.0124797, -0.153833, 0.919588)
+bones/20/rotation = Quaternion(-0.41072, -0.00350323, -0.00654384, 0.911731)
+bones/21/rotation = Quaternion(0.00474551, -0.0352117, 0.962336, -0.26953)
+bones/22/rotation = Quaternion(-0.393047, 0.00318559, 0.0904252, 0.915056)
+bones/23/rotation = Quaternion(-0.392062, 0.00146695, -0.000372723, 0.919938)
+bones/24/rotation = Quaternion(0.045663, -0.0508843, 0.695447, 0.715318)
+bones/25/rotation = Quaternion(-0.385248, -0.00170352, 0.0455832, 0.921685)
+bones/26/rotation = Quaternion(-0.44574, -0.00136058, 0.00234112, 0.895159)
+bones/27/rotation = Quaternion(0.045663, 0.0508843, -0.695447, 0.715318)
+bones/28/rotation = Quaternion(-0.385248, 0.00170352, -0.0455832, 0.921685)
+bones/29/rotation = Quaternion(-0.44574, 0.00136058, -0.00234112, 0.895159)
+bones/30/position = Vector3(-1.98933, 1.32662, 0.198479)
+bones/31/position = Vector3(1.98933, 1.32662, 0.198479)
+bones/32/position = Vector3(-2.44807, -0.000359535, 0.198479)
+bones/33/position = Vector3(2.44807, -0.000359535, 0.198479)
+bones/34/position = Vector3(-1.98933, -1.32662, 0.198479)
+bones/35/position = Vector3(1.98933, -1.32662, 0.198479)
+
+[node name="SafetyRing" parent="crab/CrabSkeleton/Skeleton3D" index="1"]
+visible = false
+
+[node name="BoosterPack" parent="crab/CrabSkeleton/Skeleton3D" index="2"]
+visible = false
+
+[editable path="crab"]

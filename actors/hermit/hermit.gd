@@ -13,7 +13,8 @@ const ANIM_PARAMS_IS_HIDE_PRESSED = "parameters/BlendTree/StateMachine/condition
 const ANIM_PARAMS_JUMP_AND_FALL = "parameters/BlendTree/StateMachine/JumpAndFall/blend_position";
 const ANIM_PARAMS_WALKING_BLEND = "parameters/BlendTree/StateMachine/Walking/blend_position";
 const ANIM_PARAMS_TIME_SCALE = "parameters/BlendTree/TimeScale/scale";
-const ANIM_PARAMS_IS_SWINGING = "parameters/BlendTree/HandMachine/conditions/is_swinging";
+const ANIM_PARAMS_IS_SWINGING_1 = "parameters/BlendTree/HandMachine/conditions/is_swinging_1";
+const ANIM_PARAMS_IS_SWINGING_2 = "parameters/BlendTree/HandMachine/conditions/is_swinging_2";
 const ANIM_PARAMS_ARM_BLEND = "parameters/BlendTree/Add2/add_amount";
 
 # audio assets
@@ -56,16 +57,13 @@ var smoothed_up: Vector3 = Vector3.UP + Vector3.ONE * 0.001;
 # animation trackers
 var is_raving = false;
 var is_hiding = false;
+var is_swinging_1 = false;
+var is_swinging_2 = false;
 
 # roaming trackers
 var origin: Vector3 = Vector3.ZERO;
 var roaming_timer: float = 5.0;
 var roaming_target: Vector3 = Vector3.ZERO;
-
-func _ready() -> void:
-	
-	origin = global_position;
-	return;
 
 func init_roaming():
 	
@@ -196,7 +194,8 @@ func process_animation(t_delta: float) -> void:
 	# set animation params
 	animation_tree.set(ANIM_PARAMS_IS_ON_GROUND, is_on_floor());
 	animation_tree.set(ANIM_PARAMS_JUMP_AND_FALL, velocity.dot(up_direction));
-	animation_tree.set(ANIM_PARAMS_IS_SWINGING, Input.is_action_just_pressed("swing"));
+	animation_tree.set(ANIM_PARAMS_IS_SWINGING_1, is_swinging_1);
+	animation_tree.set(ANIM_PARAMS_IS_SWINGING_2, is_swinging_2);
 	animation_tree.set(ANIM_PARAMS_ARM_BLEND, arm_blend);
 	
 	# here, we're passing the walk blending params as the relationship between
@@ -225,7 +224,30 @@ func process_animation(t_delta: float) -> void:
 		arm_blend = lerp(arm_blend, 0.0 if is_raving || is_hiding else 1.0, t_delta * 10.0);
 	return;
 
+func _on_spawn(t_data: Variant):
+	
+	if t_data is not Dictionary:
+		push_error("Hermit was expecting data to be dictionary");
+		return;
+	if !t_data.has("data"):
+		push_error("Hermit was expecting data to have data");
+		return;
+	if t_data.data is not Dictionary:
+		push_error("Hermit was expecting data.data to be dictionary");
+		return;
+	if t_data.has("roaming_distance"):
+		roaming_distance = t_data.roaming_distance;
+	if t_data.has("detection_area"):
+		detection_area = get_node("../../" + t_data.detection_area);
+	if t_data.has("hostility_area"):
+		hostility_area = get_node("../../" + t_data.hostility_area);
+	origin = t_data.transform.origin;
+	return;
+
 func _physics_process(t_delta: float) -> void:
+	
+	if multiplayer.has_multiplayer_peer() && !multiplayer.is_server():
+		return;
 	
 	process_movement(t_delta);
 	process_forces(t_delta);

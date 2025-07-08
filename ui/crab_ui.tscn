@@ -1,0 +1,112 @@
+[gd_scene load_steps=10 format=3 uid="uid://cgg7lhqe14w10"]
+
+[ext_resource type="Shader" uid="uid://did5vtykh6n11" path="res://shaders/props/shell.gdshader" id="1_qbe43"]
+[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_kjnco"]
+[ext_resource type="Environment" uid="uid://w2e6ycuh6qo3" path="res://environments/ui_viewport_environment.tres" id="3_jprpl"]
+[ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="4_11yku"]
+[ext_resource type="Script" uid="uid://baim48guv3n7v" path="res://scripts/auto_label.gd" id="5_bopgo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lhgq"]
+render_priority = 0
+shader = ExtResource("1_qbe43")
+shader_parameter/bob_amount = 0.1
+shader_parameter/diffuse_colour = Color(0.83, 0.821423, 0.5727, 1)
+shader_parameter/metalness = 0.5
+shader_parameter/roughness = 0.0
+shader_parameter/emission = 0.2
+shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
+shader_parameter/perlescence_frequency = 0.5
+
+[sub_resource type="Animation" id="Animation_rgudy"]
+resource_name = "OnCollectShell"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.95, 0.95), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6khos"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ov32d"]
+_data = {
+&"OnCollectShell": SubResource("Animation_rgudy"),
+&"RESET": SubResource("Animation_6khos")
+}
+
+[node name="CrabUI" type="CanvasLayer"]
+
+[node name="ShellCountDisplay" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(150, 100)
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.25
+anchor_bottom = 0.2
+
+[node name="ShellIconContainer" type="AspectRatioContainer" parent="ShellCountDisplay"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="ShellCountDisplay/ShellIconContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="ShellCountDisplay/ShellIconContainer/ViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(100, 100)
+render_target_update_mode = 4
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
+layers = 524288
+material_override = SubResource("ShaderMaterial_8lhgq")
+mesh = ExtResource("2_kjnco")
+skeleton = NodePath("../../../..")
+
+[node name="Camera3D" type="Camera3D" parent="ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.70725)
+cull_mask = 524288
+environment = ExtResource("3_jprpl")
+fov = 60.0
+
+[node name="ShellCountLabel" type="Label" parent="ShellCountDisplay"]
+custom_minimum_size = Vector2(50, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+theme_override_fonts/font = ExtResource("4_11yku")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_bopgo")
+
+[node name="UIAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ov32d")
+}
+
+[connection signal="resized" from="ShellCountDisplay/ShellCountLabel" to="ShellCountDisplay/ShellCountLabel" method="_on_resized"]

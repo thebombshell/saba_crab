@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://bjh1a7ut3b2of"]
+[gd_scene load_steps=43 format=3 uid="uid://bjh1a7ut3b2of"]
 
 [ext_resource type="Script" uid="uid://gkgniwalsak6" path="res://actors/hermit/hermit.gd" id="1_y0ick"]
 [ext_resource type="PackedScene" uid="uid://c4n2fttjfgugr" path="res://models/hermit/hermit.glb" id="2_oell7"]
@@ -14,18 +14,6 @@ height = 7.43385
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_ieb0f"]
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_5xahp"]
-animation = &"Grab1"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8lhgq"]
-animation = &"Grab2"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fyuy5"]
-animation = &"Hold1"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w66pk"]
-animation = &"Hold2"
-
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hhuwn"]
 animation = &"IdleClaws"
 
@@ -35,110 +23,36 @@ animation = &"Swing1"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_plgea"]
 animation = &"Swing2"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a52gb"]
-animation = &"Yeet1"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_6olra"]
-animation = &"Yeet2"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_plgea"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ls75x"]
-xfade_time = 0.1
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y0ick"]
 advance_mode = 2
-advance_condition = &"is_grabbing_1"
+advance_condition = &"is_swinging_1"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1elqm"]
-xfade_time = 0.2
-switch_mode = 2
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fyync"]
 advance_mode = 2
-advance_condition = &"has_grabbed"
+advance_condition = &"is_swinging_2"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_32kc2"]
-advance_mode = 2
-advance_condition = &"is_yeeting"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hfyy1"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qx0my"]
 xfade_time = 0.2
 switch_mode = 2
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_m8i5c"]
-xfade_time = 0.1
-advance_mode = 2
-advance_condition = &"is_grabbing_2"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_o3r0t"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8v06s"]
 xfade_time = 0.2
-switch_mode = 2
-advance_mode = 2
-advance_condition = &"has_grabbed"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_mkghy"]
-advance_mode = 2
-advance_condition = &"is_yeeting"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p2ldd"]
-xfade_time = 0.2
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ieb0f"]
-xfade_time = 0.1
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!get(\"parameters/BlendTree/HandMachine/conditions/has_grabbed\")"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fc1xm"]
-xfade_time = 0.1
-switch_mode = 2
-advance_mode = 2
-advance_expression = "!get(\"parameters/BlendTree/HandMachine/conditions/has_grabbed\")"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ytn5g"]
-xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"is_swinging"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_uquan"]
-xfade_time = 0.3
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v0otd"]
-advance_mode = 2
-advance_condition = &"is_swinging"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_duvi4"]
-xfade_time = 0.3
 switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ytn5g"]
-states/Grab1/node = SubResource("AnimationNodeAnimation_5xahp")
-states/Grab1/position = Vector2(486.667, 270.593)
-states/Grab2/node = SubResource("AnimationNodeAnimation_8lhgq")
-states/Grab2/position = Vector2(624.667, 270.914)
-states/Hold1/node = SubResource("AnimationNodeAnimation_fyuy5")
-states/Hold1/position = Vector2(486.444, 397.333)
-states/Hold2/node = SubResource("AnimationNodeAnimation_w66pk")
-states/Hold2/position = Vector2(625.778, 397.333)
 states/IdleClaws/node = SubResource("AnimationNodeAnimation_hhuwn")
 states/IdleClaws/position = Vector2(555.334, 100.222)
 states/Swing1/node = SubResource("AnimationNodeAnimation_04so3")
-states/Swing1/position = Vector2(487.111, 515.333)
+states/Swing1/position = Vector2(397.778, 243.185)
 states/Swing2/node = SubResource("AnimationNodeAnimation_plgea")
-states/Swing2/position = Vector2(624.074, 515.111)
-states/Yeet1/node = SubResource("AnimationNodeAnimation_a52gb")
-states/Yeet1/position = Vector2(339.333, 398.074)
-states/Yeet2/node = SubResource("AnimationNodeAnimation_6olra")
-states/Yeet2/position = Vector2(754, 396)
-transitions = ["Start", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_plgea"), "IdleClaws", "Grab1", SubResource("AnimationNodeStateMachineTransition_ls75x"), "Grab1", "Hold1", SubResource("AnimationNodeStateMachineTransition_1elqm"), "Hold1", "Yeet1", SubResource("AnimationNodeStateMachineTransition_32kc2"), "Yeet1", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_hfyy1"), "IdleClaws", "Grab2", SubResource("AnimationNodeStateMachineTransition_m8i5c"), "Grab2", "Hold2", SubResource("AnimationNodeStateMachineTransition_o3r0t"), "Hold2", "Yeet2", SubResource("AnimationNodeStateMachineTransition_mkghy"), "Yeet2", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_p2ldd"), "Grab2", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_ieb0f"), "Grab1", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_fc1xm"), "Hold1", "Swing1", SubResource("AnimationNodeStateMachineTransition_ytn5g"), "Swing1", "Hold1", SubResource("AnimationNodeStateMachineTransition_uquan"), "Hold2", "Swing2", SubResource("AnimationNodeStateMachineTransition_v0otd"), "Swing2", "Hold2", SubResource("AnimationNodeStateMachineTransition_duvi4")]
-graph_offset = Vector2(-50, 8)
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ls75x"]
-animation = &"Dash"
+states/Swing2/position = Vector2(554.47, 242.444)
+transitions = ["Start", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_plgea"), "IdleClaws", "Swing1", SubResource("AnimationNodeStateMachineTransition_y0ick"), "IdleClaws", "Swing2", SubResource("AnimationNodeStateMachineTransition_fyync"), "Swing1", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_qx0my"), "Swing2", "IdleClaws", SubResource("AnimationNodeStateMachineTransition_8v06s")]
+graph_offset = Vector2(118, -35)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y0ick"]
 animation = &"Hide"
@@ -157,9 +71,6 @@ blend_point_1/pos = -1.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_a6tpn"]
 animation = &"Rave"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1elqm"]
-animation = &"Spin"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2x4nq"]
 animation = &"Action"
@@ -215,35 +126,6 @@ advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_rav
 advance_mode = 2
 advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_on_ground\")"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yfpss"]
-xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"is_dash_pressed"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_vqgx3"]
-xfade_time = 0.2
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pgv6q"]
-xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"is_dash_pressed"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xqivb"]
-xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"is_spin_pressed"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_w7sik"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ocqmu"]
-xfade_time = 0.05
-advance_mode = 2
-advance_condition = &"is_spin_pressed"
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oell7"]
 advance_mode = 2
 advance_condition = &"is_hiding_pressed"
@@ -257,26 +139,22 @@ advance_mode = 2
 advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_on_ground\")"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_plgea"]
-states/Dash/node = SubResource("AnimationNodeAnimation_ls75x")
-states/Dash/position = Vector2(317.555, 259.185)
 states/Hide/node = SubResource("AnimationNodeAnimation_y0ick")
-states/Hide/position = Vector2(715.161, 258.277)
+states/Hide/position = Vector2(542.519, 265.61)
 states/JumpAndFall/node = SubResource("AnimationNodeBlendSpace1D_5xahp")
 states/JumpAndFall/position = Vector2(315.926, 77.5555)
 states/Rave/node = SubResource("AnimationNodeAnimation_a6tpn")
-states/Rave/position = Vector2(715.185, 76.5927)
-states/Spin/node = SubResource("AnimationNodeAnimation_1elqm")
-states/Spin/position = Vector2(198.444, 337.308)
+states/Rave/position = Vector2(542.074, 77.4568)
 states/Start/position = Vector2(26.5927, 78.2222)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8lhgq")
-states/Walking/position = Vector2(490.222, 260)
-transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3"), "Walking", "Dash", SubResource("AnimationNodeStateMachineTransition_yfpss"), "Dash", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_vqgx3"), "JumpAndFall", "Dash", SubResource("AnimationNodeStateMachineTransition_pgv6q"), "JumpAndFall", "Spin", SubResource("AnimationNodeStateMachineTransition_xqivb"), "Spin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_w7sik"), "Walking", "Spin", SubResource("AnimationNodeStateMachineTransition_ocqmu"), "Walking", "Hide", SubResource("AnimationNodeStateMachineTransition_oell7"), "Hide", "Walking", SubResource("AnimationNodeStateMachineTransition_pdbyx"), "Hide", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_jofts")]
+states/Walking/position = Vector2(317.58, 267.333)
+transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3"), "Walking", "Hide", SubResource("AnimationNodeStateMachineTransition_oell7"), "Hide", "Walking", SubResource("AnimationNodeStateMachineTransition_pdbyx"), "Hide", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_jofts")]
 graph_offset = Vector2(-291, -32)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ls75x"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_1elqm"]
-graph_offset = Vector2(-241.671, -67.1167)
+graph_offset = Vector2(-176.174, 102.649)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_ieb0f")
 nodes/Add2/position = Vector2(453.333, 160)
 nodes/HandMachine/node = SubResource("AnimationNodeStateMachine_ytn5g")
@@ -301,6 +179,41 @@ transitions = ["Start", "BlendTree", SubResource("AnimationNodeStateMachineTrans
 height = 1.79053
 radius = 1.58936
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_u0tvg"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimationTree:parameters/BlendTree/Add2/add_amount")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_swinging_1")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_swinging_2")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_hiding_pressed")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_on_ground")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_rave_pressed")
+properties/7/spawn = true
+properties/7/replication_mode = 2
+properties/8/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/JumpAndFall/blend_position")
+properties/8/spawn = true
+properties/8/replication_mode = 2
+properties/9/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/Walking/blend_position")
+properties/9/spawn = true
+properties/9/replication_mode = 2
+properties/10/path = NodePath("AnimationTree:parameters/BlendTree/TimeScale/scale")
+properties/10/spawn = true
+properties/10/replication_mode = 2
+
 [node name="Hermit" type="CharacterBody3D"]
 collision_layer = 17
 axis_lock_angular_x = true
@@ -323,16 +236,11 @@ root_node = NodePath("../hermit")
 tree_root = SubResource("AnimationNodeStateMachine_fyync")
 anim_player = NodePath("../hermit/AnimationPlayer")
 parameters/BlendTree/Add2/add_amount = 1.0
-parameters/BlendTree/HandMachine/conditions/has_grabbed = false
-parameters/BlendTree/HandMachine/conditions/is_grabbing_1 = false
-parameters/BlendTree/HandMachine/conditions/is_grabbing_2 = false
-parameters/BlendTree/HandMachine/conditions/is_swinging = false
-parameters/BlendTree/HandMachine/conditions/is_yeeting = false
-parameters/BlendTree/StateMachine/conditions/is_dash_pressed = false
+parameters/BlendTree/HandMachine/conditions/is_swinging_1 = false
+parameters/BlendTree/HandMachine/conditions/is_swinging_2 = false
 parameters/BlendTree/StateMachine/conditions/is_hiding_pressed = false
 parameters/BlendTree/StateMachine/conditions/is_on_ground = false
 parameters/BlendTree/StateMachine/conditions/is_rave_pressed = false
-parameters/BlendTree/StateMachine/conditions/is_spin_pressed = false
 parameters/BlendTree/StateMachine/JumpAndFall/blend_position = 0
 parameters/BlendTree/StateMachine/Walking/blend_position = Vector2(0, 2.275)
 parameters/BlendTree/TimeScale/scale = 1.0
@@ -408,5 +316,8 @@ bus = &"SFX"
 attenuation_filter_db = -14.0
 
 [node name="MiscPlayer" type="AudioStreamPlayer3D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_u0tvg")
 
 [editable path="hermit"]

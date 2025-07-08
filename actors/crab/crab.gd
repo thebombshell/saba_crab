@@ -50,9 +50,16 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 
 # ui nodes
 
+@onready var crab_ui: CanvasLayer = $CrabUI
 @onready var shell_count_display: Control = $CrabUI/ShellCountDisplay;
 @onready var shell_count_label: AutoLabel = $CrabUI/ShellCountDisplay/ShellCountLabel;
 @onready var ui_animator: AnimationPlayer = $CrabUI/UIAnimator;
+
+# multiplayer
+
+@export var multiplayer_id: int = 0;
+var is_local_crab: bool:
+	get: return !multiplayer.has_multiplayer_peer() || multiplayer_id == multiplayer.get_unique_id();
 
 # configurables
 
@@ -115,13 +122,13 @@ var is_sliding: bool = false;
 var flip_timer: float = -1.0;
 var is_flipping: bool:
 	get: return flip_timer > 0.0;
-	set(t_value): flip_timer = 0.5 if t_value else -1.0;
+	set(t_value): flip_timer = 1.0 if t_value else -1.0;
 
 # super spin variables
 var super_spin_timer: float = -1.0;
 var is_super_spinning: bool:
 	get: return super_spin_timer > 0.0;
-	set(t_value): super_spin_timer = 0.5 if t_value else -1.0;
+	set(t_value): super_spin_timer = 1.0 if t_value else -1.0;
 
 func collect_shell() -> void:
 	
@@ -287,7 +294,7 @@ func process_forces(t_delta: float) -> void:
 		pow(velocity.length(), 2.0) * drag_strength * t_delta);
 	if is_sliding:
 		drag_power *= 0.05;
-	elif is_flipping || is_super_spinning:
+	elif flip_timer > 0.5 || super_spin_timer > 0.5:
 		drag_power *= 0.6;
 	velocity -= velocity * drag_power;
 	
@@ -455,14 +462,23 @@ func yeet():
 	# little bit so we aren't suddenly activating a physics objects in our own
 	# skull, and finally applying the yeet impulse and clearing our grabbed
 	# object storage
-	grabbed.reparent(get_parent_node_3d());
 	var dir = (grabbed.global_position -
 		(global_position + get_global_transform_interpolated().basis.z * 10.0)).normalized();
 	grabbed.global_position += dir;
 	grabbed.linear_velocity = (dir + up_direction * 0.5) * (yeet_power * 0.5 + (yeet_power * 0.5) / grabbed.mass);
+	yeeting_timer = -1.0;
+	drop();
+	return;
+
+func drop():
+	
+	if !is_instance_valid(grabbed):
+		return;
+	
+	# adding this because multiplayer needs a graceful way for grabbables to be dropped
+	grabbed.reparent(get_parent_node_3d());
 	grabbed.collision_layer = grabbed.collision_layer | PHYS_LAYER_NORMAL;
 	grabbed = null;
-	yeeting_timer = -1.0;
 	return;
 
 func process_animation(t_delta: float) -> void:
@@ -541,7 +557,27 @@ func process_ui(t_delta: float) -> void:
 	shell_count_display.position = lerp(shell_display_left, shell_display_right, shell_display_alpha);
 	return;
 
+func process_multiplayer_peer(_delta: float) -> void:
+	
+	return;
+
+func _ready() -> void:
+	
+	if !is_local_crab:
+		
+		crab_ui.hide();
+		crab_ui.process_mode = Node.PROCESS_MODE_DISABLED;
+	elif get_parent().has_node("../FollowCamera"):
+		
+		var t_camera: FollowCameraActor = get_parent().get_node("../FollowCamera");
+		t_camera.follow_target = self;
+	return;
+
 func _physics_process(t_delta: float) -> void:
+	
+	if !is_local_crab:
+		process_multiplayer_peer(t_delta);
+		return;
 	
 	camera = get_viewport().get_camera_3d();
 	process_movement(t_delta);
@@ -553,4 +589,24 @@ func _physics_process(t_delta: float) -> void:
 	
 	was_on_floor = is_on_floor();
 	move_and_slide();
+	return;
+
+func _on_spawn(t_data) -> void:
+	
+	if t_data is not Dictionary:
+		push_error("Crab was expecting data to be dictionary");
+		return;
+	if !t_data.has("data"):
+		push_error("Crab was expecting data to contain data");
+		return;
+	if t_data.data is not int:
+		push_error("Crab was expecting data.data to be an int");
+		return;
+	multiplayer_id = t_data.data;
+	return;
+
+func _on_tree_exiting() -> void:
+	
+	# ensure any grabbables are dropped before being made invalid
+	drop();
 	return;

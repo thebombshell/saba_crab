@@ -1,6 +1,16 @@
-[gd_resource type="Theme" load_steps=7 format=3 uid="uid://5ryk8wjh8k36"]
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://5ryk8wjh8k36"]
 
 [ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="1_d8awb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqi3m"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.247059)
+shadow_size = 4
+shadow_offset = Vector2(4, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_52fkg"]
 bg_color = Color(0.76, 0.468667, 0, 1)
@@ -47,6 +57,20 @@ shadow_color = Color(0, 0, 0, 0.247059)
 shadow_size = 4
 shadow_offset = Vector2(4, 4)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d8awb"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lrx17"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5vef"]
 bg_color = Color(0.1, 0.1, 0.1, 1)
 border_color = Color(0, 0, 0, 1)
@@ -56,14 +80,19 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [resource]
+default_font = ExtResource("1_d8awb")
 Button/colors/font_color = Color(1, 0.923333, 0.8, 1)
 Button/colors/font_focus_color = Color(1, 0.923333, 0.8, 1)
 Button/colors/font_hover_color = Color(1, 1, 1, 1)
 Button/colors/font_hover_pressed_color = Color(1, 0.846667, 0.6, 1)
 Button/colors/font_pressed_color = Color(1, 0.923333, 0.8, 1)
 Button/fonts/font = ExtResource("1_d8awb")
+Button/styles/disabled = SubResource("StyleBoxFlat_xqi3m")
 Button/styles/focus = SubResource("StyleBoxFlat_52fkg")
 Button/styles/hover = SubResource("StyleBoxFlat_2b18n")
 Button/styles/normal = SubResource("StyleBoxFlat_0also")
 Button/styles/pressed = SubResource("StyleBoxFlat_xs5u6")
+LineEdit/fonts/font = ExtResource("1_d8awb")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_d8awb")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_lrx17")
 Panel/styles/panel = SubResource("StyleBoxFlat_s5vef")

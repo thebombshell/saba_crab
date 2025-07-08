@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ds3bl7txwbxq5"]
+[gd_scene load_steps=5 format=3 uid="uid://ds3bl7txwbxq5"]
 
 [ext_resource type="Script" uid="uid://bno5vuj0pill3" path="res://scenes/loader_scene.gd" id="1_5huan"]
 [ext_resource type="PackedScene" uid="uid://ccjww4x18uira" path="res://ui/command_panel.tscn" id="2_5huan"]
 [ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="3_yft55"]
+[ext_resource type="Script" uid="uid://bc6rtgfv2d0ot" path="res://scripts/multiplayer_manager.gd" id="4_rfcsa"]
 
 [node name="LoaderScene" type="Node3D"]
 script = ExtResource("1_5huan")
@@ -30,6 +31,7 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
+fold_size_scaling = 1.0
 
 [node name="FYILabel" type="Label" parent="CanvasLayer"]
 anchors_preset = -1
@@ -43,3 +45,6 @@ text = "THIS IS FOR BIG WARNINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="MultiplayerManager" type="Node" parent="."]
+script = ExtResource("4_rfcsa")

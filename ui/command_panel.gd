@@ -38,7 +38,7 @@ func _ready() -> void:
 	current = self;
 	return;
 
-@rpc("any_peer", "call_remote", "reliable", 0)
+@rpc("any_peer", "call_local", "reliable")
 func add_line_internal(t_source :String, t_message :String):
 	
 	if t_message.length() > 240:
@@ -83,6 +83,8 @@ func run_command(t_message :String):
 			final_args.push_back(arg);
 	print("command: " + command);
 	print("args: " + str(final_args));
+	if has_method(command):
+		self[command].call(final_args);
 	return;
 
 func on_submit_text(t_text: String) -> void:

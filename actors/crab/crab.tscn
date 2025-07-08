@@ -1,17 +1,13 @@
-[gd_scene load_steps=86 format=3 uid="uid://lddmwkgyuqsk"]
+[gd_scene load_steps=79 format=3 uid="uid://lddmwkgyuqsk"]
 
 [ext_resource type="Script" uid="uid://chfx3hh8lsrfl" path="res://actors/crab/crab.gd" id="1_fc1xm"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="1_vihr2"]
 [ext_resource type="AudioStream" uid="uid://kh5jw413qke" path="res://audio_fx/pops/pops_randomizer.tres" id="3_fc1xm"]
-[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="4_5xahp"]
 [ext_resource type="AudioStream" uid="uid://dbsue48pc4jgq" path="res://audio_fx/chimes/chimes_randomizer.tres" id="4_6khos"]
-[ext_resource type="Environment" uid="uid://w2e6ycuh6qo3" path="res://environments/ui_viewport_environment.tres" id="5_a6tpn"]
 [ext_resource type="AudioStream" uid="uid://c0ochslvoixb0" path="res://audio_fx/clacks/clacks_randomizer.tres" id="5_fyuy5"]
-[ext_resource type="Shader" uid="uid://did5vtykh6n11" path="res://shaders/props/shell.gdshader" id="5_ov32d"]
-[ext_resource type="FontFile" uid="uid://mxusxbj4a140" path="res://fonts/SuperPeanut-PVAK7.ttf" id="6_2x4nq"]
 [ext_resource type="AudioStream" uid="uid://ecn7qvlfberi" path="res://audio_fx/thuds/thuds_randomizer.tres" id="6_w66pk"]
-[ext_resource type="Script" uid="uid://baim48guv3n7v" path="res://scripts/auto_label.gd" id="7_8atix"]
 [ext_resource type="AudioStream" uid="uid://mfgs7jvagkgn" path="res://audio_fx/swings/swings_randomizer.tres" id="7_hhuwn"]
+[ext_resource type="PackedScene" uid="uid://cgg7lhqe14w10" path="res://ui/crab_ui.tscn" id="8_rgudy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ieb0f"]
 height = 1.6
@@ -264,11 +260,11 @@ advance_mode = 2
 advance_expression = "!get(\"parameters/BlendTree/StateMachine/conditions/is_sliding\")"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q4cli"]
+xfade_time = 0.2
 switch_mode = 2
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fem22"]
-xfade_time = 0.1
 advance_mode = 2
 advance_condition = &"is_flipping"
 
@@ -309,7 +305,7 @@ states/SuperSpin/position = Vector2(489.181, -31.0169)
 states/Walking/node = SubResource("AnimationNodeBlendSpace2D_8lhgq")
 states/Walking/position = Vector2(490.222, 260)
 transitions = ["Start", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_fyuy5"), "JumpAndFall", "Walking", SubResource("AnimationNodeStateMachineTransition_w66pk"), "Walking", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_hhuwn"), "Walking", "Rave", SubResource("AnimationNodeStateMachineTransition_a52gb"), "Rave", "Walking", SubResource("AnimationNodeStateMachineTransition_6olra"), "Rave", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_04so3"), "Walking", "Dash", SubResource("AnimationNodeStateMachineTransition_yfpss"), "Dash", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_vqgx3"), "JumpAndFall", "Dash", SubResource("AnimationNodeStateMachineTransition_pgv6q"), "JumpAndFall", "Spin", SubResource("AnimationNodeStateMachineTransition_xqivb"), "Spin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_w7sik"), "Walking", "Spin", SubResource("AnimationNodeStateMachineTransition_ocqmu"), "Dash", "Slide", SubResource("AnimationNodeStateMachineTransition_v6mtc"), "Slide", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_tcyba"), "Flip", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_q4cli"), "Slide", "Flip", SubResource("AnimationNodeStateMachineTransition_fem22"), "Spin", "SuperSpin", SubResource("AnimationNodeStateMachineTransition_d1j4y"), "SuperSpin", "JumpAndFall", SubResource("AnimationNodeStateMachineTransition_gsk3x"), "Dash", "Spin", SubResource("AnimationNodeStateMachineTransition_acw5q"), "Slide", "Spin", SubResource("AnimationNodeStateMachineTransition_euuoj")]
-graph_offset = Vector2(-160, -106)
+graph_offset = Vector2(-234, -83)
 
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ls75x"]
 
@@ -342,53 +338,61 @@ radius = 1.0
 radius = 0.55
 height = 1.7
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8lhgq"]
-render_priority = 0
-shader = ExtResource("5_ov32d")
-shader_parameter/bob_amount = 0.1
-shader_parameter/diffuse_colour = Color(0.83, 0.821423, 0.5727, 1)
-shader_parameter/metalness = 0.5
-shader_parameter/roughness = 0.0
-shader_parameter/emission = 0.2
-shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
-shader_parameter/perlescence_frequency = 0.5
-
-[sub_resource type="Animation" id="Animation_rgudy"]
-resource_name = "OnCollectShell"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.95, 0.95), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_6khos"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ShellCountDisplay/ShellCountLabel:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ov32d"]
-_data = {
-&"OnCollectShell": SubResource("Animation_rgudy"),
-&"RESET": SubResource("Animation_6khos")
-}
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6khos"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimationTree:parameters/BlendTree/Add2/add_amount")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/has_grabbed")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_grabbing_1")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_grabbing_2")
+properties/5/spawn = true
+properties/5/replication_mode = 2
+properties/6/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_swinging")
+properties/6/spawn = true
+properties/6/replication_mode = 2
+properties/7/path = NodePath("AnimationTree:parameters/BlendTree/HandMachine/conditions/is_yeeting")
+properties/7/spawn = true
+properties/7/replication_mode = 2
+properties/8/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_dash_pressed")
+properties/8/spawn = true
+properties/8/replication_mode = 2
+properties/9/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_flipping")
+properties/9/spawn = true
+properties/9/replication_mode = 2
+properties/10/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_on_ground")
+properties/10/spawn = true
+properties/10/replication_mode = 2
+properties/11/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_rave_pressed")
+properties/11/spawn = true
+properties/11/replication_mode = 2
+properties/12/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_sliding")
+properties/12/spawn = true
+properties/12/replication_mode = 2
+properties/13/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_spin_pressed")
+properties/13/spawn = true
+properties/13/replication_mode = 2
+properties/14/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/conditions/is_super_spinning")
+properties/14/spawn = true
+properties/14/replication_mode = 2
+properties/15/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/JumpAndFall/blend_position")
+properties/15/spawn = true
+properties/15/replication_mode = 2
+properties/16/path = NodePath("AnimationTree:parameters/BlendTree/StateMachine/Walking/blend_position")
+properties/16/spawn = true
+properties/16/replication_mode = 2
+properties/17/path = NodePath("AnimationTree:parameters/BlendTree/TimeScale/scale")
+properties/17/spawn = true
+properties/17/replication_mode = 2
 
 [node name="Crab" type="CharacterBody3D"]
 collision_layer = 3
@@ -531,63 +535,13 @@ volume_db = -14.0
 bus = &"SFX"
 attenuation_filter_db = -14.0
 
-[node name="CrabUI" type="CanvasLayer" parent="."]
-
-[node name="ShellCountDisplay" type="HBoxContainer" parent="CrabUI"]
-custom_minimum_size = Vector2(150, 100)
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.05
-anchor_right = 0.25
-anchor_bottom = 0.2
-
-[node name="ShellIconContainer" type="AspectRatioContainer" parent="CrabUI/ShellCountDisplay"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="ViewportContainer" type="SubViewportContainer" parent="CrabUI/ShellCountDisplay/ShellIconContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(100, 100)
-render_target_update_mode = 4
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
-layers = 524288
-material_override = SubResource("ShaderMaterial_8lhgq")
-mesh = ExtResource("4_5xahp")
-skeleton = NodePath("../../../..")
-
-[node name="Camera3D" type="Camera3D" parent="CrabUI/ShellCountDisplay/ShellIconContainer/ViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.70725)
-cull_mask = 524288
-environment = ExtResource("5_a6tpn")
-fov = 60.0
-
-[node name="ShellCountLabel" type="Label" parent="CrabUI/ShellCountDisplay"]
-custom_minimum_size = Vector2(50, 100)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-size_flags_stretch_ratio = 2.0
-theme_override_fonts/font = ExtResource("6_2x4nq")
-theme_override_font_sizes/font_size = 50
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("7_8atix")
-
-[node name="UIAnimator" type="AnimationPlayer" parent="CrabUI"]
-libraries = {
-&"": SubResource("AnimationLibrary_ov32d")
-}
+[node name="CrabUI" parent="." instance=ExtResource("8_rgudy")]
 
 [node name="MiscPlayer" type="AudioStreamPlayer3D" parent="."]
 
-[connection signal="resized" from="CrabUI/ShellCountDisplay/ShellCountLabel" to="CrabUI/ShellCountDisplay/ShellCountLabel" method="_on_resized"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_6khos")
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
 
 [editable path="crab"]

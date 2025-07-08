@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2hk4mk5h8x1v"]
+
+[ext_resource type="Script" uid="uid://duja5r4vf067q" path="res://scripts/multiplayer_spawn_point.gd" id="1_p3p4p"]
+[ext_resource type="PackedScene" uid="uid://bjh1a7ut3b2of" path="res://actors/hermit/hermit.tscn" id="2_edq2y"]
+[ext_resource type="PackedScene" uid="uid://c4n2fttjfgugr" path="res://models/hermit/hermit.glb" id="2_eieqw"]
+
+[node name="HermitSpawner" type="Node3D"]
+script = ExtResource("1_p3p4p")
+spawn_actor = ExtResource("2_edq2y")
+
+[node name="hermit" parent="." instance=ExtResource("2_eieqw")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="SafetyRing" parent="hermit/CrabSkeleton/Skeleton3D" index="1"]
+visible = false
+
+[node name="BoosterPack" parent="hermit/CrabSkeleton/Skeleton3D" index="2"]
+visible = false
+
+[editable path="hermit"]
