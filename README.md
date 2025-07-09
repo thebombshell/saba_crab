@@ -29,10 +29,6 @@ I am not going to use anything that isn't already approved for royalty-free comm
 [Super Peanut](https://www.fontspace.com/super-peanut-font-f136882)
 **Provided by "All Super Font", they have an etsy as [nhfonts](https://nhfonts.etsy.com/)**
 
-### Materials
-
-[Wavy Sand PBR Material provided by freePBR.com](https://freepbr.com/product/wavy-sand/)
-
 ### Sounds
 
 The Following Sound effects obtained from Free To Use Sounds:
