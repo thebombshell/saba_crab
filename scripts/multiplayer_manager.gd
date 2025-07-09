@@ -62,9 +62,12 @@ func _peer_connected(t_id: int):
 func _peer_disconnected(t_id: int):
 	
 	if !multiplayer.is_server():
-		get_node("../Gameplay").queue_free();
-		get_node("MenuScene").visible = true;
-		get_node("MenuScene").process_mode = Node.PROCESS_MODE_ALWAYS;
+		get_node("../MenuScene").visible = true;
+		get_node("../MenuScene").process_mode = Node.PROCESS_MODE_ALWAYS;
+		if is_instance_valid(get_node("../Gameplay")):
+			get_node("../Gameplay").queue_free();
+		MultiplayerManager.end_multiplayer();
+		SteamManager.leave_lobby();
 	CommandPanel.add_line("MM", "Peer %d has disconnected!" % t_id);
 	return
 
