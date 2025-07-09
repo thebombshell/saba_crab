@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvmm651rsd5f"]
+[gd_scene load_steps=4 format=3 uid="uid://bvmm651rsd5f"]
 
 [ext_resource type="Script" uid="uid://b11wnii58t1k8" path="res://scenes/gameplay_scene.gd" id="1_mkkox"]
+[ext_resource type="PackedScene" uid="uid://vxvc07fm0xrb" path="res://actors/props/shell_manager.tscn" id="2_rqjx6"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_mkkox"]
 properties/0/path = NodePath(".:is_ready")
@@ -13,3 +14,5 @@ script = ExtResource("1_mkkox")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_mkkox")
+
+[node name="ShellManager" parent="." instance=ExtResource("2_rqjx6")]

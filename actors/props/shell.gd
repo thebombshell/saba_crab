@@ -4,7 +4,6 @@ const PHYS_MASK_FLOOR = 64;
 
 static var shell_list: Array[Shell] = [];
 
-
 @export var is_airborne: bool = false;
 var origin_position: Vector3 = Vector3.ZERO;
 
@@ -29,19 +28,10 @@ func _exit_tree() -> void:
 	shell_list.erase(self);
 	return;
 
-@rpc("any_peer", "call_local", "reliable")
 func collect_shell() -> void:
 	
 	ShellManager.collect_shell();
 	queue_free();
-	return;
-
-func try_collect_shell() -> void:
-	
-	if !is_locally_processible:
-		collect_shell.rpc(get_multiplayer_authority());
-	else:
-		collect_shell();
 	return;
 
 func correct_height() -> void:
@@ -78,6 +68,6 @@ static func fill_mesh(t_mesh: MultiMesh):
 
 func _on_body_entered(t_body: Node3D) -> void:
 	
-	if t_body is CrabActor && !is_queued_for_deletion():
-		try_collect_shell();
+	if t_body is CrabActor && is_locally_processible && !is_queued_for_deletion():
+		collect_shell();
 	return;

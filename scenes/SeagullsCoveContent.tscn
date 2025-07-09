@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://b71u3tpv825ri"]
+[gd_scene load_steps=26 format=4 uid="uid://b71u3tpv825ri"]
 
 [ext_resource type="Script" uid="uid://5dgn78fx7rbk" path="res://scripts/ambience_tracker.gd" id="3_1oxf8"]
 [ext_resource type="AudioStream" uid="uid://dywok45y8cfox" path="res://audio_fx/beach_1_ambience/ambience_synchronized.tres" id="4_bw3nc"]
@@ -8,7 +8,6 @@
 [ext_resource type="ArrayMesh" uid="uid://bb0hkhy5kpp56" path="res://models/beach_1/beach_Shrub1.res" id="8_1bpkh"]
 [ext_resource type="Environment" uid="uid://cixnvigsimcmc" path="res://environments/beach_1_environment.tres" id="9_67dp3"]
 [ext_resource type="ArrayMesh" uid="uid://dooh41vhkxtwl" path="res://models/beach_1/beach_lighthouse.res" id="10_npwqv"]
-[ext_resource type="PackedScene" uid="uid://vxvc07fm0xrb" path="res://actors/props/shell_multimesh.tscn" id="11_bnfd6"]
 [ext_resource type="ArrayMesh" uid="uid://do280vkfk202i" path="res://models/beach_1/beach_Plane.res" id="13_ytngl"]
 [ext_resource type="ArrayMesh" uid="uid://dyi613cjvfhxj" path="res://models/beach_1/beach_Tree1.res" id="14_l3qfo"]
 [ext_resource type="ArrayMesh" uid="uid://by1ddtihd0cfq" path="res://models/props/props_rock.res" id="15_glxcb"]
@@ -103,11 +102,6 @@ height = 9.68916
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7ddre"]
 size = Vector3(1000, 20, 1000)
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_0r80v"]
-properties/0/path = NodePath("ShellManager:collected_shell_count")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [sub_resource type="BoxOccluder3D" id="BoxOccluder3D_s36qc"]
 size = Vector3(140.217, 15.4192, 6.47064)
@@ -245,12 +239,6 @@ shape = SubResource("BoxShape3D_7ddre")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.4737, 1.52588e-05, -928.123)
 mesh = ExtResource("10_npwqv")
-
-[node name="ShellManager" parent="." instance=ExtResource("11_bnfd6")]
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="ShellManager"]
-root_path = NodePath("../..")
-replication_config = SubResource("SceneReplicationConfig_0r80v")
 
 [node name="Grass" type="Node" parent="."]
 
