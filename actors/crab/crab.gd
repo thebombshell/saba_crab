@@ -110,9 +110,11 @@ var is_under_water: bool = false;
 # dash variables
 var dash_timer: float = 0.0;
 var is_dashing: bool:
+	get: return dash_timer > 0.5;
+var is_dash_cooling_down: bool:
 	get: return dash_timer > 0.0;
 var can_dash: bool:
-	get: return !is_dashing && !is_spinning;
+	get: return !is_dash_cooling_down && !is_spinning;
 var dash_direction: Vector3 = Vector3.FORWARD;
 
 # spin variables
@@ -124,7 +126,10 @@ var can_spin: bool:
 	get: return dash_timer < 0.5 && !is_spinning;
 
 # slide variables
-var is_sliding: bool = false;
+var is_sliding: bool:
+	get: return time_sliding >= 0.0;
+	set(t_value): time_sliding = 0.0 if t_value else -1.0;
+var time_sliding: float = 0.0;
 var flip_timer: float = -1.0;
 var is_flipping: bool:
 	get: return flip_timer > 0.0;
@@ -219,7 +224,8 @@ func spin() -> void:
 	
 	spin_timer = 0.5;
 	velocity *= 0.9;
-	velocity -= Vector3.UP * min(0.0, velocity.dot(up_direction)) * 0.5;
+	velocity -= up_direction * min(0.0, velocity.dot(up_direction)) * 0.5;
+	velocity += up_direction * 0.5;
 	return;
 
 func dash() -> void:
@@ -227,6 +233,9 @@ func dash() -> void:
 	dash_timer = 1.0;
 	dash_direction = (move_input if move_input.length() > 0.25 else
 		get_global_transform_interpolated().basis.z).normalized();
+	var hvelocity = velocity - up_direction * velocity.dot(up_direction);
+	velocity -= dash_direction * max(0.0, 1.0 - hvelocity.dot(dash_direction));
+	velocity += dash_direction * dash_speed * 0.25;
 	return;
 
 func flip() -> void:
@@ -299,7 +308,9 @@ func process_forces(t_delta: float) -> void:
 	var drag_power = min(velocity.length(),
 		pow(velocity.length(), 2.0) * drag_strength * t_delta);
 	if is_sliding:
-		drag_power *= 0.05;
+		drag_power = clamp((3.0 - time_sliding) / 3.0, 0.0, drag_power * 0.5);
+		if is_under_water:
+			velocity += up_direction * 14.0 * t_delta;
 	elif flip_timer > 0.5 || super_spin_timer > 0.5:
 		drag_power *= 0.6;
 	velocity -= velocity * drag_power;
