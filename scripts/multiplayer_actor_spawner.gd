@@ -2,24 +2,7 @@ class_name MultiplayerActorSpawner extends MultiplayerSpawner
 
 var registered_actors: Dictionary[int, PackedScene] = {};
 
-func register(t_scene: PackedScene):
-	
-	var uid = ResourceLoader.get_resource_uid(t_scene.resource_path);
-	if !registered_actors.has(uid):
-		registered_actors[uid] = t_scene;
-	return;
-
-func build_registry():
-	
-	for child in get_children():
-		if child is MultiplayerSpawnPoint && child.spawn_actor != null:
-			register(child.spawn_actor);
-	return;
-
 func _spawn(t_data: Variant):
-	
-	if registered_actors.is_empty():
-		build_registry();
 	
 	if t_data is not Dictionary:
 		push_error("Was expecting a dictionary to MultiplayerActorSpawner spawn");
@@ -30,15 +13,14 @@ func _spawn(t_data: Variant):
 	if t_data.uid is not int:
 		push_error("UID is not a valid type, we can not know what to spawn");
 		return null;
-	if !registered_actors.has(t_data.uid):
-		push_error("UID given by data is unknown to the spawner, can not spawn");
-		return null;
 	if !t_data.has("transform"):
 		push_error("Data does not contain a transform, do not know whwere to spawn");
 		return null;
 	if t_data.transform is not Transform3D:
 		push_error("Transform is not valid, do not know where to spawn");
 		return null;
+	if !registered_actors.has(t_data.uid):
+		registered_actors[t_data.uid] = load(ResourceUID.get_id_path(t_data.uid));
 	
 	var packed = registered_actors[t_data.uid];
 	var node = packed.instantiate();
