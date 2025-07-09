@@ -138,7 +138,7 @@ var is_super_spinning: bool:
 
 func collect_shell() -> void:
 	
-	shell_count += 1;
+	shell_count = ShellManager.current_shell_count;
 	shell_count_label.text = str(shell_count);
 	chimes_player.play();
 	ui_animator.play("OnCollectShell");
@@ -557,20 +557,17 @@ func process_ui(t_delta: float) -> void:
 	if Input.is_action_pressed("show_ui"):
 		shell_display_timer = 3.0;
 	shell_display_timer -= t_delta;
+	if shell_count != ShellManager.current_shell_count:
+		collect_shell();
 	var shell_display_alpha = smoothstep(0.0, 0.25, shell_display_timer);
 	var shell_display_left = Vector2(get_viewport().size) * Vector2(-0.25, 0.05);
 	var shell_display_right = Vector2(get_viewport().size) * Vector2(0.05, 0.05);
 	shell_count_display.position = lerp(shell_display_left, shell_display_right, shell_display_alpha);
 	return;
 
-func process_multiplayer_peer(_delta: float) -> void:
-	
-	return;
-
 func _ready() -> void:
 	
 	if !is_locally_processible:
-		
 		crab_ui.hide();
 	return;
 
@@ -586,9 +583,6 @@ func process_camera(_delta: float) -> void:
 func _physics_process(t_delta: float) -> void:
 	
 	if !(is_locally_processible && is_ready):
-		
-		if multiplayer.has_multiplayer_peer():
-			process_multiplayer_peer(t_delta);
 		return;
 	
 	crab_ui.show();

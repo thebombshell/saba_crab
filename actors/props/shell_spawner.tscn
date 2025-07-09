@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bh2nt6t1ah8i6"]
+
+[ext_resource type="Script" uid="uid://duja5r4vf067q" path="res://scripts/multiplayer_spawn_point.gd" id="1_4l1pv"]
+[ext_resource type="PackedScene" uid="uid://bi5m314kxl6o6" path="res://actors/props/shell.tscn" id="2_gymub"]
+[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_ynirh"]
+
+[node name="ShellSpawner" type="Node3D"]
+script = ExtResource("1_4l1pv")
+spawn_actor = ExtResource("2_gymub")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = ExtResource("2_ynirh")

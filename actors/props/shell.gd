@@ -4,8 +4,18 @@ const PHYS_MASK_FLOOR = 64;
 
 static var shell_list: Array[Shell] = [];
 
+
 @export var is_airborne: bool = false;
 var origin_position: Vector3 = Vector3.ZERO;
+
+var is_ready: bool:
+	get:
+		var level_manager = get_node("../../");
+		return level_manager is LevelManager && level_manager.is_ready;
+var is_local_authority_and_should_be:
+	get: return is_multiplayer_authority();
+var is_locally_processible: bool:
+	get: return true if !multiplayer.has_multiplayer_peer() else is_local_authority_and_should_be;
 
 func _enter_tree() -> void:
 	
@@ -19,6 +29,21 @@ func _exit_tree() -> void:
 	shell_list.erase(self);
 	return;
 
+@rpc("any_peer", "call_local", "reliable")
+func collect_shell() -> void:
+	
+	ShellManager.collect_shell();
+	queue_free();
+	return;
+
+func try_collect_shell() -> void:
+	
+	if !is_locally_processible:
+		collect_shell.rpc(get_multiplayer_authority());
+	else:
+		collect_shell();
+	return;
+
 func correct_height() -> void:
 	
 	var query = PhysicsRayQueryParameters3D.new();
@@ -30,11 +55,12 @@ func correct_height() -> void:
 	var result = get_world_3d().direct_space_state.intersect_ray(query);
 	if result.has("position"):
 		global_position = result.position + Vector3.UP * 1.2;
+	is_airborne = true;
 	return;
 
-func _ready() -> void:
+func _physics_process(delta: float) -> void:
 	
-	if !is_airborne:
+	if is_ready && is_locally_processible && !is_airborne:
 		correct_height.call_deferred();
 	return;
 
@@ -53,6 +79,5 @@ static func fill_mesh(t_mesh: MultiMesh):
 func _on_body_entered(t_body: Node3D) -> void:
 	
 	if t_body is CrabActor && !is_queued_for_deletion():
-		t_body.collect_shell();
-		queue_free();
+		try_collect_shell();
 	return;

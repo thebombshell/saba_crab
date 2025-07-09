@@ -1,21 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://bh2nt6t1ah8i6"]
+[gd_scene load_steps=5 format=3 uid="uid://bi5m314kxl6o6"]
 
-[ext_resource type="Script" uid="uid://cg4qghqyiqpth" path="res://actors/props/shell.gd" id="1_77iah"]
-[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_ynirh"]
+[ext_resource type="Script" uid="uid://cg4qghqyiqpth" path="res://actors/props/shell.gd" id="1_gvw8b"]
+[ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_3m4vs"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_77iah"]
 radius = 1.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gvw8b"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
 [node name="Shell" type="Area3D"]
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("1_77iah")
+script = ExtResource("1_gvw8b")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_77iah")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = ExtResource("2_ynirh")
+mesh = ExtResource("2_3m4vs")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_gvw8b")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

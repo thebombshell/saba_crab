@@ -12,6 +12,7 @@ script = ExtResource("1_5huan")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="CommandPanel" parent="CanvasLayer" instance=ExtResource("2_5huan")]
+visible = false
 
 [node name="FYILabel" type="Label" parent="CanvasLayer"]
 anchors_preset = -1

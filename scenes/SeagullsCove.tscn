@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cluxu12q8s20m"]
+[gd_scene load_steps=7 format=3 uid="uid://cluxu12q8s20m"]
 
 [ext_resource type="Script" uid="uid://4dacmxvlnj2o" path="res://scripts/level_manager.gd" id="1_neono"]
 [ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="5_btvi2"]
+[ext_resource type="PackedScene" uid="uid://bh2nt6t1ah8i6" path="res://actors/props/shell_spawner.tscn" id="6_mwlnt"]
 [ext_resource type="Script" uid="uid://b8xdt5q7pccfu" path="res://scripts/multiplayer_actor_spawner.gd" id="17_0tyup"]
 [ext_resource type="PackedScene" uid="uid://b5juv2ah8cigo" path="res://actors/crab/crab_spawner.tscn" id="18_rq4i4"]
 [ext_resource type="PackedScene" uid="uid://d2hk4mk5h8x1v" path="res://actors/hermit/hermit_spawner.tscn" id="20_neono"]
@@ -59,5 +60,185 @@ transform = Transform3D(0.623197, 0, 0.782065, 0, 1, 0, -0.782065, 0, 0.623197, 
 
 [node name="CrabSpawner8" parent="MultiplayerSpawner" instance=ExtResource("18_rq4i4")]
 transform = Transform3D(0.623197, 0, 0.782065, 0, 1, 0, -0.782065, 0, 0.623197, 64.7831, 6.031, 155.26)
+
+[node name="Shell" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9781, 3.11281, 78.2756)
+
+[node name="Shell2" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.3126, 3.11281, 81.416)
+
+[node name="Shell3" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.6363, 3.11281, 90.3657)
+
+[node name="Shell27" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.3243, 3.11281, 139.257)
+
+[node name="Shell28" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0500755, 3.11281, 162.908)
+
+[node name="Shell29" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33347, 3.11281, 146.224)
+
+[node name="Shell30" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.38918, 3.11281, 133.146)
+
+[node name="Shell4" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 159.893, 13.2174, -41.4811)
+
+[node name="Shell5" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 154.123, 13.2174, -47.311)
+
+[node name="Shell6" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 161.417, 13.2174, -58.8527)
+
+[node name="Shell42" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 164.173, 13.2174, -72.3909)
+
+[node name="Shell43" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 162.921, 13.2174, -86.2796)
+
+[node name="Shell44" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 158.945, 13.2174, -99.081)
+
+[node name="Shell45" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150.604, 13.2174, -110.137)
+
+[node name="Shell46" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 139.064, 13.2174, -117.41)
+
+[node name="Shell47" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.68, 13.2174, -120.999)
+
+[node name="Shell48" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.618, 13.2174, -120.514)
+
+[node name="Shell53" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 98.7199, 13.2174, -115.859)
+
+[node name="Shell49" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.7053, 13.2174, -83.0792)
+
+[node name="Shell54" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.6147, 13.2174, -95.8806)
+
+[node name="Shell55" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.5671, 13.2174, -107.324)
+
+[node name="Shell50" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.9962, 13.2174, -69.8899)
+
+[node name="Shell51" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.2634, 13.2174, -56.8945)
+
+[node name="Shell52" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.2158, 13.2174, -45.1598)
+
+[node name="Shell7" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.409, 6, 15.879)
+
+[node name="Shell8" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.1549, 6.3119, 14.5596)
+
+[node name="Shell36" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.7071, 12.1196, -24.7571)
+
+[node name="Shell37" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.9683, 12.1196, -11.4953)
+
+[node name="Shell38" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 67.3344, 12.1196, -2.8171)
+
+[node name="Shell39" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.6222, 12.1196, -15.3455)
+
+[node name="Shell40" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.9012, 12.1196, -17.9225)
+
+[node name="Shell41" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.6795, 12.1196, -6.01566)
+
+[node name="Shell9" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.3367, 5.59926, 10.1268)
+
+[node name="Shell10" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.70889, 2.60647, 56.7237)
+
+[node name="Shell11" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.0923, 2.63176, 46.4838)
+
+[node name="Shell12" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64979, 2.6146, 66.2018)
+
+[node name="Shell13" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.5892, 2.68663, -17.9025)
+
+[node name="Shell56" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65.6654, 2.68663, -109.568)
+
+[node name="Shell57" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.3934, 2.68663, -115.554)
+
+[node name="Shell58" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.2877, 2.68663, -122.788)
+
+[node name="Shell59" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 95.5146, 2.68663, -128.525)
+
+[node name="Shell60" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 106.656, 2.68663, -131.768)
+
+[node name="Shell14" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -67.0931, 2.69025, -35.4684)
+
+[node name="Shell31" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -174.515, 12.7013, -104.764)
+
+[node name="Shell15" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -78.2029, 2.70248, -42.2762)
+
+[node name="Shell16" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.415, 2.96265, -123.761)
+
+[node name="Shell17" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -73.479, 2.97995, -106.219)
+
+[node name="Shell18" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -79.5911, 2.97846, -119.981)
+
+[node name="Shell19" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96.8511, 2.85568, -95.9282)
+
+[node name="Shell32" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -149.227, 11.4758, -122.457)
+
+[node name="Shell20" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.4482, 2.85754, -65.2139)
+
+[node name="Shell33" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -145.342, 2.85754, -33.5393)
+
+[node name="Shell34" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -138, 2.85754, -42.2359)
+
+[node name="Shell35" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -159.242, 2.85754, -34.2521)
+
+[node name="Shell21" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -167.168, 13.3809, -120.92)
+
+[node name="Shell22" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.883, 2.77189, -77.4416)
+
+[node name="Shell23" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.0144, 4.2182, -80.376)
+
+[node name="Shell24" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.1737, 4.34828, -75.8908)
+
+[node name="Shell25" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.0676, 4.40264, -82.1923)
+
+[node name="Shell26" parent="MultiplayerSpawner" instance=ExtResource("6_mwlnt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55.0318, 4.91711, -70.7659)
 
 [node name="MultiplayerObjects" type="Node3D" parent="."]
