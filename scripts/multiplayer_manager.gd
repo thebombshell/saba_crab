@@ -90,6 +90,9 @@ func _on_joined_lobby():
 
 func _on_kicked_from_lobby():
 	
+	get_node("../Gameplay").queue_free();
+	get_node("MenuScene").visible = true;
+	get_node("MenuScene").process_mode = Node.PROCESS_MODE_ALWAYS;
 	is_waiting_for_gameserver = false;
 	return;
 

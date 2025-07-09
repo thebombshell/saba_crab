@@ -3,6 +3,9 @@ class_name LevelManager extends Node3D
 @export var player_spawn_points: Array[MultiplayerSpawnPoint] = [];
 @export var content_path: String = "";
 
+@export var shells_collected: int = 0;
+@export var shell_max: int = 100;
+
 var player_nodes: Dictionary[int, Node] = {};
 var is_ready = false;
 
