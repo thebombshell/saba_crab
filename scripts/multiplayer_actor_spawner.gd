@@ -9,7 +9,17 @@ func register(t_scene: PackedScene):
 		registered_actors[uid] = t_scene;
 	return;
 
+func build_registry():
+	
+	for child in get_children():
+		if child is MultiplayerSpawnPoint && child.spawn_actor != null:
+			register(child.spawn_actor);
+	return;
+
 func _spawn(t_data: Variant):
+	
+	if registered_actors.is_empty():
+		build_registry();
 	
 	if t_data is not Dictionary:
 		push_error("Was expecting a dictionary to MultiplayerActorSpawner spawn");
@@ -43,7 +53,7 @@ func try_spawn(t_data: Variant) -> Node:
 		var node = _spawn(t_data);
 		get_node(spawn_path).add_child(node);
 		return node;
-	if !multiplayer.is_server():
+	if !is_multiplayer_authority():
 		return null;
 	return spawn(t_data);
 

@@ -32,9 +32,9 @@ func spawn(t_data: Variant = null):
 func _ready():
 	
 	hide();
+	
 	if spawn_actor == null:
 		return;
-	actor_spawner.register(spawn_actor);
 	if spawn_immediately:
 		spawn.call_deferred();
 	return;

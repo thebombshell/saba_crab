@@ -58,7 +58,7 @@ func correct_height() -> void:
 	is_airborne = true;
 	return;
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	
 	if is_ready && is_locally_processible && !is_airborne:
 		correct_height.call_deferred();
