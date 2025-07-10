@@ -73,7 +73,7 @@ var is_locally_processible: bool:
 @export var decceleration: float = 20.0;
 @export var jump_impulse: float = 6.5;
 @export var air_control: float = 0.5;
-@export var drag: float = 0.005;
+@export var drag: float = 0.003;
 @export var dash_speed: float = 40.0;
 
 # movement trackers
@@ -110,11 +110,11 @@ var is_under_water: bool = false;
 # dash variables
 var dash_timer: float = 0.0;
 var is_dashing: bool:
-	get: return dash_timer > 0.5;
+	get: return dash_timer > 0.8;
 var is_dash_cooling_down: bool:
 	get: return dash_timer > 0.0;
 var can_dash: bool:
-	get: return !is_dash_cooling_down && !is_spinning;
+	get: return !is_dash_cooling_down && !is_spinning && move_input.length() > 0.1;
 var dash_direction: Vector3 = Vector3.FORWARD;
 
 # spin variables
@@ -131,6 +131,7 @@ var is_sliding: bool:
 	set(t_value): time_sliding = 0.0 if t_value else -1.0;
 var time_sliding: float = 0.0;
 var flip_timer: float = -1.0;
+var flip_direction: Vector3 = Vector3.FORWARD;
 var is_flipping: bool:
 	get: return flip_timer > 0.0;
 	set(t_value): flip_timer = 1.0 if t_value else -1.0;
@@ -235,7 +236,7 @@ func dash() -> void:
 		get_global_transform_interpolated().basis.z).normalized();
 	var hvelocity = velocity - up_direction * velocity.dot(up_direction);
 	velocity -= dash_direction * max(0.0, 1.0 - hvelocity.dot(dash_direction));
-	velocity += dash_direction * dash_speed * 0.25;
+	velocity += dash_direction * dash_speed * 0.5;
 	return;
 
 func flip() -> void:
@@ -243,7 +244,8 @@ func flip() -> void:
 	is_sliding = false;
 	is_flipping = true;
 	velocity -= up_direction * velocity.dot(up_direction);
-	velocity += velocity.normalized() * 10.0;
+	flip_direction = velocity.normalized();
+	velocity += flip_direction * 10.0;
 	velocity += up_direction * jump_impulse * 0.8;
 	jumps_player.play();
 	return;
@@ -280,12 +282,16 @@ func process_abilities(t_delta: float) -> void:
 		is_sliding = true;
 	
 	# handle dash
-	if dash_timer > 0.0:
-		var delta = pow(dash_timer, 2.0) * t_delta;
+	if is_dashing:
+		var delta = pow(dash_timer, 3.0) * t_delta;
 		velocity += dash_direction * dash_speed * delta;
 		turn_character_towards(dash_direction, delta * 10.0);
 	if spin_timer > 0.0:
 		velocity += Vector3.UP * spin_timer * t_delta;
+	
+	# handle flipping
+	if is_flipping:
+		velocity += flip_direction * 10.0 * flip_timer * t_delta;
 	return;
 
 func process_forces(t_delta: float) -> void:

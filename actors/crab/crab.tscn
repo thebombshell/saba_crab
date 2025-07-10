@@ -399,7 +399,7 @@ collision_layer = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-floor_max_angle = 0.610865
+floor_max_angle = 0.654498
 script = ExtResource("1_fc1xm")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

@@ -3,9 +3,9 @@
 [ext_resource type="Theme" uid="uid://5ryk8wjh8k36" path="res://ui/base_theme.tres" id="1_6fxy3"]
 [ext_resource type="Script" uid="uid://clcxldtajj80v" path="res://scenes/menu_scene.gd" id="1_21ehr"]
 [ext_resource type="Environment" uid="uid://cixnvigsimcmc" path="res://environments/beach_1_environment.tres" id="3_10uq6"]
-[ext_resource type="ArrayMesh" uid="uid://dooh41vhkxtwl" path="res://models/beach_1/beach_lighthouse.res" id="4_qdg0f"]
+[ext_resource type="ArrayMesh" uid="uid://bcxgoegvcx2am" path="res://models/beach_1/beach_LightHouse.res" id="4_qdg0f"]
 [ext_resource type="PackedScene" uid="uid://c74fjumkfclbm" path="res://models/crab/crab.glb" id="5_kvab8"]
-[ext_resource type="Material" uid="uid://ugkp3syuh6x5" path="res://brushes/grey_rock.tres" id="5_xbut1"]
+[ext_resource type="Material" uid="uid://ugkp3syuh6x5" path="res://brushes/ocean_rock.tres" id="5_xbut1"]
 [ext_resource type="ArrayMesh" uid="uid://by1ddtihd0cfq" path="res://models/props/props_rock.res" id="6_i7jh1"]
 [ext_resource type="PackedScene" uid="uid://b65hsqf6l6xdi" path="res://actors/follow_camera/follow_camera.tscn" id="6_qdg0f"]
 [ext_resource type="Material" uid="uid://db26evuax1qov" path="res://brushes/yellow_sand.tres" id="7_i43ud"]
@@ -175,7 +175,7 @@ material_override = ExtResource("7_i43ud")
 mesh = ExtResource("6_i7jh1")
 
 [node name="crab" parent="." instance=ExtResource("5_kvab8")]
-transform = Transform3D(0.277714, 0, -0.113469, 0, 0.3, 0, 0.113469, 0, 0.277714, -9.53336, 85.4685, 6.54353)
+transform = Transform3D(0.277714, 0, -0.113469, 0, 0.3, 0, 0.113469, 0, 0.277714, -8.77137, 143.45, 18.7714)
 
 [node name="Skeleton3D" parent="crab/CrabSkeleton" index="0"]
 bones/0/rotation = Quaternion(0, 0.707107, 0.707107, 0)
@@ -222,7 +222,7 @@ visible = false
 autoplay = "Rave"
 
 [node name="FollowCamera" parent="." instance=ExtResource("6_qdg0f")]
-transform = Transform3D(0.999072, 0, 0.0430614, 0, 1, 0, -0.0430614, 0, 0.999072, -31.4205, 91.0513, 65.0181)
+transform = Transform3D(0.999072, 0, 0.0430614, 0, 1, 0, -0.0430614, 0, 0.999072, -31.4205, 149.647, 65.0181)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.437676, 0.849545, -0.294473, -0.202999, 0.412416, 0.88809, 0.875918, -0.328918, 0.352961, 0, 101.559, 0)

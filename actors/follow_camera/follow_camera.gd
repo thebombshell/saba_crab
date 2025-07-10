@@ -58,14 +58,17 @@ func process_obstruction(_delta: float) -> void:
 	var physics = get_world_3d().direct_space_state;
 	var query = PhysicsRayQueryParameters3D.new();
 	query.from = follow_target_position;
-	query.to = global_position;
+	var diff = query.from - global_position;
+	var dist = diff.length();
+	var dir = (diff).normalized();
+	query.to = global_position - dir;
 	query.collide_with_bodies = true;
 	query.collide_with_areas = false;
 	query.exclude = [follow_target];
 	query.collision_mask = PHYS_MASK_FLOOR;
 	var result = physics.intersect_ray(query);
 	if result.has("position"):
-		global_position = result.position;
+		global_position = result.position + dir;
 	return;
 
 func process_underwater(t_delta: float) -> void:

@@ -1,0 +1,16 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bc4xp4boqrq11"]
+
+[ext_resource type="Shader" uid="uid://cygk4101suhg0" path="res://shaders/standard_shader.gdshader" id="1_the10"]
+[ext_resource type="Texture2D" uid="uid://d13gyd7encn8j" path="res://brushes/rock_albedo.png" id="2_fccrm"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_the10")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("2_fccrm")
+shader_parameter/albedo_texture_size = Vector2i(256, 256)
+shader_parameter/roughness = 1.0
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = 0.05
