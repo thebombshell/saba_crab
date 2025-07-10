@@ -52,13 +52,93 @@ _subresources={
 }
 },
 "meshes": {
-"beach_Plane": {
+"beach_BeachFence": {
 "generate/lightmap_uv": 0,
 "generate/lods": 0,
 "generate/shadow_meshes": 0,
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_Plane.res"
+"save_to_file/path": "res://models/beach_1/beach_BeachFence.res"
+},
+"beach_Brush1": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Brush1.res"
+},
+"beach_Brush2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Brush2.res"
+},
+"beach_Grass1": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Grass1.res"
+},
+"beach_Grass2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Grass2.res"
+},
+"beach_Grass3": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Grass3.res"
+},
+"beach_LightHouse": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_LightHouse.res"
+},
+"beach_Mesh": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Mesh.res"
+},
+"beach_Mesh2": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Mesh2.res"
+},
+"beach_Mesh3": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Mesh3.res"
+},
+"beach_Mesh4": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"save_to_file/enabled": true,
+"save_to_file/path": "res://models/beach_1/beach_Mesh4.res"
 },
 "beach_Shrub1": {
 "generate/lightmap_uv": 0,
@@ -75,30 +155,19 @@ _subresources={
 "lods/normal_merge_angle": 60.0,
 "save_to_file/enabled": true,
 "save_to_file/path": "res://models/beach_1/beach_Tree1.res"
+}
 },
-"beach_lighthouse": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_lighthouse.res"
+"nodes": {
+"PATH:BeachFence": {
+"generate/physics": true
 },
-"beach_sand": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_sand.res"
+"PATH:BeachRock": {
+"generate/occluder": 1,
+"generate/physics": true
 },
-"beach_sand_fence": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"save_to_file/enabled": true,
-"save_to_file/path": "res://models/beach_1/beach_sand_fence.res"
+"PATH:BeachSand": {
+"generate/occluder": 1,
+"generate/physics": true
 }
 }
 }
