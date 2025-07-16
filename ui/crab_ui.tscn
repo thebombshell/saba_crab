@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://cgg7lhqe14w10"]
+[gd_scene load_steps=12 format=3 uid="uid://cgg7lhqe14w10"]
 
+[ext_resource type="Script" uid="uid://th2gfnt2vuo" path="res://ui/crab_ui.gd" id="1_kjnco"]
 [ext_resource type="Shader" uid="uid://did5vtykh6n11" path="res://shaders/props/shell.gdshader" id="1_qbe43"]
 [ext_resource type="ArrayMesh" uid="uid://bbs4wtf73rkvr" path="res://models/props/props_shell.res" id="2_kjnco"]
 [ext_resource type="Environment" uid="uid://w2e6ycuh6qo3" path="res://environments/ui_viewport_environment.tres" id="3_jprpl"]
@@ -16,6 +17,13 @@ shader_parameter/roughness = 0.0
 shader_parameter/emission = 0.2
 shader_parameter/perlescence_colour = Color(1, 0.855089, 0.948175, 1)
 shader_parameter/perlescence_frequency = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbe43"]
+bg_color = Color(0.1, 0.1, 0.1, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
 
 [sub_resource type="Animation" id="Animation_rgudy"]
 resource_name = "OnCollectShell"
@@ -55,6 +63,7 @@ _data = {
 }
 
 [node name="CrabUI" type="CanvasLayer"]
+script = ExtResource("1_kjnco")
 
 [node name="ShellCountDisplay" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(150, 100)
@@ -103,6 +112,40 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_bopgo")
+
+[node name="DialogPanel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.7
+anchor_right = 0.8
+anchor_bottom = 0.95
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbe43")
+
+[node name="DialogLabel" type="Label" parent="DialogPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(1, 0.923333, 0.8, 1)
+theme_override_fonts/font = ExtResource("4_11yku")
+theme_override_font_sizes/font_size = 24
+text = "This is sample text the real slim sample text, all you other sample text are just imitating, can the real sample text please stand up.
+Please stand up.
+Please stand up."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("5_bopgo")
+min_scale_size = 180.0
+max_scale_size = 360.0
+min_font_size = 24
+max_font_size = 40
+metadata/_custom_type_script = "uid://baim48guv3n7v"
 
 [node name="UIAnimator" type="AnimationPlayer" parent="."]
 libraries = {

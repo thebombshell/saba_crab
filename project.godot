@@ -171,6 +171,7 @@ initiate_chat={
 [rendering]
 
 occlusion_culling/bvh_build_quality=1
+lights_and_shadows/directional_shadow/size=8190
 occlusion_culling/occlusion_rays_per_thread=64
 occlusion_culling/use_occlusion_culling=true
 

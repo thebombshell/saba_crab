@@ -50,7 +50,7 @@ const SFX_DIVE = preload("res://audio_fx/dives/dives - dive 1.wav");
 
 # ui nodes
 
-@onready var crab_ui: CanvasLayer = $CrabUI
+@onready var crab_ui: CrabUI = $CrabUI
 @onready var shell_count_display: Control = $CrabUI/ShellCountDisplay;
 @onready var shell_count_label: AutoLabel = $CrabUI/ShellCountDisplay/ShellCountLabel;
 @onready var ui_animator: AnimationPlayer = $CrabUI/UIAnimator;

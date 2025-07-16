@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://skufcpjahk3v"]
 
 [ext_resource type="Shader" uid="uid://fbjwqylcfu0p" path="res://shaders/props/leafy_shader.gdshader" id="1_x7703"]
-[ext_resource type="Texture2D" uid="uid://ciu7bdjpmc3vi" path="res://models/beach_1/beach_leaf_albedo.png" id="2_ufap0"]
+[ext_resource type="Texture2D" uid="uid://bj7ssik45inuo" path="res://models/beach_1/beach_leaf_albedo.png" id="2_ufap0"]
 
 [resource]
 render_priority = 0

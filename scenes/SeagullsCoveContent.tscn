@@ -1,6 +1,7 @@
-[gd_scene load_steps=36 format=4 uid="uid://b71u3tpv825ri"]
+[gd_scene load_steps=35 format=4 uid="uid://b71u3tpv825ri"]
 
 [ext_resource type="Script" uid="uid://5dgn78fx7rbk" path="res://scripts/ambience_tracker.gd" id="3_1oxf8"]
+[ext_resource type="PackedScene" uid="uid://dqa8snblsturl" path="res://actors/props/fish_spirit_stone.tscn" id="4_7qc8x"]
 [ext_resource type="AudioStream" uid="uid://dywok45y8cfox" path="res://audio_fx/beach_1_ambience/ambience_synchronized.tres" id="4_bw3nc"]
 [ext_resource type="Script" uid="uid://b87nc8rpyjirx" path="res://scripts/point_check_collision_polygon.gd" id="5_atkxv"]
 [ext_resource type="Material" uid="uid://skufcpjahk3v" path="res://shaders/props/leaves.tres" id="5_hrgrh"]
@@ -13,8 +14,7 @@
 [ext_resource type="Environment" uid="uid://cixnvigsimcmc" path="res://environments/beach_1_environment.tres" id="9_67dp3"]
 [ext_resource type="ArrayMesh" uid="uid://cqqi4afylwvtm" path="res://models/beach_1/beach_Grass3.res" id="10_0r80v"]
 [ext_resource type="Material" uid="uid://ugkp3syuh6x5" path="res://brushes/ocean_rock.tres" id="11_0r80v"]
-[ext_resource type="Material" uid="uid://bc4xp4boqrq11" path="res://brushes/ocean_rock_basic.tres" id="13_7qc8x"]
-[ext_resource type="ArrayMesh" uid="uid://b62dj6jia5kym" path="res://models/props/props_Mesh.res" id="14_0r80v"]
+[ext_resource type="PackedScene" uid="uid://c0hgkupsei64e" path="res://actors/fish_spirit/fish_spirit.tscn" id="15_0r80v"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3qnke"]
 rough = true
@@ -88,9 +88,6 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_p5b2f")
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_7qc8x"]
-points = PackedVector3Array(-1.22863, 1.40498, 0.542663, -1.04597, 1.31501, 0.552796, -1.08384, 1.86906, 0.545334, -1.08533, 1.8738, 0.317349, -1.07493, 1.87046, -0.152808, -1.22145, 1.40972, 0.317349, -1.20561, 0.880176, 0.542663, -1.03805, 0.963187, 0.552796, -0.859353, 1.72533, 0.55298, -0.987066, 1.58855, 0.552796, -0.867273, 1.9231, 0.552796, -0.62249, 2.12562, 0.552796, -0.615807, 2.23537, 0.542663, -0.612589, 2.23258, 0.317349, -0.609372, 2.22339, -0.152808, -1.06825, 1.86906, -0.37324, -1.19596, 1.41195, -0.152808, -1.19373, 0.879062, 0.317349, -1.08681, 0.307736, -0.152808, -1.10909, 0.304115, 0.317349, -1.11602, 0.3147, 0.542663, -0.984591, 0.594653, 0.552796, -0.764311, 0.255645, 0.55298, -0.707632, 1.80722, 0.553072, -0.747975, 1.92032, 0.55298, -0.633875, 0.253695, 0.553072, -0.439087, 2.10027, 0.55298, -0.326472, 2.23091, 0.552796, 0.00147355, 2.51504, 0.547085, -0.604917, 2.02171, 0.55298, 0.0019685, 2.52479, 0.317349, 0.0022161, 2.50975, -0.152808, -0.608629, 2.1947, -0.378123, -1.16255, 1.4203, -0.378123, -1.16032, 0.884355, -0.152808, -1.05563, 0.309965, -0.378123, -0.973701, -0.256904, -0.37324, -0.983106, -0.269718, -0.152808, -0.984096, -0.270554, 0.317349, -0.972711, -0.240469, 0.545334, -0.891529, 0.316928, 0.552796, -0.725205, 0.00382742, 0.552796, -0.63041, 0.113301, 0.55298, 0.571975, 1.9128, 0.553164, -0.548238, 1.90723, 0.553072, -0.33761, 0.137815, 0.553072, -0.200244, 2.1206, 0.55298, -0.378696, 2.01336, 0.553072, 0.00617611, 2.18746, 0.552888, 0.345507, 2.23676, 0.552796, 0.662562, 2.14707, 0.552796, 0.683353, 2.27994, 0.542663, 0.684343, 2.27966, 0.317349, 0.684343, 2.27186, -0.152808, 0.682115, 2.24233, -0.378123, 0.00320613, 2.46657, -0.378123, -0.598729, 1.57407, -0.387887, -0.574226, 0.942574, -0.387887, -0.539575, 0.321664, -0.387887, -1.12369, 0.88909, -0.378123, -0.501706, -0.26944, -0.378123, -0.500221, -0.298967, -0.152808, -0.500469, -0.312895, 0.317349, -0.500716, -0.312616, 0.542663, -0.000259042, -0.311224, 0.547085, -0.503934, -0.0997968, 0.552796, -0.503192, 0.0731888, 0.55298, 0.903386, 1.74789, 0.55298, 0.782355, 1.93397, 0.55298, 0.631624, 2.02896, 0.55298, 0.460102, 2.10389, 0.55298, 0.216309, 2.12255, 0.55298, 0.35516, 0.138372, 0.553072, 0.654395, 0.25481, 0.553072, -0.366816, 0.041433, 0.55298, 0.385108, 0.0417115, 0.55298, 0.929869, 1.95737, 0.552796, 1.26499, 1.96572, 0.545334, 1.28083, 1.9777, 0.317349, 1.27786, 1.97742, -0.152808, 1.26821, 1.97408, -0.37324, 0.632119, 1.59747, -0.387887, 0.00741363, 1.66209, -0.387887, 0.539057, 0.322778, -0.387887, 0.501436, -0.26944, -0.378123, -0.000259042, -0.300917, -0.152808, -0.00050652, -0.320973, 0.317349, 0.500198, -0.312616, 0.542663, 0.973678, -0.240469, 0.545334, 0.516534, -0.0995182, 0.552796, 1.08679, 1.33451, 0.552796, 1.04892, 1.62142, 0.552796, 0.779633, 0.257038, 0.55298, 0.524207, 0.0734673, 0.55298, 0.651672, 0.11358, 0.55298, 1.29989, 1.45039, 0.542663, 1.29667, 1.45819, 0.317349, 1.2739, 1.46209, -0.152808, 1.23826, 1.46989, -0.378123, 1.05758, 0.311636, -0.378123, 0.97343, -0.256904, -0.37324, 0.499703, -0.298967, -0.152808, 0.499456, -0.312895, 0.317349, 0.983826, -0.270554, 0.317349, 0.740279, 0.00382742, 0.552796, 1.11921, 0.316093, 0.542663, 1.22465, 0.892711, 0.542663, 0.993973, 0.595767, 0.552796, 0.900416, 0.318043, 0.552796, 1.05857, 0.968201, 0.552704, 1.21351, 0.892433, 0.317349, 1.08926, 0.309407, -0.152808, 0.982835, -0.269718, -0.152808, 1.11203, 0.305229, 0.317349)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e1bn2"]
 
@@ -356,6 +353,9 @@ depth = 100.0
 polygon = PackedVector2Array(15.5338, 198.431, 28.1789, 112.965, 58.605, 70.3468, 156.939, 61.113, 191.729, 174.173, 88.8427, 246.884)
 script = ExtResource("5_atkxv")
 
+[node name="FishSpiritStone" parent="." instance=ExtResource("4_7qc8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7192, 1.50225, 89.2053)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 65
 physics_material_override = SubResource("PhysicsMaterial_3qnke")
@@ -377,16 +377,6 @@ transform = Transform3D(0.198513, 0, 0.980098, 0, 1, 0, -0.980098, 0, 0.198513, 
 mesh = SubResource("ArrayMesh_s51w8")
 skeleton = NodePath("../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(2.43267, 0.054616, -1.75475, 0.579303, 2.80563, 0.890429, 1.65727, -1.06088, 2.2645, 31.0929, 1.56359, 87.0514)
-shape = SubResource("ConvexPolygonShape3D_7qc8x")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
-transform = Transform3D(1, 0, 2.98023e-08, 1.49012e-08, 1, 0, 0, -2.98023e-08, 1, 0, 0, 0)
-material_override = ExtResource("13_7qc8x")
-mesh = ExtResource("14_0r80v")
-skeleton = NodePath("../../..")
-
 [node name="beach" parent="StaticBody3D" instance=ExtResource("6_k31st")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.02211, 0)
 
@@ -403,6 +393,30 @@ visible = false
 visible = false
 
 [node name="Grass1" parent="StaticBody3D/beach" index="5"]
+visible = false
+
+[node name="Brush1" parent="StaticBody3D/beach" index="6"]
+visible = false
+
+[node name="Grass2" parent="StaticBody3D/beach" index="7"]
+visible = false
+
+[node name="Grass3" parent="StaticBody3D/beach" index="8"]
+visible = false
+
+[node name="BeachRock" parent="StaticBody3D/beach" index="10"]
+surface_material_override/0 = ExtResource("11_0r80v")
+
+[node name="StaticBody3D" parent="StaticBody3D/beach/BeachRock" index="0"]
+collision_layer = 65
+
+[node name="BeachSandDistance" parent="StaticBody3D/beach" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42758, 0)
+
+[node name="Barnacle1" parent="StaticBody3D/beach" index="13"]
+visible = false
+
+[node name="Barnacle2" parent="StaticBody3D/beach" index="14"]
 visible = false
 
 [node name="Grass7" type="MeshInstance3D" parent="StaticBody3D/beach"]
@@ -430,12 +444,6 @@ transform = Transform3D(-0.43352, 0, -0.414802, 0, 0.6, 0, 0.414802, 0, -0.43352
 mesh = ExtResource("7_01i0k")
 skeleton = NodePath("")
 
-[node name="Brush1" parent="StaticBody3D/beach" index="11"]
-visible = false
-
-[node name="Grass2" parent="StaticBody3D/beach" index="12"]
-visible = false
-
 [node name="Grass5" type="MeshInstance3D" parent="StaticBody3D/beach"]
 transform = Transform3D(0.974699, 0, -0.223522, 0, 1, 0, 0.223522, 0, 0.974699, 92.5378, 10.9322, 150.913)
 mesh = ExtResource("8_tew5w")
@@ -445,24 +453,6 @@ skeleton = NodePath("")
 transform = Transform3D(-0.396074, 0, -0.918218, 0, 1, 0, 0.918218, 0, -0.396074, 87.5064, 10.9322, 171.321)
 mesh = ExtResource("8_tew5w")
 skeleton = NodePath("")
-
-[node name="Grass3" parent="StaticBody3D/beach" index="15"]
-visible = false
-
-[node name="BeachRock" parent="StaticBody3D/beach" index="17"]
-surface_material_override/0 = ExtResource("11_0r80v")
-
-[node name="StaticBody3D" parent="StaticBody3D/beach/BeachRock" index="0"]
-collision_layer = 65
-
-[node name="BeachSandDistance" parent="StaticBody3D/beach" index="18"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42758, 0)
-
-[node name="Barnacle1" parent="StaticBody3D/beach" index="20"]
-visible = false
-
-[node name="Barnacle2" parent="StaticBody3D/beach" index="21"]
-visible = false
 
 [node name="Barnacle3" type="MeshInstance3D" parent="StaticBody3D/beach"]
 transform = Transform3D(-0.28248, -0.833785, 0.474349, 0.947121, -0.320877, 6.90601e-09, 0.152208, 0.449266, 0.880337, 8.37923, 27.5138, 62.7918)
@@ -478,6 +468,12 @@ skeleton = NodePath("")
 
 [node name="Barnacle11" type="MeshInstance3D" parent="StaticBody3D/beach"]
 transform = Transform3D(0.0954478, -0.801934, -0.58974, 0.974108, 0.197224, -0.11053, 0.204949, -0.56392, 0.799994, 90.9064, 18.1539, 169.683)
+material_override = ExtResource("9_7qc8x")
+mesh = SubResource("ArrayMesh_nw173")
+skeleton = NodePath("")
+
+[node name="Barnacle14" type="MeshInstance3D" parent="StaticBody3D/beach"]
+transform = Transform3D(0.3963, 0.791176, 0.46582, 0.917274, -0.319397, -0.237896, -0.0394361, 0.521562, -0.852301, 108.607, 18.1539, 185.369)
 material_override = ExtResource("9_7qc8x")
 mesh = SubResource("ArrayMesh_nw173")
 skeleton = NodePath("")
@@ -506,6 +502,18 @@ material_override = ExtResource("9_7qc8x")
 mesh = SubResource("ArrayMesh_al5ff")
 skeleton = NodePath("")
 
+[node name="Barnacle13" type="MeshInstance3D" parent="StaticBody3D/beach"]
+transform = Transform3D(-0.192783, -0.9759, -0.102248, 0.961018, -0.166736, -0.22055, 0.198187, -0.14078, 0.970001, 144.576, 11.7399, 195.181)
+material_override = ExtResource("9_7qc8x")
+mesh = SubResource("ArrayMesh_al5ff")
+skeleton = NodePath("")
+
+[node name="Barnacle15" type="MeshInstance3D" parent="StaticBody3D/beach"]
+transform = Transform3D(0.340243, -0.243916, -0.908151, 0.867987, -0.290027, 0.403091, -0.361709, -0.925414, 0.113036, 159.162, 21.3882, 249.745)
+material_override = ExtResource("9_7qc8x")
+mesh = SubResource("ArrayMesh_al5ff")
+skeleton = NodePath("")
+
 [node name="Barnacle5" type="MeshInstance3D" parent="StaticBody3D/beach"]
 transform = Transform3D(0.0752624, -0.543572, -1.92324, 1.9811, 0.274301, -1.79943e-08, 0.263774, -1.90507, 0.548758, -8.68808, 17.9456, 188.681)
 material_override = ExtResource("9_7qc8x")
@@ -530,12 +538,12 @@ mesh = ExtResource("10_0r80v")
 skeleton = NodePath("")
 
 [node name="Grass15" type="MeshInstance3D" parent="StaticBody3D/beach"]
-transform = Transform3D(0.276966, 0, -0.53225, 0, 0.6, 0, 0.53225, 0, 0.276966, 26.6442, 9.81483, 85.5907)
+transform = Transform3D(0.276966, 0, -0.53225, 0, 0.6, 0, 0.53225, 0, 0.276966, 25.1544, 9.81483, 88.4007)
 mesh = ExtResource("10_0r80v")
 skeleton = NodePath("")
 
 [node name="Grass16" type="MeshInstance3D" parent="StaticBody3D/beach"]
-transform = Transform3D(-0.215382, 0, 0.560009, 0, 0.6, 0, -0.560009, 0, -0.215382, 34.8954, 9.81483, 87.8084)
+transform = Transform3D(-0.215382, 0, 0.560009, 0, 0.6, 0, -0.560009, 0, -0.215382, 33.9541, 9.81483, 90.2844)
 mesh = ExtResource("10_0r80v")
 skeleton = NodePath("")
 
@@ -561,9 +569,8 @@ shadow_enabled = true
 shadow_normal_bias = 2.133
 shadow_blur = 0.5
 directional_shadow_mode = 0
-directional_shadow_fade_start = 0.25
-directional_shadow_max_distance = 500.0
-directional_shadow_pancake_size = 0.0
+directional_shadow_fade_start = 0.5
+directional_shadow_max_distance = 256.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("9_67dp3")
@@ -856,5 +863,10 @@ skeleton = NodePath("../..")
 transform = Transform3D(1.75347, 0.0112766, 0.961873, 0.0015327, 1.99983, -0.0262392, -0.961938, 0.023742, 1.75331, 344.144, 27.9566, 212.772)
 mesh = SubResource("ArrayMesh_tew5w")
 skeleton = NodePath("../..")
+
+[node name="FishSpirit" parent="." instance=ExtResource("15_0r80v")]
+transform = Transform3D(0.199368, 0, 0.979925, 0, 1, 0, -0.979925, 0, 0.199368, 17.9842, 5.33579, 95.5937)
+
+[connection signal="on_activate_stone" from="FishSpiritStone" to="FishSpirit" method="look_to"]
 
 [editable path="StaticBody3D/beach"]

@@ -59,7 +59,6 @@ func process_obstruction(_delta: float) -> void:
 	var query = PhysicsRayQueryParameters3D.new();
 	query.from = follow_target_position;
 	var diff = query.from - global_position;
-	var dist = diff.length();
 	var dir = (diff).normalized();
 	query.to = global_position - dir;
 	query.collide_with_bodies = true;
