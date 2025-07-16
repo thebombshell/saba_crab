@@ -1,10 +1,11 @@
-[gd_scene load_steps=35 format=4 uid="uid://b71u3tpv825ri"]
+[gd_scene load_steps=39 format=4 uid="uid://b71u3tpv825ri"]
 
 [ext_resource type="Script" uid="uid://5dgn78fx7rbk" path="res://scripts/ambience_tracker.gd" id="3_1oxf8"]
 [ext_resource type="PackedScene" uid="uid://dqa8snblsturl" path="res://actors/props/fish_spirit_stone.tscn" id="4_7qc8x"]
 [ext_resource type="AudioStream" uid="uid://dywok45y8cfox" path="res://audio_fx/beach_1_ambience/ambience_synchronized.tres" id="4_bw3nc"]
 [ext_resource type="Script" uid="uid://b87nc8rpyjirx" path="res://scripts/point_check_collision_polygon.gd" id="5_atkxv"]
 [ext_resource type="Material" uid="uid://skufcpjahk3v" path="res://shaders/props/leaves.tres" id="5_hrgrh"]
+[ext_resource type="PackedScene" uid="uid://c33sp4akc466h" path="res://actors/props/poof_particles.tscn" id="6_ffsdv"]
 [ext_resource type="PackedScene" uid="uid://bduogxajbvtgt" path="res://models/beach_1/beach.glb" id="6_k31st"]
 [ext_resource type="ArrayMesh" uid="uid://b7iimtu2vmmui" path="res://models/beach_1/beach_Grass1.res" id="7_01i0k"]
 [ext_resource type="ArrayMesh" uid="uid://drjphsw2xc07t" path="res://models/props/props_parasol.res" id="7_sv720"]
@@ -15,6 +16,79 @@
 [ext_resource type="ArrayMesh" uid="uid://cqqi4afylwvtm" path="res://models/beach_1/beach_Grass3.res" id="10_0r80v"]
 [ext_resource type="Material" uid="uid://ugkp3syuh6x5" path="res://brushes/ocean_rock.tres" id="11_0r80v"]
 [ext_resource type="PackedScene" uid="uid://c0hgkupsei64e" path="res://actors/fish_spirit/fish_spirit.tscn" id="15_0r80v"]
+
+[sub_resource type="Animation" id="Animation_vm5um"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_26hpv"]
+resource_name = "fish_spirit_spawn_one"
+length = 5.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FishSpirit")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0333333, 2.46667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"jump"
+}, {
+"args": [],
+"method": &"sit"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FishSpirit:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4.96667),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"push_message"
+}, {
+"args": [],
+"method": &"end_dialog"
+}]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PoofParticles")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.0333333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7ogn3"]
+_data = {
+&"RESET": SubResource("Animation_vm5um"),
+&"fish_spirit_spawn_one": SubResource("Animation_26hpv")
+}
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3qnke"]
 rough = true
@@ -355,6 +429,19 @@ script = ExtResource("5_atkxv")
 
 [node name="FishSpiritStone" parent="." instance=ExtResource("4_7qc8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.7192, 1.50225, 89.2053)
+message_queue = ["Yohohoho!"]
+
+[node name="FishSpirit" parent="FishSpiritStone" instance=ExtResource("15_0r80v")]
+transform = Transform3D(0.905539, 0, -0.424263, 0, 1, 0, 0.424263, 0, 0.905539, -0.605904, 9.75472, -0.464287)
+visible = false
+
+[node name="PoofParticles" parent="FishSpiritStone" instance=ExtResource("6_ffsdv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.502611, 7.75658, -0.404594)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FishSpiritStone"]
+libraries = {
+&"": SubResource("AnimationLibrary_7ogn3")
+}
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 65
@@ -864,9 +951,7 @@ transform = Transform3D(1.75347, 0.0112766, 0.961873, 0.0015327, 1.99983, -0.026
 mesh = SubResource("ArrayMesh_tew5w")
 skeleton = NodePath("../..")
 
-[node name="FishSpirit" parent="." instance=ExtResource("15_0r80v")]
-transform = Transform3D(0.199368, 0, 0.979925, 0, 1, 0, -0.979925, 0, 0.199368, 17.9842, 5.33579, 95.5937)
-
-[connection signal="on_activate_stone" from="FishSpiritStone" to="FishSpirit" method="look_to"]
+[connection signal="on_activate_stone" from="FishSpiritStone" to="FishSpiritStone/FishSpirit" method="look_to"]
+[connection signal="on_activate_stone_nocrab" from="FishSpiritStone" to="FishSpiritStone/AnimationPlayer" method="play" binds= [&"fish_spirit_spawn_one"]]
 
 [editable path="StaticBody3D/beach"]

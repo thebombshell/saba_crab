@@ -1,10 +1,8 @@
-[gd_scene load_steps=17 format=3 uid="uid://dqa8snblsturl"]
+[gd_scene load_steps=8 format=3 uid="uid://dqa8snblsturl"]
 
 [ext_resource type="Script" uid="uid://vg27jm68whuf" path="res://actors/props/fish_spirit_stone.gd" id="1_5gunv"]
 [ext_resource type="Material" uid="uid://bc4xp4boqrq11" path="res://brushes/ocean_rock_basic.tres" id="1_cj8e8"]
 [ext_resource type="ArrayMesh" uid="uid://b62dj6jia5kym" path="res://models/props/props_Mesh.res" id="2_gevtu"]
-[ext_resource type="PackedScene" uid="uid://cbdknkk5fy66p" path="res://models/fish_spirit/fishspirit.glb" id="3_gevtu"]
-[ext_resource type="Texture2D" uid="uid://cbn1wpqpcgneu" path="res://brushes/poof.png" id="4_ocq8i"]
 [ext_resource type="ArrayMesh" uid="uid://daw88r1fme4jk" path="res://models/props/props_Mesh2.res" id="4_qijac"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6easv"]
@@ -18,62 +16,8 @@ emission = Color(0, 0.6, 1, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_gevtu"]
 size = Vector3(2.51733, 2.81339, 0.973022)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_gevtu"]
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_ocq8i"]
-radius = 0.212647
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ffsdv"]
 radius = 3.0415
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gunv"]
-transparency = 3
-alpha_hash_scale = 1.0
-alpha_antialiasing_mode = 0
-shading_mode = 2
-diffuse_mode = 3
-specular_mode = 2
-disable_fog = true
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("4_ocq8i")
-
-[sub_resource type="Curve" id="Curve_qijac"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_6easv"]
-width = 32
-texture_mode = 1
-curve = SubResource("Curve_qijac")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k733g"]
-particle_flag_disable_z = true
-emission_shape = 2
-emission_sphere_radius = 2.0
-angle_min = -720.0
-angle_max = 720.0
-spread = 180.0
-initial_velocity_min = 3.0
-initial_velocity_max = 6.0
-angular_velocity_min = -320.0
-angular_velocity_max = 160.0
-orbit_velocity_min = -0.39
-orbit_velocity_max = 0.224
-radial_velocity_min = -4.00002
-radial_velocity_max = 3.99998
-gravity = Vector3(0, 0, 0)
-damping_min = 8.0
-damping_max = 16.0
-scale_min = 2.0
-scale_max = 4.0
-scale_over_velocity_min = 1.0
-scale_over_velocity_max = 4.0
-alpha_curve = SubResource("CurveTexture_6easv")
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.0
-
-[sub_resource type="QuadMesh" id="QuadMesh_847la"]
 
 [node name="FishSpiritStone" type="StaticBody3D"]
 script = ExtResource("1_5gunv")
@@ -94,38 +38,11 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.58496, -0.00952105, -1.52247, 0.375532, 2.91124, 0.619395, 1.47546, -0.724277, 2.50966, -0.0337758, 3.21338, -0.567321)
 shape = SubResource("BoxShape3D_gevtu")
 
-[node name="Collider2" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.58496, -0.00952105, -1.52247, 0.375532, 2.91124, 0.619395, 1.47546, -0.724277, 2.50966, 0.0227393, 8.40205, -1.61867)
-shape = SubResource("SphereShape3D_gevtu")
-
-[node name="Collider3" type="CollisionShape3D" parent="."]
-transform = Transform3D(2.58496, -0.00952105, -1.52247, 0.375532, 2.91124, 0.619395, 1.47546, -0.724277, 2.50966, -0.676008, 9.24805, -0.551887)
-shape = SubResource("SphereShape3D_ocq8i")
-
 [node name="ActivationArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.726873, 0, -0.380297)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ActivationArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.77182, 1.49622, 2.59051)
 shape = SubResource("CylinderShape3D_ffsdv")
-
-[node name="fishspirit" parent="." instance=ExtResource("3_gevtu")]
-transform = Transform3D(0.856078, 0, -0.516847, 0, 1, 0, 0.516847, 0, 0.856078, -0.600456, 7.50758, -0.739815)
-
-[node name="AnimationPlayer" parent="fishspirit" index="1"]
-autoplay = "SitIdle"
-
-[node name="PoofParticles" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.131174, 8.20897, 0.600993)
-material_override = SubResource("StandardMaterial3D_5gunv")
-emitting = false
-amount = 16
-lifetime = 0.5
-one_shot = true
-local_coords = true
-transform_align = 1
-process_material = SubResource("ParticleProcessMaterial_k733g")
-draw_pass_1 = SubResource("QuadMesh_847la")
-
-[editable path="fishspirit"]

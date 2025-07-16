@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://c33sp4akc466h"]
+
+[ext_resource type="Texture2D" uid="uid://cbn1wpqpcgneu" path="res://brushes/poof.png" id="1_5hiog"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5gunv"]
+transparency = 3
+alpha_hash_scale = 1.0
+alpha_antialiasing_mode = 0
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 2
+disable_fog = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_5hiog")
+
+[sub_resource type="Curve" id="Curve_qijac"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6easv"]
+width = 32
+texture_mode = 1
+curve = SubResource("Curve_qijac")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_k733g"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 2.0
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 6.0
+angular_velocity_min = -320.0
+angular_velocity_max = 160.0
+orbit_velocity_min = -0.39
+orbit_velocity_max = 0.224
+radial_velocity_min = -4.00002
+radial_velocity_max = 3.99998
+gravity = Vector3(0, 0, 0)
+damping_min = 8.0
+damping_max = 16.0
+scale_min = 2.0
+scale_max = 4.0
+scale_over_velocity_min = 1.0
+scale_over_velocity_max = 4.0
+alpha_curve = SubResource("CurveTexture_6easv")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_847la"]
+
+[node name="PoofParticles" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_5gunv")
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+local_coords = true
+transform_align = 1
+process_material = SubResource("ParticleProcessMaterial_k733g")
+draw_pass_1 = SubResource("QuadMesh_847la")

@@ -1,10 +1,9 @@
 class_name FishSpiritStone extends StaticBody3D
 
 signal on_activate_stone(t_crab: CrabActor);
+signal on_activate_stone_nocrab();
 
 @onready var activation_area: Area3D = $ActivationArea;
-@onready var poof_particles: GPUParticles3D = $PoofParticles;
-@onready var fishspirit: Node3D = $fishspirit;
 @onready var stone_mesh: MeshInstance3D = $StoneMesh;
 @onready var glow_mesh: MeshInstance3D = $GlowMesh;
 
@@ -24,13 +23,14 @@ var message_index: int = 0;
 
 func end_dialog():
 	
-	crab.crab_ui.lock_dialog_open = false;
+	if is_instance_valid(crab):
+		crab.crab_ui.lock_dialog_open = false;
 	crab = null;
 	return;
 
 func push_message():
 	
-	if !is_instance_valid(crab):
+	if !is_instance_valid(crab) || message_queue.is_empty():
 		return;
 	crab.crab_ui.push_message(message_queue[message_index % message_queue.size()], true);
 	message_index += 1;
@@ -38,18 +38,16 @@ func push_message():
 
 func activate(t_crab: CrabActor):
 	
-	poof_particles.restart();
+	crab = t_crab;
 	activation_time = 1.0;
-	fishspirit.visible = true;
 	message_index = 0;
 	on_activate_stone.emit(t_crab);
+	on_activate_stone_nocrab.emit();
 	return;
 
 func soft_activate():
 	
-	poof_particles.restart();
 	activation_time = 1.0;
-	fishspirit.visible = true;
 	return;
 
 func highlight():
@@ -74,7 +72,7 @@ func check_for_activation():
 	var has_crab = false;
 	var is_crab_spinning = false;
 	var is_local_crab_spinning = false;
-	var crab: CrabActor = null;
+	var t_crab: CrabActor = null;
 	for body in activation_area.get_overlapping_bodies():
 		if body is CrabActor:
 			has_crab = true;
@@ -82,10 +80,10 @@ func check_for_activation():
 				is_crab_spinning = true;
 				if body.is_locally_processible:
 					is_local_crab_spinning = true;
-					crab = body;
+					t_crab = body;
 					break;
-	if is_local_crab_spinning && is_instance_valid(crab):
-		try_activate(crab);
+	if is_local_crab_spinning && is_instance_valid(t_crab):
+		try_activate(t_crab);
 	elif is_crab_spinning:
 		try_soft_activate();
 	elif has_crab:

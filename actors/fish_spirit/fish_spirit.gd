@@ -44,6 +44,7 @@ func process_forces(t_delta: float) -> void:
 func process_moving(t_delta: float) -> void:
 	
 	var hvelocity = velocity - Vector3.UP * velocity.y;
+	var vvelocity = Vector3(0.0, velocity.y, 0.0);
 	if is_move_to_order_active:
 		
 		var diff = move_to_target - global_position;
@@ -53,7 +54,7 @@ func process_moving(t_delta: float) -> void:
 			is_move_to_order_active = false;
 		else:
 			var target_vel = dir * 10.0;
-			velocity = velocity.lerp(target_vel, t_delta * 8.0);
+			velocity = hvelocity.lerp(target_vel, t_delta * 8.0) + vvelocity;
 	else:
 		velocity = Vector3(0.0, velocity.y, 0.0);
 	var turn_vector = (velocity - Vector3.UP * velocity.y);
